@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Vec2","Simple 2D size, in characters."],["Vec4","Four values representing each direction."]],"trait":[["ToVec2","A generic trait for converting a value into a 2D vector."],["ToVec4","Generic trait for converting a value into a Vec4."]]});

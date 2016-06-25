@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Cursive` struct in crate `cursive`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Cursive">
+
+    <title>cursive::Cursive - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'Cursive', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>cursive</a>::<wbr><a class='struct' href=''>Cursive</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1740' class='srclink' href='../src/cursive/src/lib.rs.html#59-69' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Cursive {
+    // some fields omitted
+}</pre><div class='docblock'><p>Central part of the cursive library.</p>
+
+<p>It initializes ncurses on creation and cleans up on drop.
+To use it, you should populate it with views, layouts and callbacks,
+then start the event loop with run().</p>
+
+<p>It uses a list of screen, with one screen active at a time.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1746' class='srclink' href='../src/cursive/src/lib.rs.html#71-274' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
+<div class='docblock'><p>Creates a new Cursive root, and initialize ncurses.</p>
+</div><h4 id='method.current_theme' class='method'><code>fn <a href='#method.current_theme' class='fnname'>current_theme</a>(&amp;self) -&gt; &amp;<a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a></code></h4>
+<div class='docblock'><p>Returns the currently used theme</p>
+</div><h4 id='method.load_theme' class='method'><code>fn <a href='#method.load_theme' class='fnname'>load_theme</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, filename: P) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Loads a theme from the given file.</p>
+
+<p>Returns TRUE if the theme was successfully loaded.</p>
+</div><h4 id='method.set_fps' class='method'><code>fn <a href='#method.set_fps' class='fnname'>set_fps</a>(&amp;self, fps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>)</code></h4>
+<div class='docblock'><p>Regularly redraws everything, even when no input is given. Between 0 and 1000.</p>
+
+<p>Call with fps=0 to disable (default value).</p>
+</div><h4 id='method.screen_mut' class='method'><code>fn <a href='#method.screen_mut' class='fnname'>screen_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../cursive/view/struct.StackView.html' title='cursive::view::StackView'>StackView</a></code></h4>
+<div class='docblock'><p>Returns a mutable reference to the currently active screen.</p>
+</div><h4 id='method.add_screen' class='method'><code>fn <a href='#method.add_screen' class='fnname'>add_screen</a>(&amp;mut self) -&gt; <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a></code></h4>
+<div class='docblock'><p>Adds a new screen, and returns its ID.</p>
+</div><h4 id='method.add_active_screen' class='method'><code>fn <a href='#method.add_active_screen' class='fnname'>add_active_screen</a>(&amp;mut self) -&gt; <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a></code></h4>
+<div class='docblock'><p>Convenient method to create a new screen, and set it as active.</p>
+</div><h4 id='method.set_screen' class='method'><code>fn <a href='#method.set_screen' class='fnname'>set_screen</a>(&amp;mut self, screen_id: <a class='type' href='../cursive/type.ScreenId.html' title='cursive::ScreenId'>ScreenId</a>)</code></h4>
+<div class='docblock'><p>Sets the active screen. Panics if no such screen exist.</p>
+</div><h4 id='method.find' class='method'><code>fn <a href='#method.find' class='fnname'>find</a>&lt;V:&nbsp;<a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;(&amp;mut self, selector: &amp;<a class='enum' href='../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut V&gt;</code></h4>
+<div class='docblock'><p>Tries to find the view pointed to by the given path.
+If the view is not found, or if it is not of the asked type,
+it returns None.</p>
+</div><h4 id='method.find_id' class='method'><code>fn <a href='#method.find_id' class='fnname'>find_id</a>&lt;V:&nbsp;<a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;(&amp;mut self, id: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut V&gt;</code></h4>
+<div class='docblock'><p>Convenient method to use <code>find</code> with a <code>Selector::Id</code>.</p>
+</div><h4 id='method.add_global_callback' class='method'><code>fn <a href='#method.add_global_callback' class='fnname'>add_global_callback</a>&lt;F,&nbsp;E:&nbsp;<a class='trait' href='../cursive/event/trait.ToEvent.html' title='cursive::event::ToEvent'>ToEvent</a>&gt;(&amp;mut self, event: E, cb: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + 'static</span></code></h4>
+<div class='docblock'><p>Adds a global callback, triggered on the given key press when no view catches it.</p>
+</div><h4 id='method.add_layer' class='method'><code>fn <a href='#method.add_layer' class='fnname'>add_layer</a>&lt;T:&nbsp;'static + <a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt;(&amp;mut self, view: T)</code></h4>
+<div class='docblock'><p>Convenient method to add a layer to the current screen.</p>
+</div><h4 id='method.pop_layer' class='method'><code>fn <a href='#method.pop_layer' class='fnname'>pop_layer</a>(&amp;mut self)</code></h4>
+<div class='docblock'><p>Convenient method to remove a layer from the current screen.</p>
+</div><h4 id='method.screen_size' class='method'><code>fn <a href='#method.screen_size' class='fnname'>screen_size</a>(&amp;self) -&gt; <a class='struct' href='../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
+<div class='docblock'><p>Returns the size of the screen, in characters.</p>
+</div><h4 id='method.run' class='method'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self)</code></h4>
+<div class='docblock'><p>Runs the event loop.
+It will wait for user input (key presses) and trigger callbacks accordingly.
+Blocks until quit() is called.</p>
+</div><h4 id='method.quit' class='method'><code>fn <a href='#method.quit' class='fnname'>quit</a>(&amp;mut self)</code></h4>
+<div class='docblock'><p>Stops the event loop.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1827' class='srclink' href='../src/cursive/src/lib.rs.html#276-280' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+<div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "cursive";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
