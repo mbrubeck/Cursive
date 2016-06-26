@@ -218,6 +218,8 @@
 <span id="174">174</span>
 <span id="175">175</span>
 <span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>ncurses</span>::{<span class='self'>self</span>, <span class='ident'>chtype</span>};
 
@@ -253,7 +255,7 @@
             <span class='ident'>cursor</span>: <span class='number'>0</span>,
             <span class='ident'>offset</span>: <span class='number'>0</span>,
             <span class='ident'>min_length</span>: <span class='number'>1</span>,
-            <span class='ident'>last_length</span>: <span class='number'>0</span>, <span class='comment'>/* scrollable: false, */</span>
+            <span class='ident'>last_length</span>: <span class='number'>0</span>, <span class='comment'>// scrollable: false,</span>
         }
     }
 
@@ -359,20 +361,22 @@
                 <span class='comment'>// TODO: handle wide (CJK) chars</span>
                 <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>+=</span> <span class='number'>1</span>;
             }
-            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>key</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>key</span> {
-                <span class='ident'>Key</span>::<span class='ident'>Home</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='number'>0</span>,
-                <span class='ident'>Key</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>chars</span>().<span class='ident'>count</span>(),
-                <span class='ident'>Key</span>::<span class='ident'>Left</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-=</span> <span class='number'>1</span>,
-                <span class='ident'>Key</span>::<span class='ident'>Right</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>chars</span>().<span class='ident'>count</span>() <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>+=</span> <span class='number'>1</span>,
-                <span class='ident'>Key</span>::<span class='ident'>Backspace</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
-                    <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-=</span> <span class='number'>1</span>;
-                    <span class='ident'>remove_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>content</span>, <span class='self'>self</span>.<span class='ident'>cursor</span>);
+            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>key</span>) <span class='op'>=&gt;</span> {
+                <span class='kw'>match</span> <span class='ident'>key</span> {
+                    <span class='ident'>Key</span>::<span class='ident'>Home</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='number'>0</span>,
+                    <span class='ident'>Key</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>chars</span>().<span class='ident'>count</span>(),
+                    <span class='ident'>Key</span>::<span class='ident'>Left</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-=</span> <span class='number'>1</span>,
+                    <span class='ident'>Key</span>::<span class='ident'>Right</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>chars</span>().<span class='ident'>count</span>() <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>+=</span> <span class='number'>1</span>,
+                    <span class='ident'>Key</span>::<span class='ident'>Backspace</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
+                        <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-=</span> <span class='number'>1</span>;
+                        <span class='ident'>remove_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>content</span>, <span class='self'>self</span>.<span class='ident'>cursor</span>);
+                    }
+                    <span class='ident'>Key</span>::<span class='ident'>Del</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>chars</span>().<span class='ident'>count</span>() <span class='op'>=&gt;</span> {
+                        <span class='ident'>remove_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>content</span>, <span class='self'>self</span>.<span class='ident'>cursor</span>);
+                    }
+                    _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
                 }
-                <span class='ident'>Key</span>::<span class='ident'>Del</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>chars</span>().<span class='ident'>count</span>() <span class='op'>=&gt;</span> {
-                    <span class='ident'>remove_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>content</span>, <span class='self'>self</span>.<span class='ident'>cursor</span>);
-                }
-                _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
-            },
+            }
         }
 
         <span class='comment'>// Keep cursor in [offset, offset+last_length] by changing offset</span>

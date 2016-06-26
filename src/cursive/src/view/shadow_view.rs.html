@@ -93,7 +93,6 @@
 <span id="49">49</span>
 <span id="50">50</span>
 <span id="51">51</span>
-<span id="52">52</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>ncurses</span>::<span class='ident'>chtype</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>, <span class='ident'>SizeRequest</span>};
@@ -108,15 +107,14 @@
     <span class='ident'>view</span>: <span class='ident'>T</span>,
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ShadowView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ShadowView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Wraps the given view.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>ShadowView</span> { <span class='ident'>view</span>: <span class='ident'>view</span> }
     }
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>ShadowView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>ShadowView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='macro'>wrap_impl</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>view</span>);
 
     <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>SizeRequest</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {

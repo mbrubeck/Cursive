@@ -319,6 +319,13 @@
 <span id="275">275</span>
 <span id="276">276</span>
 <span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
@@ -419,7 +426,6 @@
 
         <span class='self'>self</span>
     }
-
 }
 
 <span class='kw'>impl</span> <span class='ident'>View</span> <span class='kw'>for</span> <span class='ident'>Dialog</span> {
@@ -529,54 +535,62 @@
     <span class='kw'>fn</span> <span class='ident'>on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>focus</span> {
             <span class='comment'>// If we are on the content, we can only go down.</span>
-            <span class='ident'>Focus</span>::<span class='ident'>Content</span> <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
-                <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>buttons</span>.<span class='ident'>is_empty</span>() <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>event</span> {
-                    <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Down</span>) <span class='op'>=&gt;</span> {
-                        <span class='comment'>// Default to leftmost button when going down.</span>
-                        <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='number'>0</span>);
-                        <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+            <span class='ident'>Focus</span>::<span class='ident'>Content</span> <span class='op'>=&gt;</span> {
+                <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
+                    <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>buttons</span>.<span class='ident'>is_empty</span>() <span class='op'>=&gt;</span> {
+                        <span class='kw'>match</span> <span class='ident'>event</span> {
+                            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Down</span>) <span class='op'>=&gt;</span> {
+                                <span class='comment'>// Default to leftmost button when going down.</span>
+                                <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='number'>0</span>);
+                                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+                            }
+                            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Tab</span>) <span class='op'>|</span> <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>ShiftTab</span>) <span class='op'>=&gt;</span> {
+                                <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='number'>0</span>);
+                                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+                            }
+                            _ <span class='op'>=&gt;</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
+                        }
                     }
-                    <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Tab</span>) <span class='op'>|</span> <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>ShiftTab</span>) <span class='op'>=&gt;</span> {
-                        <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='number'>0</span>);
-                        <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
-                    }
-                    _ <span class='op'>=&gt;</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
-                },
-                <span class='ident'>res</span> <span class='op'>=&gt;</span> <span class='ident'>res</span>,
-            },
+                    <span class='ident'>res</span> <span class='op'>=&gt;</span> <span class='ident'>res</span>,
+                }
+            }
             <span class='comment'>// If we are on a button, we have more choice</span>
-            <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='ident'>i</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>buttons</span>[<span class='ident'>i</span>].<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
-                <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>event</span> {
-                    <span class='comment'>// Up goes back to the content</span>
-                    <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Up</span>) <span class='op'>=&gt;</span> {
-                        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>take_focus</span>() {
-                            <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Content</span>;
-                            <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
-                        } <span class='kw'>else</span> {
-                            <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>
+            <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='ident'>i</span>) <span class='op'>=&gt;</span> {
+                <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>buttons</span>[<span class='ident'>i</span>].<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
+                    <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='op'>=&gt;</span> {
+                        <span class='kw'>match</span> <span class='ident'>event</span> {
+                            <span class='comment'>// Up goes back to the content</span>
+                            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Up</span>) <span class='op'>=&gt;</span> {
+                                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>take_focus</span>() {
+                                    <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Content</span>;
+                                    <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+                                } <span class='kw'>else</span> {
+                                    <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>
+                                }
+                            }
+                            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Tab</span>) <span class='op'>|</span> <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>ShiftTab</span>) <span class='op'>=&gt;</span> {
+                                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>take_focus</span>() {
+                                    <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Content</span>;
+                                    <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+                                } <span class='kw'>else</span> {
+                                    <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>
+                                }
+                            }
+                            <span class='comment'>// Left and Right move to other buttons</span>
+                            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>) <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>buttons</span>.<span class='ident'>len</span>() <span class='op'>=&gt;</span> {
+                                <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>);
+                                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+                            }
+                            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>) <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
+                                <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='ident'>i</span> <span class='op'>-</span> <span class='number'>1</span>);
+                                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
+                            }
+                            _ <span class='op'>=&gt;</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
                         }
                     }
-                    <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Tab</span>) <span class='op'>|</span> <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>ShiftTab</span>) <span class='op'>=&gt;</span> {
-                        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>take_focus</span>() {
-                            <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Content</span>;
-                            <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
-                        } <span class='kw'>else</span> {
-                            <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>
-                        }
-                    }
-                    <span class='comment'>// Left and Right move to other buttons</span>
-                    <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Right</span>) <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>buttons</span>.<span class='ident'>len</span>() <span class='op'>=&gt;</span> {
-                        <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>);
-                        <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
-                    }
-                    <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>Left</span>) <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>=&gt;</span> {
-                        <span class='self'>self</span>.<span class='ident'>focus</span> <span class='op'>=</span> <span class='ident'>Focus</span>::<span class='ident'>Button</span>(<span class='ident'>i</span> <span class='op'>-</span> <span class='number'>1</span>);
-                        <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
-                    }
-                    _ <span class='op'>=&gt;</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
-                },
-                <span class='ident'>res</span> <span class='op'>=&gt;</span> <span class='ident'>res</span>,
-            },
+                    <span class='ident'>res</span> <span class='op'>=&gt;</span> <span class='ident'>res</span>,
+                }
+            }
         }
     }
 

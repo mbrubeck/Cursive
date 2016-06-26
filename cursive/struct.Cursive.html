@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1740' class='srclink' href='../src/cursive/src/lib.rs.html#59-69' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1787' class='srclink' href='../src/cursive/src/lib.rs.html#59-69' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Cursive {
     // some fields omitted
 }</pre><div class='docblock'><p>Central part of the cursive library.</p>
@@ -57,7 +57,7 @@ To use it, you should populate it with views, layouts and callbacks,
 then start the event loop with run().</p>
 
 <p>It uses a list of screen, with one screen active at a time.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1746' class='srclink' href='../src/cursive/src/lib.rs.html#71-274' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1793' class='srclink' href='../src/cursive/src/lib.rs.html#71-274' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
 <div class='docblock'><p>Creates a new Cursive root, and initialize ncurses.</p>
 </div><h4 id='method.current_theme' class='method'><code>fn <a href='#method.current_theme' class='fnname'>current_theme</a>(&amp;self) -&gt; &amp;<a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a></code></h4>
@@ -98,7 +98,7 @@ It will wait for user input (key presses) and trigger callbacks accordingly.
 Blocks until quit() is called.</p>
 </div><h4 id='method.quit' class='method'><code>fn <a href='#method.quit' class='fnname'>quit</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Stops the event loop.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1827' class='srclink' href='../src/cursive/src/lib.rs.html#276-280' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1874' class='srclink' href='../src/cursive/src/lib.rs.html#276-280' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop">Read more</a></p>
 </div></div></section>

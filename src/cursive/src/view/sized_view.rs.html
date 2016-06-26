@@ -95,7 +95,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>SizedView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>SizedView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='macro'>wrap_impl</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>view</span>);
 
     <span class='kw'>fn</span> <span class='ident'>wrap_layout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Vec2</span>) {

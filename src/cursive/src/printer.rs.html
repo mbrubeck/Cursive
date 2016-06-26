@@ -194,6 +194,9 @@
 <span id="150">150</span>
 <span id="151">151</span>
 <span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Makes drawing on ncurses windows easier.</span>
 
@@ -259,7 +262,10 @@
         <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='ident'>len</span>, <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>p</span>.<span class='ident'>y</span>);
 
         <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>p</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>offset</span>;
-        <span class='ident'>ncurses</span>::<span class='ident'>mvvline</span>(<span class='ident'>p</span>.<span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>p</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>c</span>, <span class='ident'>len</span> <span class='kw'>as</span> <span class='ident'>i32</span>);
+        <span class='kw'>for</span> <span class='ident'>y</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>len</span> {
+            <span class='ident'>ncurses</span>::<span class='ident'>mvaddstr</span>((<span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>+</span> <span class='ident'>y</span>) <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>p</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='string'>&quot;│&quot;</span>);
+            <span class='comment'>// ncurses::mvaddstr(p.y as i32, p.x as i32, &quot;┌&quot;);</span>
+        }
     }
 
     <span class='doccomment'>/// Prints a horizontal line using the given character.</span>

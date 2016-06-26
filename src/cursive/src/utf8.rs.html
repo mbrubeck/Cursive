@@ -107,7 +107,7 @@
 
     <span class='comment'>// Number of leading 1s determines the number of bytes we&#39;ll have to read</span>
     <span class='kw'>let</span> <span class='ident'>n_bytes</span> <span class='op'>=</span> <span class='kw'>match</span> (<span class='op'>!</span><span class='ident'>first</span>).<span class='ident'>leading_zeros</span>() {
-        <span class='ident'>n</span> @ <span class='number'>2</span> ... <span class='number'>6</span> <span class='op'>=&gt;</span> <span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>usize</span>,
+        <span class='ident'>n</span> @ <span class='number'>2</span>...<span class='number'>6</span> <span class='op'>=&gt;</span> <span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>usize</span>,
         <span class='number'>1</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;First byte is continuation byte.&quot;</span>.<span class='ident'>to_string</span>()),
         <span class='number'>7</span>...<span class='number'>8</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;WTF is this byte??&quot;</span>.<span class='ident'>to_string</span>()),
         _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(),
