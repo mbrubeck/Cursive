@@ -175,7 +175,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
 
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>SizeRequest</span>, <span class='ident'>Selector</span>};
+<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Selector</span>, <span class='ident'>View</span>};
 <span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
 
@@ -195,8 +195,8 @@
     }
 
     <span class='doccomment'>/// Wraps the get_min_size method.</span>
-    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>SizeRequest</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='self'>self</span>.<span class='ident'>get_view</span>().<span class='ident'>get_min_size</span>(<span class='ident'>req</span>)
+    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+        <span class='self'>self</span>.<span class='ident'>get_view_mut</span>().<span class='ident'>get_min_size</span>(<span class='ident'>req</span>)
     }
 
     <span class='doccomment'>/// Wraps the on_event method.</span>
@@ -224,7 +224,7 @@
         <span class='self'>self</span>.<span class='ident'>wrap_draw</span>(<span class='ident'>printer</span>);
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>SizeRequest</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
         <span class='self'>self</span>.<span class='ident'>wrap_get_min_size</span>(<span class='ident'>req</span>)
     }
 

@@ -47,18 +47,18 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-608' class='srclink' href='../../src/cursive/src/view/key_event_view.rs.html#11-14' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-794' class='srclink' href='../../src/cursive/src/view/key_event_view.rs.html#11-14' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct KeyEventView {
     // some fields omitted
 }</pre><div class='docblock'><p>A simple wrapper view that catches some ignored event from its child.</p>
 
 <p>Events ignored by its child without a callback will stay ignored.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.KeyEventView.html' title='cursive::view::KeyEventView'>KeyEventView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-611' class='srclink' href='../../src/cursive/src/view/key_event_view.rs.html#16-33' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.KeyEventView.html' title='cursive::view::KeyEventView'>KeyEventView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-797' class='srclink' href='../../src/cursive/src/view/key_event_view.rs.html#16-33' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;V:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + 'static&gt;(view: V) -&gt; Self</code></h4>
 <div class='docblock'><p>Wraps the given view in a new KeyEventView.</p>
 </div><h4 id='method.register' class='method'><code>fn <a href='#method.register' class='fnname'>register</a>&lt;F,&nbsp;E:&nbsp;<a class='trait' href='../../cursive/event/trait.ToEvent.html' title='cursive::event::ToEvent'>ToEvent</a>&gt;(self, event: E, cb: F) -&gt; Self <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + 'static</span></code></h4>
 <div class='docblock'><p>Registers a callback when the given key is ignored by the child.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a> for <a class='struct' href='../../cursive/view/struct.KeyEventView.html' title='cursive::view::KeyEventView'>KeyEventView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-621' class='srclink' href='../../src/cursive/src/view/key_event_view.rs.html#35-49' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a> for <a class='struct' href='../../cursive/view/struct.KeyEventView.html' title='cursive::view::KeyEventView'>KeyEventView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-807' class='srclink' href='../../src/cursive/src/view/key_event_view.rs.html#35-49' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.get_view' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a></code></h4>
 <div class='docblock'><p>Get an immutable reference to the wrapped view, so that we can forward some calls to it.</p>
 </div><h4 id='method.get_view_mut' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a></code></h4>
@@ -67,7 +67,7 @@
 <div class='docblock'><p>Wraps the on_event method.</p>
 </div><h4 id='method.wrap_draw' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_draw' class='fnname'>wrap_draw</a>(&amp;mut self, printer: &amp;<a class='struct' href='../../cursive/printer/struct.Printer.html' title='cursive::printer::Printer'>Printer</a>)</code></h4>
 <div class='docblock'><p>Wraps the draw method.</p>
-</div><h4 id='method.wrap_get_min_size' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;self, req: <a class='struct' href='../../cursive/view/struct.SizeRequest.html' title='cursive::view::SizeRequest'>SizeRequest</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
+</div><h4 id='method.wrap_get_min_size' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_get_min_size' class='fnname'>wrap_get_min_size</a>(&amp;mut self, req: <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
 <div class='docblock'><p>Wraps the get_min_size method.</p>
 </div><h4 id='method.wrap_layout' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#method.wrap_layout' class='fnname'>wrap_layout</a>(&amp;mut self, size: <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></h4>
 <div class='docblock'><p>Wraps the layout method</p>

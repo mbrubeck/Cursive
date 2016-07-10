@@ -64,19 +64,8 @@
 <span id="20">20</span>
 <span id="21">21</span>
 <span id="22">22</span>
-<span id="23">23</span>
-<span id="24">24</span>
-<span id="25">25</span>
-<span id="26">26</span>
-<span id="27">27</span>
-<span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>, <span class='ident'>SizeRequest</span>, <span class='ident'>DimensionRequest</span>};
+<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='doccomment'>/// Simple wrapper view that asks for all the space it can get.</span>
@@ -94,19 +83,8 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>FullView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='macro'>wrap_impl</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>view</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>SizeRequest</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>req</span>.<span class='ident'>w</span> {
-            <span class='ident'>DimensionRequest</span>::<span class='ident'>Fixed</span>(<span class='ident'>w</span>) <span class='op'>=&gt;</span> <span class='ident'>w</span>,
-            <span class='ident'>DimensionRequest</span>::<span class='ident'>AtMost</span>(<span class='ident'>w</span>) <span class='op'>=&gt;</span> <span class='ident'>w</span>,
-            <span class='ident'>DimensionRequest</span>::<span class='ident'>Unknown</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>req</span>).<span class='ident'>x</span>,
-        };
-        <span class='kw'>let</span> <span class='ident'>h</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>req</span>.<span class='ident'>h</span> {
-            <span class='ident'>DimensionRequest</span>::<span class='ident'>Fixed</span>(<span class='ident'>h</span>) <span class='op'>=&gt;</span> <span class='ident'>h</span>,
-            <span class='ident'>DimensionRequest</span>::<span class='ident'>AtMost</span>(<span class='ident'>h</span>) <span class='op'>=&gt;</span> <span class='ident'>h</span>,
-            <span class='ident'>DimensionRequest</span>::<span class='ident'>Unknown</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>req</span>).<span class='ident'>y</span>,
-        };
-
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='ident'>w</span>, <span class='ident'>h</span>)
+    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+        <span class='ident'>req</span>
     }
 }
 </pre>

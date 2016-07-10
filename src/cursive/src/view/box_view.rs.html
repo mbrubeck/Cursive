@@ -92,18 +92,24 @@
 <span id="48">48</span>
 <span id="49">49</span>
 <span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>vec</span>::{<span class='ident'>Vec2</span>, <span class='ident'>ToVec2</span>};
-<span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>, <span class='ident'>SizeRequest</span>, <span class='ident'>DimensionRequest</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
 
-<span class='doccomment'>/// BoxView is a wrapper around an other view, with a given minimum size.</span>
+<span class='kw'>use</span> <span class='ident'>vec</span>::{<span class='ident'>ToVec2</span>, <span class='ident'>Vec2</span>};
+<span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
+
+<span class='doccomment'>/// `BoxView` is a wrapper around an other view, with a given minimum size.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> {
     <span class='ident'>size</span>: <span class='ident'>Vec2</span>,
     <span class='ident'>view</span>: <span class='ident'>T</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new BoxView with the given minimum size and content</span>
+    <span class='doccomment'>/// Creates a new `BoxView` with the given minimum size and content</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>///</span>
@@ -123,16 +129,18 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>BoxView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='macro'>wrap_impl</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>view</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>req</span>: <span class='ident'>SizeRequest</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+    <span class='kw'>fn</span> <span class='ident'>wrap_get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-            <span class='ident'>req</span>.<span class='ident'>w</span> <span class='op'>=</span> <span class='ident'>DimensionRequest</span>::<span class='ident'>AtMost</span>(<span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span>);
+            <span class='ident'>req</span>.<span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span>, <span class='ident'>req</span>.<span class='ident'>x</span>);
         }
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-            <span class='ident'>req</span>.<span class='ident'>h</span> <span class='op'>=</span> <span class='ident'>DimensionRequest</span>::<span class='ident'>AtMost</span>(<span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span>);
+            <span class='ident'>req</span>.<span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='ident'>req</span>.<span class='ident'>y</span>);
         }
 
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>req</span>);
 
+        <span class='comment'>// Did he think he got to decide?</span>
+        <span class='comment'>// Of course we have the last word here.</span>
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
             <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span>;
         }

@@ -47,20 +47,20 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1606' class='srclink' href='../../src/cursive/src/theme.rs.html#222-227' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1866' class='srclink' href='../../src/cursive/src/theme.rs.html#257-262' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Error {
-    IoError(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>),
-    ParseError,
+    Io(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>),
+    Parse,
 }</pre><div class='docblock'><p>Possible error returned when loading a theme.</p>
 </div><h2 class='variants'>Variants</h2>
-<span id='variant.IoError' class='variant'><code>IoError(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>)</code></span><div class='docblock'><p>An error occured when reading the file.</p>
-</div><span id='variant.ParseError' class='variant'><code>ParseError</code></span><div class='docblock'><p>An error occured when parsing the toml content.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt; for <a class='enum' href='../../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1617' class='srclink' href='../../src/cursive/src/theme.rs.html#229-233' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>) -&gt; Self</code></h4>
-<div class='docblock'><p>Performs the conversion.</p>
-</div></div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1610' class='srclink' href='../../src/cursive/src/theme.rs.html#221' title='goto source code'>[src]</a></span></h3>
+<span id='variant.Io' class='variant'><code>Io(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>)</code></span><div class='docblock'><p>An error occured when reading the file.</p>
+</div><span id='variant.Parse' class='variant'><code>Parse</code></span><div class='docblock'><p>An error occured when parsing the toml content.</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1859' class='srclink' href='../../src/cursive/src/theme.rs.html#256' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt; for <a class='enum' href='../../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1870' class='srclink' href='../../src/cursive/src/theme.rs.html#264-268' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>) -&gt; Self</code></h4>
+<div class='docblock'><p>Performs the conversion.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 

@@ -47,11 +47,11 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1063' class='srclink' href='../../src/cursive/src/view/text_view.rs.html#12-19' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1249' class='srclink' href='../../src/cursive/src/view/text_view.rs.html#12-22' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TextView {
     // some fields omitted
 }</pre><div class='docblock'><p>A simple view showing a fixed text</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.TextView.html' title='cursive::view::TextView'>TextView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1081' class='srclink' href='../../src/cursive/src/view/text_view.rs.html#54-127' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../cursive/view/struct.TextView.html' title='cursive::view::TextView'>TextView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1262' class='srclink' href='../../src/cursive/src/view/text_view.rs.html#40-127' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(content: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; Self</code></h4>
 <div class='docblock'><p>Creates a new TextView with the given content.</p>
 </div><h4 id='method.h_align' class='method'><code>fn <a href='#method.h_align' class='fnname'>h_align</a>(self, h: <a class='enum' href='../../cursive/align/enum.HAlign.html' title='cursive::align::HAlign'>HAlign</a>) -&gt; Self</code></h4>
@@ -64,13 +64,13 @@
 <div class='docblock'><p>Replace the text in this view.</p>
 </div><h4 id='method.get_content' class='method'><code>fn <a href='#method.get_content' class='fnname'>get_content</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
 <div class='docblock'><p>Returns the current text in this view.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> for <a class='struct' href='../../cursive/view/struct.TextView.html' title='cursive::view::TextView'>TextView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1141' class='srclink' href='../../src/cursive/src/view/text_view.rs.html#208-286' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> for <a class='struct' href='../../cursive/view/struct.TextView.html' title='cursive::view::TextView'>TextView</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1318' class='srclink' href='../../src/cursive/src/view/text_view.rs.html#195-251' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.draw' class='method'><code>fn <a href='../../cursive/view/trait.View.html#tymethod.draw' class='fnname'>draw</a>(&amp;mut self, printer: &amp;<a class='struct' href='../../cursive/printer/struct.Printer.html' title='cursive::printer::Printer'>Printer</a>)</code></h4>
 <div class='docblock'><p>Draws the view with the given printer (includes bounds) and focus.</p>
 </div><h4 id='method.on_event' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.on_event' class='fnname'>on_event</a>(&amp;mut self, event: <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></h4>
 <div class='docblock'><p>Called when a key was pressed. Default implementation just ignores it.</p>
-</div><h4 id='method.get_min_size' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.get_min_size' class='fnname'>get_min_size</a>(&amp;self, size: <a class='struct' href='../../cursive/view/struct.SizeRequest.html' title='cursive::view::SizeRequest'>SizeRequest</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
-<div class='docblock'><p>Returns the minimum size the view requires under the given restrictions.</p>
+</div><h4 id='method.get_min_size' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, size: <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
+<div class='docblock'><p>Returns the minimum size the view requires with the given restrictions.</p>
 </div><h4 id='method.take_focus' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.take_focus' class='fnname'>take_focus</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>This view is offered focus. Will it take it?</p>
 </div><h4 id='method.layout' class='method'><code>fn <a href='../../cursive/view/trait.View.html#method.layout' class='fnname'>layout</a>(&amp;mut self, size: <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></h4>

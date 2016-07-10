@@ -322,6 +322,73 @@
 <span id="278">278</span>
 <span id="279">279</span>
 <span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Cursive</span>
 <span class='doccomment'>//!</span>
@@ -347,6 +414,17 @@
 <span class='doccomment'>//! ```</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncurses</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>toml</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_segmentation</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_width</span>;
+
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>println_stderr</span>(
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>arg</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { {
+        <span class='kw'>use</span> ::<span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Write</span>;
+        <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> ::<span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>stderr</span>(), $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>arg</span>)<span class='op'>*</span>);
+        <span class='ident'>r</span>.<span class='ident'>expect</span>(<span class='string'>&quot;failed printing to stderr&quot;</span>);
+    } }
+);
+
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>event</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>view</span>;
@@ -355,9 +433,17 @@
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>theme</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>align</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>orientation</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>menu</span>;
+
+<span class='comment'>// This probably doesn&#39;t need to be public?</span>
+<span class='kw'>mod</span> <span class='ident'>menubar</span>;
 
 <span class='kw'>mod</span> <span class='ident'>div</span>;
 <span class='kw'>mod</span> <span class='ident'>utf8</span>;
+
+<span class='kw'>mod</span> <span class='ident'>backend</span>;
+
+<span class='kw'>use</span> <span class='ident'>backend</span>::{<span class='ident'>Backend</span>, <span class='ident'>NcursesBackend</span>};
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
@@ -367,9 +453,9 @@
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>StackView</span>, <span class='ident'>Selector</span>};
+<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Selector</span>, <span class='ident'>StackView</span>};
 
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>ToEvent</span>, <span class='ident'>Key</span>, <span class='ident'>EventResult</span>, <span class='ident'>Callback</span>};
+<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>ToEvent</span>};
 
 <span class='doccomment'>/// Identifies a screen in the cursive ROOT.</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>ScreenId</span> <span class='op'>=</span> <span class='ident'>usize</span>;
@@ -382,46 +468,65 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// It uses a list of screen, with one screen active at a time.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Cursive</span> {
+    <span class='ident'>theme</span>: <span class='ident'>theme</span>::<span class='ident'>Theme</span>,
     <span class='ident'>screens</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>StackView</span><span class='op'>&gt;</span>,
+    <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Event</span>, <span class='ident'>Callback</span><span class='op'>&gt;</span>,
+    <span class='ident'>menubar</span>: <span class='ident'>menubar</span>::<span class='ident'>Menubar</span>,
 
     <span class='ident'>active_screen</span>: <span class='ident'>ScreenId</span>,
 
     <span class='ident'>running</span>: <span class='ident'>bool</span>,
-
-    <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Event</span>, <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>Callback</span><span class='op'>&gt;&gt;</span>,
-
-    <span class='ident'>theme</span>: <span class='ident'>theme</span>::<span class='ident'>Theme</span>,
 }
+
+<span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Cursive</span> {
+    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='self'>Self</span>::<span class='ident'>new</span>()
+    }
+}
+
+<span class='comment'>// Use the Ncurses backend.</span>
+<span class='comment'>// TODO: make this feature-driven</span>
+<span class='kw'>type</span> <span class='ident'>B</span> <span class='op'>=</span> <span class='ident'>NcursesBackend</span>;
 
 <span class='kw'>impl</span> <span class='ident'>Cursive</span> {
     <span class='doccomment'>/// Creates a new Cursive root, and initialize ncurses.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='comment'>// Default delay is way too long. 25 is imperceptible yet works fine.</span>
-        <span class='ident'>std</span>::<span class='ident'>env</span>::<span class='ident'>set_var</span>(<span class='string'>&quot;ESCDELAY&quot;</span>, <span class='string'>&quot;25&quot;</span>);
-        <span class='ident'>ncurses</span>::<span class='ident'>setlocale</span>(<span class='ident'>ncurses</span>::<span class='ident'>LcCategory</span>::<span class='ident'>all</span>, <span class='string'>&quot;&quot;</span>);
-        <span class='ident'>ncurses</span>::<span class='ident'>initscr</span>();
-        <span class='ident'>ncurses</span>::<span class='ident'>keypad</span>(<span class='ident'>ncurses</span>::<span class='ident'>stdscr</span>, <span class='bool-val'>true</span>);
-        <span class='ident'>ncurses</span>::<span class='ident'>noecho</span>();
-        <span class='ident'>ncurses</span>::<span class='ident'>cbreak</span>();
-        <span class='ident'>ncurses</span>::<span class='ident'>start_color</span>();
-        <span class='ident'>ncurses</span>::<span class='ident'>curs_set</span>(<span class='ident'>ncurses</span>::<span class='ident'>CURSOR_VISIBILITY</span>::<span class='ident'>CURSOR_INVISIBLE</span>);
+        <span class='ident'>B</span>::<span class='ident'>init</span>();
+
         <span class='kw'>let</span> <span class='ident'>theme</span> <span class='op'>=</span> <span class='ident'>theme</span>::<span class='ident'>load_default</span>();
         <span class='comment'>// let theme = theme::load_theme(&quot;assets/style.toml&quot;).unwrap();</span>
 
-        <span class='ident'>ncurses</span>::<span class='ident'>wbkgd</span>(<span class='ident'>ncurses</span>::<span class='ident'>stdscr</span>,
-                       <span class='ident'>ncurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>theme</span>::<span class='ident'>ColorPair</span>::<span class='ident'>Background</span>.<span class='ident'>ncurses_id</span>()));
-
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>Cursive</span> {
+            <span class='ident'>theme</span>: <span class='ident'>theme</span>,
             <span class='ident'>screens</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+            <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
+            <span class='ident'>menubar</span>: <span class='ident'>menubar</span>::<span class='ident'>Menubar</span>::<span class='ident'>new</span>(),
             <span class='ident'>active_screen</span>: <span class='number'>0</span>,
             <span class='ident'>running</span>: <span class='bool-val'>true</span>,
-            <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-            <span class='ident'>theme</span>: <span class='ident'>theme</span>,
         };
 
         <span class='ident'>res</span>.<span class='ident'>screens</span>.<span class='ident'>push</span>(<span class='ident'>StackView</span>::<span class='ident'>new</span>());
 
         <span class='ident'>res</span>
+    }
+
+    <span class='doccomment'>/// Selects the menubar</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>select_menubar</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>take_focus</span>();
+    }
+
+    <span class='doccomment'>/// Sets the menubar autohide_menubar feature.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// * When enabled, the menu is only visible when selected.</span>
+    <span class='doccomment'>/// * When disabled, the menu is always visible and reserves the top row.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_autohide_menu</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>autohide</span>: <span class='ident'>bool</span>) {
+        <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>autohide</span> <span class='op'>=</span> <span class='ident'>autohide</span>;
+    }
+
+    <span class='doccomment'>/// Retrieve the menu tree used by the menubar.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>menubar</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>menubar</span>::<span class='ident'>Menubar</span> {
+        <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>menubar</span>
     }
 
     <span class='doccomment'>/// Returns the currently used theme</span>
@@ -440,15 +545,13 @@
         <span class='bool-val'>true</span>
     }
 
-    <span class='doccomment'>/// Regularly redraws everything, even when no input is given. Between 0 and 1000.</span>
+    <span class='doccomment'>/// Sets the refresh rate, in frames per second.</span>
     <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Regularly redraws everything, even when no input is given.</span>
+    <span class='doccomment'>/// Between 0 and 1000.</span>
     <span class='doccomment'>/// Call with fps=0 to disable (default value).</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_fps</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fps</span>: <span class='ident'>u32</span>) {
-        <span class='kw'>if</span> <span class='ident'>fps</span> <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='ident'>ncurses</span>::<span class='ident'>timeout</span>(<span class='op'>-</span><span class='number'>1</span>);
-        } <span class='kw'>else</span> {
-            <span class='ident'>ncurses</span>::<span class='ident'>timeout</span>(<span class='number'>1000</span> <span class='op'>/</span> <span class='ident'>fps</span> <span class='kw'>as</span> <span class='ident'>i32</span>);
-        }
+        <span class='ident'>B</span>::<span class='ident'>set_refresh_rate</span>(<span class='ident'>fps</span>)
     }
 
     <span class='doccomment'>/// Returns a mutable reference to the currently active screen.</span>
@@ -474,7 +577,8 @@
     <span class='doccomment'>/// Sets the active screen. Panics if no such screen exist.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_screen</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>screen_id</span>: <span class='ident'>ScreenId</span>) {
         <span class='kw'>if</span> <span class='ident'>screen_id</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>screens</span>.<span class='ident'>len</span>() {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Tried to set an invalid screen ID: {}, but only {} screens present.&quot;</span>,
+            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Tried to set an invalid screen ID: {}, but only {} \
+                    screens present.&quot;</span>,
                    <span class='ident'>screen_id</span>,
                    <span class='self'>self</span>.<span class='ident'>screens</span>.<span class='ident'>len</span>());
         }
@@ -489,8 +593,8 @@
     <span class='doccomment'>/// Tries to find the view pointed to by the given path.</span>
     <span class='doccomment'>/// If the view is not found, or if it is not of the asked type,</span>
     <span class='doccomment'>/// it returns None.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>find</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selector</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>find_any</span>(<span class='ident'>selector</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>find</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>sel</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span><span class='op'>&gt;</span> {
+        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>find_any</span>(<span class='ident'>sel</span>) {
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
             <span class='prelude-val'>Some</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>.<span class='ident'>downcast_mut</span>::<span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(),
         }
@@ -501,11 +605,13 @@
         <span class='self'>self</span>.<span class='ident'>find</span>(<span class='kw-2'>&amp;</span><span class='ident'>Selector</span>::<span class='ident'>Id</span>(<span class='ident'>id</span>))
     }
 
-    <span class='doccomment'>/// Adds a global callback, triggered on the given key press when no view catches it.</span>
+    <span class='doccomment'>/// Adds a global callback.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Will be triggered on the given key press when no view catches it.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_global_callback</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>E</span>: <span class='ident'>ToEvent</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>E</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>)
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
     {
-        <span class='self'>self</span>.<span class='ident'>global_callbacks</span>.<span class='ident'>insert</span>(<span class='ident'>event</span>.<span class='ident'>to_event</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>cb</span>)));
+        <span class='self'>self</span>.<span class='ident'>global_callbacks</span>.<span class='ident'>insert</span>(<span class='ident'>event</span>.<span class='ident'>to_event</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>cb</span>));
     }
 
     <span class='doccomment'>/// Convenient method to add a layer to the current screen.</span>
@@ -530,9 +636,7 @@
 
     <span class='doccomment'>/// Returns the size of the screen, in characters.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>screen_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='ident'>ncurses</span>::<span class='ident'>getmaxyx</span>(<span class='ident'>ncurses</span>::<span class='ident'>stdscr</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>y</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>x</span>);
+        <span class='kw'>let</span> (<span class='ident'>x</span>, <span class='ident'>y</span>) <span class='op'>=</span> <span class='ident'>B</span>::<span class='ident'>screen_size</span>();
 
         <span class='ident'>Vec2</span> {
             <span class='ident'>x</span>: <span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>,
@@ -546,24 +650,39 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='comment'>// TODO: don&#39;t clone the theme</span>
+        <span class='comment'>// Reference it or something</span>
         <span class='kw'>let</span> <span class='ident'>printer</span> <span class='op'>=</span> <span class='ident'>Printer</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>screen_size</span>(), <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>clone</span>());
-        <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='ident'>printer</span>);
-        <span class='ident'>ncurses</span>::<span class='ident'>refresh</span>();
-    }
 
-    <span class='kw'>fn</span> <span class='ident'>poll_event</span>() <span class='op'>-&gt;</span> <span class='ident'>Event</span> {
-        <span class='kw'>let</span> <span class='ident'>ch</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='ident'>ncurses</span>::<span class='ident'>getch</span>();
-
-        <span class='comment'>// Is it a UTF-8 starting point?</span>
-        <span class='kw'>if</span> <span class='number'>32</span> <span class='op'>&lt;=</span> <span class='ident'>ch</span> <span class='op'>&amp;&amp;</span> <span class='ident'>ch</span> <span class='op'>&lt;</span> <span class='number'>0x100</span> <span class='op'>&amp;&amp;</span> <span class='ident'>ch</span> <span class='op'>!=</span> <span class='number'>127</span> {
-            <span class='ident'>Event</span>::<span class='ident'>CharEvent</span>(<span class='ident'>utf8</span>::<span class='ident'>read_char</span>(<span class='ident'>ch</span> <span class='kw'>as</span> <span class='ident'>u8</span>, <span class='op'>||</span> <span class='ident'>ncurses</span>::<span class='ident'>getch</span>() <span class='kw'>as</span> <span class='ident'>u8</span>).<span class='ident'>unwrap</span>())
+        <span class='comment'>// Draw the currently active screen</span>
+        <span class='comment'>// If the menubar is active, nothing else can be.</span>
+        <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>autohide</span> {
+            <span class='number'>0</span>
         } <span class='kw'>else</span> {
-            <span class='ident'>Event</span>::<span class='ident'>KeyEvent</span>(<span class='ident'>Key</span>::<span class='ident'>from_ncurses</span>(<span class='ident'>ch</span>))
+            <span class='number'>1</span>
+        };
+        <span class='comment'>// Draw the menubar?</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>visible</span>() {
+            <span class='kw'>let</span> <span class='ident'>printer</span> <span class='op'>=</span> <span class='ident'>printer</span>.<span class='ident'>sub_printer</span>(<span class='ident'>Vec2</span>::<span class='ident'>zero</span>(),
+                                              <span class='ident'>printer</span>.<span class='ident'>size</span>,
+                                              <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>receive_events</span>());
+            <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='ident'>printer</span>);
         }
+
+        <span class='kw'>let</span> <span class='ident'>selected</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>receive_events</span>();
+
+        <span class='kw'>let</span> <span class='ident'>printer</span> <span class='op'>=</span>
+            <span class='ident'>printer</span>.<span class='ident'>sub_printer</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='ident'>offset</span>), <span class='ident'>printer</span>.<span class='ident'>size</span>, <span class='op'>!</span><span class='ident'>selected</span>);
+        <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='ident'>printer</span>);
+
+        <span class='ident'>B</span>::<span class='ident'>refresh</span>();
     }
 
     <span class='doccomment'>/// Runs the event loop.</span>
-    <span class='doccomment'>/// It will wait for user input (key presses) and trigger callbacks accordingly.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// It will wait for user input (key presses)</span>
+    <span class='doccomment'>/// and trigger callbacks accordingly.</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// Blocks until quit() is called.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
 
@@ -571,23 +690,38 @@
         <span class='kw'>while</span> <span class='self'>self</span>.<span class='ident'>running</span> {
             <span class='comment'>// Do we need to redraw everytime?</span>
             <span class='comment'>// Probably, actually.</span>
-            <span class='comment'>// TODO: Do we actually need to clear everytime?</span>
-            <span class='ident'>ncurses</span>::<span class='ident'>clear</span>();
             <span class='comment'>// TODO: Do we need to re-layout everytime?</span>
             <span class='self'>self</span>.<span class='ident'>layout</span>();
+
             <span class='comment'>// TODO: Do we need to redraw every view every time?</span>
             <span class='comment'>// (Is this getting repetitive? :p)</span>
             <span class='self'>self</span>.<span class='ident'>draw</span>();
 
             <span class='comment'>// Wait for next event.</span>
             <span class='comment'>// (If set_fps was called, this returns -1 now and then)</span>
-            <span class='kw'>let</span> <span class='ident'>event</span> <span class='op'>=</span> <span class='ident'>Cursive</span>::<span class='ident'>poll_event</span>();
+            <span class='kw'>let</span> <span class='ident'>event</span> <span class='op'>=</span> <span class='ident'>B</span>::<span class='ident'>poll_event</span>();
+            <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>event</span>::<span class='ident'>Key</span>::<span class='ident'>Resize</span>) {
+                <span class='ident'>B</span>::<span class='ident'>clear</span>();
+                <span class='kw'>continue</span>;
+            }
 
-            <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
-                <span class='comment'>// If the event was ignored, it is our turn to play with it.</span>
-                <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>),
-                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> (),
-                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=&gt;</span> <span class='ident'>cb</span>(<span class='self'>self</span>),
+            <span class='comment'>// Event dispatch order:</span>
+            <span class='comment'>// * Focused element:</span>
+            <span class='comment'>//     * Menubar (if active)</span>
+            <span class='comment'>//     * Current screen (top layer)</span>
+            <span class='comment'>// * Global callbacks</span>
+            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>receive_events</span>() {
+                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>cb</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
+                    <span class='ident'>cb</span>(<span class='self'>self</span>);
+                }
+            } <span class='kw'>else</span> {
+                <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
+                    <span class='comment'>// If the event was ignored,</span>
+                    <span class='comment'>// it is our turn to play with it.</span>
+                    <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>),
+                    <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> (),
+                    <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=&gt;</span> <span class='ident'>cb</span>(<span class='self'>self</span>),
+                }
             }
         }
     }
@@ -600,7 +734,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Cursive</span> {
     <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='ident'>ncurses</span>::<span class='ident'>endwin</span>();
+        <span class='ident'>B</span>::<span class='ident'>finish</span>();
     }
 }
 </pre>

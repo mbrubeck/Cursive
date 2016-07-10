@@ -47,12 +47,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1210' class='srclink' href='../../src/cursive/src/view/mod.rs.html#50-78' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1407' class='srclink' href='../../src/cursive/src/view/mod.rs.html#61-89' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait View {
     fn <a href='#tymethod.draw' class='fnname'>draw</a>(&amp;mut self, printer: &amp;<a class='struct' href='../../cursive/printer/struct.Printer.html' title='cursive::printer::Printer'>Printer</a>);
 
     fn <a href='#method.on_event' class='fnname'>on_event</a>(&amp;mut self, <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a> { ... }
-    fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;self, <a class='struct' href='../../cursive/view/struct.SizeRequest.html' title='cursive::view::SizeRequest'>SizeRequest</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a> { ... }
+    fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a> { ... }
     fn <a href='#method.layout' class='fnname'>layout</a>(&amp;mut self, <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) { ... }
     fn <a href='#method.find' class='fnname'>find</a>(&amp;mut self, &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt; { ... }
     fn <a href='#method.take_focus' class='fnname'>take_focus</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
@@ -65,7 +65,7 @@
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.on_event' class='method stab '><code>fn <a href='#method.on_event' class='fnname'>on_event</a>(&amp;mut self, <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></h3><div class='docblock'><p>Called when a key was pressed. Default implementation just ignores it.</p>
-</div><h3 id='method.get_min_size' class='method stab '><code>fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;self, <a class='struct' href='../../cursive/view/struct.SizeRequest.html' title='cursive::view::SizeRequest'>SizeRequest</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h3><div class='docblock'><p>Returns the minimum size the view requires under the given restrictions.</p>
+</div><h3 id='method.get_min_size' class='method stab '><code>fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h3><div class='docblock'><p>Returns the minimum size the view requires with the given restrictions.</p>
 </div><h3 id='method.layout' class='method stab '><code>fn <a href='#method.layout' class='fnname'>layout</a>(&amp;mut self, <a class='struct' href='../../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>)</code></h3><div class='docblock'><p>Called once the size for this view has been decided, so it can
 propagate the information to its children.</p>
 </div><h3 id='method.find' class='method stab '><code>fn <a href='#method.find' class='fnname'>find</a>(&amp;mut self, &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;</code></h3><div class='docblock'><p>Finds the view pointed to by the given path.
@@ -79,6 +79,7 @@ Returns None if the path doesn&#39;t lead to a view.</p>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.Dialog.html' title='cursive::view::Dialog'>Dialog</a></code></li>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.EditView.html' title='cursive::view::EditView'>EditView</a></code></li>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.LinearLayout.html' title='cursive::view::LinearLayout'>LinearLayout</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/view/struct.MenuPopup.html' title='cursive::view::MenuPopup'>MenuPopup</a></code></li>
 <li><code>impl&lt;T:&nbsp;'static&gt; View for <a class='struct' href='../../cursive/view/struct.SelectView.html' title='cursive::view::SelectView'>SelectView</a>&lt;T&gt;</code></li>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.StackView.html' title='cursive::view::StackView'>StackView</a></code></li>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.TextView.html' title='cursive::view::TextView'>TextView</a></code></li>

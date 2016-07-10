@@ -185,19 +185,37 @@
 <span id="141">141</span>
 <span id="142">142</span>
 <span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>min</span>, <span class='ident'>max</span>};
-<span class='kw'>use</span> <span class='ident'>ncurses</span>::<span class='ident'>chtype</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>max</span>, <span class='ident'>min</span>};
 
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorPair</span>;
+<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
 
 <span class='doccomment'>/// Provide scrolling functionalities to a view.</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Default</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ScrollBase</span> {
     <span class='kw'>pub</span> <span class='ident'>start_line</span>: <span class='ident'>usize</span>,
     <span class='kw'>pub</span> <span class='ident'>content_height</span>: <span class='ident'>usize</span>,
     <span class='kw'>pub</span> <span class='ident'>view_height</span>: <span class='ident'>usize</span>,
+    <span class='kw'>pub</span> <span class='ident'>scrollbar_padding</span>: <span class='ident'>usize</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>ScrollBase</span> {
@@ -206,7 +224,13 @@
             <span class='ident'>start_line</span>: <span class='number'>0</span>,
             <span class='ident'>content_height</span>: <span class='number'>0</span>,
             <span class='ident'>view_height</span>: <span class='number'>0</span>,
+            <span class='ident'>scrollbar_padding</span>: <span class='number'>0</span>,
         }
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bar_padding</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>padding</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='self'>self</span>.<span class='ident'>scrollbar_padding</span> <span class='op'>=</span> <span class='ident'>padding</span>;
+        <span class='self'>self</span>
     }
 
     <span class='doccomment'>/// Call this method whem the content or the view changes.</span>
@@ -215,7 +239,8 @@
         <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>=</span> <span class='ident'>content_height</span>;
 
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>scrollable</span>() {
-            <span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>start_line</span>, <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>view_height</span>);
+            <span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>start_line</span>,
+                                  <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>view_height</span>);
         } <span class='kw'>else</span> {
             <span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>=</span> <span class='number'>0</span>;
         }
@@ -257,7 +282,8 @@
 
     <span class='doccomment'>/// Scroll down by the given number of line, never going further than the bottom of the view.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scroll_down</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>n</span>: <span class='ident'>usize</span>) {
-        <span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>+</span> <span class='ident'>n</span>, <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>view_height</span>);
+        <span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>+</span> <span class='ident'>n</span>,
+                              <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>view_height</span>);
     }
 
     <span class='doccomment'>/// Scroll up by the given number of lines, never going above the top of the view.</span>
@@ -290,16 +316,19 @@
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>, <span class='ident'>usize</span>)
     {
         <span class='comment'>// Print the content in a sub_printer</span>
-        <span class='kw'>let</span> <span class='ident'>max_y</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>view_height</span>, <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start_line</span>);
+        <span class='kw'>let</span> <span class='ident'>max_y</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>view_height</span>,
+                        <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start_line</span>);
         <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>scrollable</span>() {
-            <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>2</span>
+            <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span> <span class='comment'>// TODO: 2</span>
         } <span class='kw'>else</span> {
             <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span>
         };
         <span class='kw'>for</span> <span class='ident'>y</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>max_y</span> {
             <span class='comment'>// Y is the actual coordinate of the line.</span>
             <span class='comment'>// The item ID is then Y + self.start_line</span>
-            <span class='ident'>line_drawer</span>(<span class='kw-2'>&amp;</span><span class='ident'>printer</span>.<span class='ident'>sub_printer</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='ident'>y</span>), <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='ident'>w</span>, <span class='number'>1</span>), <span class='bool-val'>true</span>),
+            <span class='ident'>line_drawer</span>(<span class='kw-2'>&amp;</span><span class='ident'>printer</span>.<span class='ident'>sub_printer</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='ident'>y</span>),
+                                             <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='ident'>w</span>, <span class='number'>1</span>),
+                                             <span class='bool-val'>true</span>),
                         <span class='ident'>y</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>start_line</span>);
         }
 
@@ -309,22 +338,27 @@
             <span class='comment'>// We directly compute the size of the scrollbar (this allow use to avoid using floats).</span>
             <span class='comment'>// (ratio) * max_height</span>
             <span class='comment'>// Where ratio is ({start or end} / content.height)</span>
-            <span class='kw'>let</span> <span class='ident'>height</span> <span class='op'>=</span> <span class='ident'>max</span>(<span class='number'>1</span>, <span class='self'>self</span>.<span class='ident'>view_height</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>view_height</span> <span class='op'>/</span> <span class='self'>self</span>.<span class='ident'>content_height</span>);
+            <span class='kw'>let</span> <span class='ident'>height</span> <span class='op'>=</span> <span class='ident'>max</span>(<span class='number'>1</span>,
+                             <span class='self'>self</span>.<span class='ident'>view_height</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>view_height</span> <span class='op'>/</span>
+                             <span class='self'>self</span>.<span class='ident'>content_height</span>);
             <span class='comment'>// Number of different possible positions</span>
             <span class='kw'>let</span> <span class='ident'>steps</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>view_height</span> <span class='op'>-</span> <span class='ident'>height</span> <span class='op'>+</span> <span class='number'>1</span>;
 
             <span class='comment'>// Now</span>
-            <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>steps</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>/</span> (<span class='number'>1</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>view_height</span>);
+            <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>steps</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>start_line</span> <span class='op'>/</span>
+                        (<span class='number'>1</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>view_height</span>);
 
             <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>printer</span>.<span class='ident'>focused</span> {
-                <span class='ident'>ColorPair</span>::<span class='ident'>Highlight</span>
+                <span class='ident'>ColorStyle</span>::<span class='ident'>Highlight</span>
             } <span class='kw'>else</span> {
-                <span class='ident'>ColorPair</span>::<span class='ident'>HighlightInactive</span>
+                <span class='ident'>ColorStyle</span>::<span class='ident'>HighlightInactive</span>
             };
 
-            <span class='ident'>printer</span>.<span class='ident'>print_vline</span>((<span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='number'>0</span>), <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='string'>&#39;|&#39;</span> <span class='kw'>as</span> <span class='ident'>chtype</span>);
+            <span class='comment'>// TODO: use 1 instead of 2</span>
+            <span class='kw'>let</span> <span class='ident'>scrollbar_x</span> <span class='op'>=</span> <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>scrollbar_padding</span>;
+            <span class='ident'>printer</span>.<span class='ident'>print_vline</span>((<span class='ident'>scrollbar_x</span>, <span class='number'>0</span>), <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='string'>&quot;|&quot;</span>);
             <span class='ident'>printer</span>.<span class='ident'>with_color</span>(<span class='ident'>color</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
-                <span class='ident'>printer</span>.<span class='ident'>print_vline</span>((<span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='ident'>start</span>), <span class='ident'>height</span>, <span class='string'>&#39; &#39;</span> <span class='kw'>as</span> <span class='ident'>chtype</span>);
+                <span class='ident'>printer</span>.<span class='ident'>print_vline</span>((<span class='ident'>scrollbar_x</span>, <span class='ident'>start</span>), <span class='ident'>height</span>, <span class='string'>&quot; &quot;</span>);
             });
         }
     }

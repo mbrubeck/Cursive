@@ -55,20 +55,24 @@
 <span id="11">11</span>
 <span id="12">12</span>
 <span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
 </pre><pre class='rust '>
-<span class='doccomment'>/// Integer division that rounds up.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>div_up_usize</span>(<span class='ident'>p</span>: <span class='ident'>usize</span>, <span class='ident'>q</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    <span class='ident'>div_up</span>(<span class='ident'>p</span> <span class='kw'>as</span> <span class='ident'>u32</span>, <span class='ident'>q</span> <span class='kw'>as</span> <span class='ident'>u32</span>) <span class='kw'>as</span> <span class='ident'>usize</span>
-}
 
-<span class='doccomment'>/// Integer division that rounds up.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>div_up</span>(<span class='ident'>p</span>: <span class='ident'>u32</span>, <span class='ident'>q</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-    <span class='kw'>if</span> <span class='ident'>p</span> <span class='op'>%</span> <span class='ident'>q</span> <span class='op'>==</span> <span class='number'>0</span> {
-        <span class='ident'>p</span> <span class='op'>/</span> <span class='ident'>q</span>
-    } <span class='kw'>else</span> {
-        <span class='number'>1</span> <span class='op'>+</span> <span class='ident'>p</span> <span class='op'>/</span> <span class='ident'>q</span>
-    }
-}
+<span class='comment'>// Integer division that rounds up.</span>
+<span class='comment'>// pub fn div_up_usize(p: usize, q: usize) -&gt; usize {</span>
+<span class='comment'>// div_up(p as u32, q as u32) as usize</span>
+<span class='comment'>// }</span>
+<span class='comment'>//</span>
+<span class='comment'>// Integer division that rounds up.</span>
+<span class='comment'>// pub fn div_up(p: u32, q: u32) -&gt; u32 {</span>
+<span class='comment'>// if p % q == 0 {</span>
+<span class='comment'>// p / q</span>
+<span class='comment'>// } else {</span>
+<span class='comment'>// 1 + p / q</span>
+<span class='comment'>// }</span>
+<span class='comment'>// }</span>
+<span class='comment'>//</span>
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

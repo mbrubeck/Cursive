@@ -47,21 +47,23 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1526' class='srclink' href='../../src/cursive/src/theme.rs.html#137-144' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1753' class='srclink' href='../../src/cursive/src/theme.rs.html#148-155' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum BorderStyle {
     NoBorder,
     Simple,
     Outset,
-}</pre><div class='docblock'><p>Specifies how View borders should be drawn.</p>
+}</pre><div class='docblock'><p>Specifies how some borders should be drawn.</p>
+
+<p>Borders are used around Dialogs, select popups, and panels.</p>
 </div><h2 class='variants'>Variants</h2>
 <span id='variant.NoBorder' class='variant'><code>NoBorder</code></span><div class='docblock'><p>Don&#39;t draw any border.</p>
 </div><span id='variant.Simple' class='variant'><code>Simple</code></span><div class='docblock'><p>Simple borders.</p>
-</div><span id='variant.Outset' class='variant'><code>Outset</code></span><div class='docblock'><p>Outset borders with a 3d effect.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../cursive/theme/enum.BorderStyle.html' title='cursive::theme::BorderStyle'>BorderStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1530' class='srclink' href='../../src/cursive/src/theme.rs.html#136' title='goto source code'>[src]</a></span></h3>
+</div><span id='variant.Outset' class='variant'><code>Outset</code></span><div class='docblock'><p>Outset borders with a simple 3d effect.</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../cursive/theme/enum.BorderStyle.html' title='cursive::theme::BorderStyle'>BorderStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1742' class='srclink' href='../../src/cursive/src/theme.rs.html#147' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../../cursive/theme/enum.BorderStyle.html' title='cursive::theme::BorderStyle'>BorderStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1537' class='srclink' href='../../src/cursive/src/theme.rs.html#136' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../cursive/theme/enum.BorderStyle.html' title='cursive::theme::BorderStyle'>BorderStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1538' class='srclink' href='../../src/cursive/src/theme.rs.html#136' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../../cursive/theme/enum.BorderStyle.html' title='cursive::theme::BorderStyle'>BorderStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1749' class='srclink' href='../../src/cursive/src/theme.rs.html#147' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../cursive/theme/enum.BorderStyle.html' title='cursive::theme::BorderStyle'>BorderStyle</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1750' class='srclink' href='../../src/cursive/src/theme.rs.html#147' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../cursive/theme/enum.BorderStyle.html' title='cursive::theme::BorderStyle'>BorderStyle</a></code></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
 </div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
