@@ -70,7 +70,7 @@
 </div><h4 id='method.keep_y' class='method'><code>fn <a href='#method.keep_y' class='fnname'>keep_y</a>(&amp;self) -&gt; Self</code></h4>
 <div class='docblock'><p>Returns a vector with the Y component of self, and x=0.</p>
 </div><h4 id='method.zero' class='method'><code>fn <a href='#method.zero' class='fnname'>zero</a>() -&gt; Self</code></h4>
-<div class='docblock'><p>Alias for Vec::new(0,0).</p>
+<div class='docblock'><p>Alias for <code>Vec2::new(0,0)</code>.</p>
 </div><h4 id='method.stack_vertical' class='method'><code>fn <a href='#method.stack_vertical' class='fnname'>stack_vertical</a>(&amp;self, other: &amp;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
 <div class='docblock'><p>Returns (max(self.x,other.x), self.y+other.y)</p>
 </div><h4 id='method.stack_horizontal' class='method'><code>fn <a href='#method.stack_horizontal' class='fnname'>stack_horizontal</a>(&amp;self, other: &amp;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
@@ -89,16 +89,16 @@
 </div><h4 id='method.pair' class='method'><code>fn <a href='#method.pair' class='fnname'>pair</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>T, T<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></h4>
 <div class='docblock'><p>Destructure self into a pair.</p>
 </div><h4 id='method.as_ref' class='method'><code>fn <a href='#method.as_ref' class='fnname'>as_ref</a>(&amp;self) -&gt; <a class='struct' href='../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;&amp;T&gt;</code></h4>
-<div class='docblock'><p>Return a XY with references to this one&#39;s values.</p>
+<div class='docblock'><p>Return a <code>XY</code> with references to this one&#39;s values.</p>
 </div><h4 id='method.iter' class='method'><code>fn <a href='#method.iter' class='fnname'>iter</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/core/iter/struct.Chain.html' title='core::iter::Chain'>Chain</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/core/iter/sources/struct.Once.html' title='core::iter::sources::Once'>Once</a>&lt;&amp;T&gt;,&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/core/iter/sources/struct.Once.html' title='core::iter::sources::Once'>Once</a>&lt;&amp;T&gt;&gt;</code></h4>
 <div class='docblock'><p>Creates an iterator that returns references to <code>x</code>, then <code>y</code>.</p>
 </div><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self, o: <a class='enum' href='../cursive/direction/enum.Orientation.html' title='cursive::direction::Orientation'>Orientation</a>) -&gt; &amp;T</code></h4>
 <div class='docblock'><p>Returns a reference to the value on the given axis.</p>
 </div><h4 id='method.zip_map' class='method'><code>fn <a href='#method.zip_map' class='fnname'>zip_map</a>&lt;U,&nbsp;V,&nbsp;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(T, U) -&gt; V&gt;(self, other: <a class='struct' href='../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;U&gt;, f: F) -&gt; <a class='struct' href='../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;V&gt;</code></h4>
-<div class='docblock'><p>Returns a new XY by calling <code>f</code> on <code>self</code> and <code>other</code> for each axis.</p>
+<div class='docblock'><p>Returns a new <code>XY</code> by calling <code>f</code> on <code>self</code> and <code>other</code> for each axis.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='struct' href='../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2429' class='srclink' href='../src/cursive/src/xy.rs.html#54-59' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.unwrap_or' class='method'><code>fn <a href='#method.unwrap_or' class='fnname'>unwrap_or</a>(self, other: <a class='struct' href='../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;T&gt;) -&gt; <a class='struct' href='../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;T&gt;</code></h4>
-<div class='docblock'><p>Returns a new XY by calling <code>unwrap_or</code> on each axis.</p>
+<div class='docblock'><p>Returns a new <code>XY</code> by calling <code>unwrap_or</code> on each axis.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.XY.html' title='cursive::XY'>XY</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2437' class='srclink' href='../src/cursive/src/xy.rs.html#61-71' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.any' class='method'><code>fn <a href='#method.any' class='fnname'>any</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Returns <code>true</code> if any of <code>x</code> or <code>y</code> is <code>true</code>.</p>

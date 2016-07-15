@@ -245,6 +245,9 @@
 <span id="201">201</span>
 <span id="202">202</span>
 <span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Direction-related structures.</span>
 <span class='doccomment'>//!</span>
@@ -258,6 +261,7 @@
 <span class='doccomment'>//! ### Direction</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! `Direction` is a bit more complex, and can be of two kinds:</span>
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! * Absolute direction: left, up, right, or down</span>
 <span class='doccomment'>//! * Relative direction: front or back.</span>
 <span class='doccomment'>//!   Its actual direction depends on the orientation.</span>
@@ -430,7 +434,9 @@
     <span class='doccomment'>/// Down</span>
     <span class='ident'>Down</span>,
 
-    <span class='doccomment'>/// No real direction</span>
+    <span class='doccomment'>/// No real direction.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Used when the &quot;direction&quot; is accross layers for instance.</span>
     <span class='prelude-val'>None</span>,
 }
 

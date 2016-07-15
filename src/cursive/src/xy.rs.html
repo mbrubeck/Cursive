@@ -156,7 +156,7 @@
         (<span class='self'>self</span>.<span class='ident'>x</span>, <span class='self'>self</span>.<span class='ident'>y</span>)
     }
 
-    <span class='doccomment'>/// Return a XY with references to this one&#39;s values.</span>
+    <span class='doccomment'>/// Return a `XY` with references to this one&#39;s values.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>x</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>y</span>)
     }
@@ -174,14 +174,14 @@
         }
     }
 
-    <span class='doccomment'>/// Returns a new XY by calling `f` on `self` and `other` for each axis.</span>
+    <span class='doccomment'>/// Returns a new `XY` by calling `f` on `self` and `other` for each axis.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>zip_map</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>V</span>, <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='ident'>T</span>, <span class='ident'>U</span>) <span class='op'>-&gt;</span> <span class='ident'>V</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
         <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>f</span>(<span class='self'>self</span>.<span class='ident'>x</span>, <span class='ident'>other</span>.<span class='ident'>x</span>), <span class='ident'>f</span>(<span class='self'>self</span>.<span class='ident'>y</span>, <span class='ident'>other</span>.<span class='ident'>y</span>))
     }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-    <span class='doccomment'>/// Returns a new XY by calling `unwrap_or` on each axis.</span>
+    <span class='doccomment'>/// Returns a new `XY` by calling `unwrap_or` on each axis.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unwrap_or</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>zip_map</span>(<span class='ident'>other</span>, <span class='op'>|</span><span class='ident'>s</span>, <span class='ident'>o</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>unwrap_or</span>(<span class='ident'>o</span>))
     }
