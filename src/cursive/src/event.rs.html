@@ -201,8 +201,34 @@
 <span id="157">157</span>
 <span id="158">158</span>
 <span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! User-input events and their effects.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! * Every user input the application receives is converted to an</span>
+<span class='doccomment'>//!   [`Event`](./enum.Event.html).</span>
+<span class='doccomment'>//! * Each event is then given to the root, and descends the view tree down to</span>
+<span class='doccomment'>//!   the view currently in focus, through the</span>
+<span class='doccomment'>//!   [`on_event`](../view/trait.View.html#method.on_event) method.</span>
+<span class='doccomment'>//!     * If the view consumes the event, it may return a callback to be</span>
+<span class='doccomment'>//!       executed.</span>
+<span class='doccomment'>//!     * Otherwise, it ignores the event, and the view parent can in turn</span>
+<span class='doccomment'>//!       choose to consume it or not.</span>
+<span class='doccomment'>//! * If no view consumes the event, the</span>
+<span class='doccomment'>//!   [global callback](../struct.Cursive.html#method.add_global_callback)</span>
+<span class='doccomment'>//!   table is checked.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 

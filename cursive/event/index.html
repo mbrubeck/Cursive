@@ -47,8 +47,26 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-8' class='srclink' href='../../src/cursive/src/event.rs.html#1-159' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-8' class='srclink' href='../../src/cursive/src/event.rs.html#1-172' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>User-input events and their effects.</p>
+
+<ul>
+<li>Every user input the application receives is converted to an
+<a href="./enum.Event.html"><code>Event</code></a>.</li>
+<li>Each event is then given to the root, and descends the view tree down to
+the view currently in focus, through the
+<a href="../view/trait.View.html#method.on_event"><code>on_event</code></a> method.
+
+<ul>
+<li>If the view consumes the event, it may return a callback to be
+executed.</li>
+<li>Otherwise, it ignores the event, and the view parent can in turn
+choose to consume it or not.</li>
+</ul></li>
+<li>If no view consumes the event, the
+<a href="../struct.Cursive.html#method.add_global_callback">global callback</a>
+table is checked.</li>
+</ul>
 </div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
