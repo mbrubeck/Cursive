@@ -321,16 +321,21 @@
 <span id="277">277</span>
 <span id="278">278</span>
 <span id="279">279</span>
+<span id="280">280</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>XY</span>;
+<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
-<span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
+<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>SizeCache</span>;
+<span class='kw'>use</span> <span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>align</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>scroll</span>::<span class='ident'>ScrollBase</span>;
 
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 <span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
+
 
 <span class='doccomment'>/// A simple view showing a fixed text</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TextView</span> {
@@ -341,7 +346,7 @@
 
     <span class='comment'>// ScrollBase make many scrolling-related things easier</span>
     <span class='ident'>scrollbase</span>: <span class='ident'>ScrollBase</span>,
-    <span class='ident'>last_size</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>,
+    <span class='ident'>last_size</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>SizeCache</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>width</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
 }
 
@@ -411,13 +416,7 @@
     <span class='kw'>fn</span> <span class='ident'>is_cache_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>last_size</span> {
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
-            <span class='prelude-val'>Some</span>(<span class='ident'>last</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='ident'>last</span>.<span class='ident'>x</span> <span class='op'>!=</span> <span class='ident'>size</span>.<span class='ident'>x</span> {
-                    <span class='bool-val'>false</span>
-                } <span class='kw'>else</span> {
-                    (<span class='ident'>last</span>.<span class='ident'>y</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>len</span>()) <span class='op'>==</span> (<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>len</span>())
-                }
-            }
+            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>last</span>) <span class='op'>=&gt;</span> <span class='ident'>last</span>.<span class='ident'>x</span>.<span class='ident'>accept</span>(<span class='ident'>size</span>.<span class='ident'>x</span>) <span class='op'>&amp;&amp;</span> <span class='ident'>last</span>.<span class='ident'>y</span>.<span class='ident'>accept</span>(<span class='ident'>size</span>.<span class='ident'>y</span>),
         }
     }
 
@@ -440,7 +439,10 @@
                 .<span class='ident'>max</span>()
                 .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>w</span><span class='op'>|</span> <span class='ident'>w</span> <span class='op'>+</span> <span class='ident'>scrollbar</span>);
 
-            <span class='self'>self</span>.<span class='ident'>last_size</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>size</span>);
+            <span class='comment'>// Our resulting size.</span>
+            <span class='kw'>let</span> <span class='ident'>my_size</span> <span class='op'>=</span>
+                <span class='ident'>size</span>.<span class='ident'>or_min</span>((<span class='self'>self</span>.<span class='ident'>width</span>.<span class='ident'>unwrap_or</span>(<span class='number'>0</span>), <span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>len</span>()));
+            <span class='self'>self</span>.<span class='ident'>last_size</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>SizeCache</span>::<span class='ident'>build</span>(<span class='ident'>my_size</span>, <span class='ident'>size</span>));
         }
     }
 
@@ -554,16 +556,16 @@
         <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='comment'>// If we have no directive, ask for a single big line.</span>
-        <span class='comment'>// TODO: what if the text has newlines??</span>
-        <span class='comment'>// Don&#39;t _force_ the max width, but take it if we have to.</span>
-
-        <span class='self'>self</span>.<span class='ident'>compute_rows</span>(<span class='ident'>size</span>);
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>width</span>.<span class='ident'>unwrap_or</span>(<span class='number'>0</span>), <span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>len</span>())
+    <span class='kw'>fn</span> <span class='ident'>needs_relayout</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='self'>self</span>.<span class='ident'>last_size</span>.<span class='ident'>is_none</span>()
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+        <span class='self'>self</span>.<span class='ident'>compute_rows</span>(<span class='ident'>size</span>);
+        <span class='ident'>size</span>.<span class='ident'>or_min</span>((<span class='self'>self</span>.<span class='ident'>width</span>.<span class='ident'>unwrap_or</span>(<span class='number'>0</span>), <span class='self'>self</span>.<span class='ident'>rows</span>.<span class='ident'>len</span>()))
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='self'>self</span>.<span class='ident'>scrollbase</span>.<span class='ident'>scrollable</span>()
     }
 

@@ -171,14 +171,16 @@
 <span id="127">127</span>
 <span id="128">128</span>
 <span id="129">129</span>
+<span id="130">130</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
 
+<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
 <span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Offset</span>, <span class='ident'>Position</span>, <span class='ident'>Selector</span>, <span class='ident'>ShadowView</span>, <span class='ident'>View</span>};
 <span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
-<span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
+<span class='kw'>use</span> <span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 
 <span class='doccomment'>/// Simple stack of views.</span>
@@ -270,7 +272,7 @@
             <span class='comment'>// We do it here instead of when adding a new layer because...?</span>
             <span class='comment'>// (TODO: try to make it during layer addition)</span>
             <span class='kw'>if</span> <span class='ident'>layer</span>.<span class='ident'>virgin</span> {
-                <span class='ident'>layer</span>.<span class='ident'>view</span>.<span class='ident'>take_focus</span>();
+                <span class='ident'>layer</span>.<span class='ident'>view</span>.<span class='ident'>take_focus</span>(<span class='ident'>Direction</span>::<span class='ident'>none</span>());
                 <span class='ident'>layer</span>.<span class='ident'>virgin</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
             }
         }
@@ -285,10 +287,10 @@
             .<span class='ident'>fold</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>Vec2</span>::<span class='ident'>max</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>source</span>: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>layers</span>.<span class='ident'>last_mut</span>() {
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
-            <span class='prelude-val'>Some</span>(<span class='kw-2'>mut</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>view</span>.<span class='ident'>take_focus</span>(),
+            <span class='prelude-val'>Some</span>(<span class='kw-2'>mut</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>view</span>.<span class='ident'>take_focus</span>(<span class='ident'>source</span>),
         }
     }
 

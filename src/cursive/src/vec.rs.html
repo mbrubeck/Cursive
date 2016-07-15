@@ -318,25 +318,25 @@
 <span id="274">274</span>
 <span id="275">275</span>
 <span id="276">276</span>
-<span id="277">277</span>
-<span id="278">278</span>
-<span id="279">279</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Points on the 2D character grid.</span>
+<span class='kw'>use</span> <span class='ident'>XY</span>;
+<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Orientation</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>min</span>, <span class='ident'>max</span>, <span class='ident'>Ordering</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Div</span>, <span class='ident'>Mul</span>, <span class='ident'>Sub</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>Ordering</span>, <span class='ident'>max</span>, <span class='ident'>min</span>};
 
-<span class='doccomment'>/// Simple 2D size, in characters.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>Copy</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Vec2</span> {
-    <span class='doccomment'>/// X coordinate (column), from left to right.</span>
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>usize</span>,
-    <span class='doccomment'>/// Y coordinate (row), from top to bottom.</span>
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>usize</span>,
-}
+<span class='doccomment'>/// Simple 2D size, in cells.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Note: due to a bug in rustdoc ([#32077]), the documentation for `Vec2` is</span>
+<span class='doccomment'>/// currently shown on the [`XY`] page.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// [#32077]: https://github.com/rust-lang/rust/issues/32077</span>
+<span class='doccomment'>/// [`XY`]: ../struct.XY.html</span>
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Vec2</span> <span class='op'>=</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>;
 
-<span class='kw'>impl</span> <span class='ident'>PartialOrd</span> <span class='kw'>for</span> <span class='ident'>Vec2</span> {
+<span class='kw'>impl</span> <span class='ident'>PartialOrd</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// `a &lt; b` &lt;=&gt; `a.x &lt; b.x &amp;&amp; a.y &lt; b.y`</span>
     <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='self'>self</span> <span class='op'>==</span> <span class='ident'>other</span> {
             <span class='prelude-val'>Some</span>(<span class='ident'>Ordering</span>::<span class='ident'>Equal</span>)
@@ -350,20 +350,29 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Vec2</span> {
-    <span class='doccomment'>/// Creates a new Vec2 from coordinates.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Vec2</span> { <span class='ident'>x</span>: <span class='ident'>x</span>, <span class='ident'>y</span>: <span class='ident'>y</span> }
-    }
-
+<span class='kw'>impl</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Returns a new Vec2 that is a maximum per coordinate.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>max</span>(<span class='ident'>a</span>: <span class='self'>Self</span>, <span class='ident'>b</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='ident'>max</span>(<span class='ident'>a</span>.<span class='ident'>x</span>, <span class='ident'>b</span>.<span class='ident'>x</span>), <span class='ident'>max</span>(<span class='ident'>a</span>.<span class='ident'>y</span>, <span class='ident'>b</span>.<span class='ident'>y</span>))
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>max</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>, <span class='ident'>B</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>a</span>: <span class='ident'>A</span>, <span class='ident'>b</span>: <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>into</span>();
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>b</span>.<span class='ident'>into</span>();
+        <span class='ident'>a</span>.<span class='ident'>zip_map</span>(<span class='ident'>b</span>, <span class='ident'>max</span>)
     }
 
     <span class='doccomment'>/// Returns a new Vec2 that is no larger than any input in both dimensions.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>min</span>(<span class='ident'>a</span>: <span class='self'>Self</span>, <span class='ident'>b</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='ident'>min</span>(<span class='ident'>a</span>.<span class='ident'>x</span>, <span class='ident'>b</span>.<span class='ident'>x</span>), <span class='ident'>min</span>(<span class='ident'>a</span>.<span class='ident'>y</span>, <span class='ident'>b</span>.<span class='ident'>y</span>))
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>min</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>, <span class='ident'>B</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>a</span>: <span class='ident'>A</span>, <span class='ident'>b</span>: <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>into</span>();
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>b</span>.<span class='ident'>into</span>();
+        <span class='ident'>a</span>.<span class='ident'>zip_map</span>(<span class='ident'>b</span>, <span class='ident'>min</span>)
+    }
+
+    <span class='doccomment'>/// Returns the minimum of `self` and `other`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>or_min</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='ident'>Vec2</span>::<span class='ident'>min</span>(<span class='self'>self</span>, <span class='ident'>other</span>)
+    }
+
+    <span class='doccomment'>/// Returns the maximum of `self` and `other`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>or_max</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='ident'>Vec2</span>::<span class='ident'>max</span>(<span class='self'>self</span>, <span class='ident'>other</span>)
     }
 
     <span class='doccomment'>/// Returns a vector with the X component of self, and y=0.</span>
@@ -390,81 +399,65 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>stack_horizontal</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
         <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>other</span>.<span class='ident'>x</span>, <span class='ident'>max</span>(<span class='self'>self</span>.<span class='ident'>y</span>, <span class='ident'>other</span>.<span class='ident'>y</span>))
     }
-}
 
-<span class='doccomment'>/// A generic trait for converting a value into a 2D vector.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ToVec2</span> {
-    <span class='doccomment'>/// Converts self into a Vec2.</span>
-    <span class='kw'>fn</span> <span class='ident'>to_vec2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span>;
-}
+    <span class='doccomment'>/// Returns `true` if `self` could fit inside `other`.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Shortcut for `self.x &lt;= other.x &amp;&amp; self.y &lt;= other.y`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fits_in</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='kw'>let</span> <span class='ident'>other</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>into</span>();
+        <span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>&lt;=</span> <span class='ident'>other</span>.<span class='ident'>x</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>y</span> <span class='op'>&lt;=</span> <span class='ident'>other</span>.<span class='ident'>y</span>
+    }
 
-<span class='kw'>impl</span> <span class='ident'>ToVec2</span> <span class='kw'>for</span> <span class='ident'>Vec2</span> {
-    <span class='kw'>fn</span> <span class='ident'>to_vec2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='self'>self</span>
+    <span class='doccomment'>/// Returns a new `Vec2` with the axis `o` set to `value`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>value</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>other</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+        <span class='op'>*</span><span class='ident'>o</span>.<span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>other</span>) <span class='op'>=</span> <span class='ident'>value</span>;
+        <span class='ident'>other</span>
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>ToVec2</span> <span class='kw'>for</span> (<span class='ident'>i32</span>, <span class='ident'>i32</span>) {
-    <span class='kw'>fn</span> <span class='ident'>to_vec2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        (<span class='self'>self</span>.<span class='number'>0</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='self'>self</span>.<span class='number'>1</span> <span class='kw'>as</span> <span class='ident'>usize</span>).<span class='ident'>to_vec2</span>()
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>i32</span>, <span class='ident'>i32</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>((<span class='ident'>x</span>, <span class='ident'>y</span>): (<span class='ident'>i32</span>, <span class='ident'>i32</span>)) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        (<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>usize</span>).<span class='ident'>into</span>()
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>ToVec2</span> <span class='kw'>for</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>) {
-    <span class='kw'>fn</span> <span class='ident'>to_vec2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='number'>0</span>, <span class='self'>self</span>.<span class='number'>1</span>)
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>u32</span>, <span class='ident'>u32</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>((<span class='ident'>x</span>, <span class='ident'>y</span>): (<span class='ident'>u32</span>, <span class='ident'>u32</span>)) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        (<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>usize</span>).<span class='ident'>into</span>()
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>ToVec2</span> <span class='kw'>for</span> (<span class='ident'>u32</span>, <span class='ident'>u32</span>) {
-    <span class='kw'>fn</span> <span class='ident'>to_vec2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='number'>0</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='self'>self</span>.<span class='number'>1</span> <span class='kw'>as</span> <span class='ident'>usize</span>)
-    }
-}
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec2</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Vec2</span>;
 
     <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>let</span> <span class='ident'>ov</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>to_vec2</span>();
-        <span class='ident'>Vec2</span> {
-            <span class='ident'>x</span>: <span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>ov</span>.<span class='ident'>x</span>,
-            <span class='ident'>y</span>: <span class='self'>self</span>.<span class='ident'>y</span> <span class='op'>+</span> <span class='ident'>ov</span>.<span class='ident'>y</span>,
-        }
+        <span class='self'>self</span>.<span class='ident'>zip_map</span>(<span class='ident'>other</span>.<span class='ident'>into</span>(), <span class='ident'>Add</span>::<span class='ident'>add</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec2</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Vec2</span>;
 
     <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>let</span> <span class='ident'>ov</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>to_vec2</span>();
-        <span class='ident'>Vec2</span> {
-            <span class='ident'>x</span>: <span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>ov</span>.<span class='ident'>x</span>,
-            <span class='ident'>y</span>: <span class='self'>self</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>ov</span>.<span class='ident'>y</span>,
-        }
+        <span class='self'>self</span>.<span class='ident'>zip_map</span>(<span class='ident'>other</span>.<span class='ident'>into</span>(), <span class='ident'>Sub</span>::<span class='ident'>sub</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Div</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec2</span> {
+<span class='kw'>impl</span> <span class='ident'>Div</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Vec2</span>;
 
     <span class='kw'>fn</span> <span class='ident'>div</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='ident'>Vec2</span> {
-            <span class='ident'>x</span>: <span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>/</span> <span class='ident'>other</span>,
-            <span class='ident'>y</span>: <span class='self'>self</span>.<span class='ident'>y</span> <span class='op'>/</span> <span class='ident'>other</span>,
-        }
+        <span class='self'>self</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span> <span class='op'>/</span> <span class='ident'>other</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec2</span> {
+<span class='kw'>impl</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Vec2</span>;
 
     <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='ident'>Vec2</span> {
-            <span class='ident'>x</span>: <span class='self'>self</span>.<span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>other</span>,
-            <span class='ident'>y</span>: <span class='self'>self</span>.<span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>other</span>,
-        }
+        <span class='self'>self</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span> <span class='op'>*</span> <span class='ident'>other</span>)
     }
 }
 
@@ -518,38 +511,23 @@
     }
 }
 
-<span class='doccomment'>/// Generic trait for converting a value into a Vec4.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ToVec4</span> {
-    <span class='doccomment'>/// Converts self to a Vec4.</span>
-    <span class='kw'>fn</span> <span class='ident'>to_vec4</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span>;
-}
-
-<span class='kw'>impl</span> <span class='ident'>ToVec4</span> <span class='kw'>for</span> <span class='ident'>Vec4</span> {
-    <span class='kw'>fn</span> <span class='ident'>to_vec4</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span> {
-        <span class='self'>self</span>
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>, <span class='ident'>usize</span>, <span class='ident'>usize</span>, <span class='ident'>usize</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec4</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>((<span class='ident'>left</span>, <span class='ident'>right</span>, <span class='ident'>top</span>, <span class='ident'>bottom</span>): (<span class='ident'>usize</span>, <span class='ident'>usize</span>, <span class='ident'>usize</span>, <span class='ident'>usize</span>)) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span> {
+        <span class='ident'>Vec4</span>::<span class='ident'>new</span>(<span class='ident'>left</span>, <span class='ident'>right</span>, <span class='ident'>top</span>, <span class='ident'>bottom</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>ToVec4</span> <span class='kw'>for</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>, <span class='ident'>usize</span>, <span class='ident'>usize</span>) {
-    <span class='kw'>fn</span> <span class='ident'>to_vec4</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span> {
-        <span class='ident'>Vec4</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='number'>0</span>, <span class='self'>self</span>.<span class='number'>1</span>, <span class='self'>self</span>.<span class='number'>2</span>, <span class='self'>self</span>.<span class='number'>3</span>)
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span>(<span class='ident'>i32</span>, <span class='ident'>i32</span>, <span class='ident'>i32</span>, <span class='ident'>i32</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec4</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>((<span class='ident'>left</span>, <span class='ident'>right</span>, <span class='ident'>top</span>, <span class='ident'>bottom</span>): (<span class='ident'>i32</span>, <span class='ident'>i32</span>, <span class='ident'>i32</span>, <span class='ident'>i32</span>)) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span> {
+        (<span class='ident'>left</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>right</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>top</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>bottom</span> <span class='kw'>as</span> <span class='ident'>usize</span>).<span class='ident'>into</span>()
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>ToVec4</span> <span class='kw'>for</span> (<span class='ident'>i32</span>, <span class='ident'>i32</span>, <span class='ident'>i32</span>, <span class='ident'>i32</span>) {
-    <span class='kw'>fn</span> <span class='ident'>to_vec4</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span> {
-        <span class='ident'>Vec4</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='number'>0</span> <span class='kw'>as</span> <span class='ident'>usize</span>,
-                  <span class='self'>self</span>.<span class='number'>1</span> <span class='kw'>as</span> <span class='ident'>usize</span>,
-                  <span class='self'>self</span>.<span class='number'>2</span> <span class='kw'>as</span> <span class='ident'>usize</span>,
-                  <span class='self'>self</span>.<span class='number'>3</span> <span class='kw'>as</span> <span class='ident'>usize</span>)
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec4</span><span class='op'>&gt;</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec4</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec4</span><span class='op'>&gt;&gt;</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec4</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Vec4</span>;
 
     <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span> {
-        <span class='kw'>let</span> <span class='ident'>ov</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>to_vec4</span>();
+        <span class='kw'>let</span> <span class='ident'>ov</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>into</span>();
 
         <span class='ident'>Vec4</span> {
             <span class='ident'>left</span>: <span class='self'>self</span>.<span class='ident'>left</span> <span class='op'>+</span> <span class='ident'>ov</span>.<span class='ident'>left</span>,
@@ -560,11 +538,11 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec4</span><span class='op'>&gt;</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec4</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec4</span><span class='op'>&gt;&gt;</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec4</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Vec4</span>;
 
     <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec4</span> {
-        <span class='kw'>let</span> <span class='ident'>ov</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>to_vec4</span>();
+        <span class='kw'>let</span> <span class='ident'>ov</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>into</span>();
 
         <span class='ident'>Vec4</span> {
             <span class='ident'>left</span>: <span class='self'>self</span>.<span class='ident'>left</span> <span class='op'>-</span> <span class='ident'>ov</span>.<span class='ident'>left</span>,
@@ -599,6 +577,22 @@
             <span class='ident'>top</span>: <span class='self'>self</span>.<span class='ident'>top</span> <span class='op'>*</span> <span class='ident'>other</span>,
             <span class='ident'>bottom</span>: <span class='self'>self</span>.<span class='ident'>bottom</span> <span class='op'>*</span> <span class='ident'>other</span>,
         }
+    }
+}
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>mod</span> <span class='ident'>tests</span> {
+    <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>Vec2</span>;
+
+    <span class='attribute'>#[<span class='ident'>test</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>test_from</span>() {
+        <span class='kw'>let</span> <span class='ident'>vi32</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>from</span>((<span class='number'>4i32</span>, <span class='number'>5i32</span>));
+        <span class='kw'>let</span> <span class='ident'>vu32</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>from</span>((<span class='number'>4u32</span>, <span class='number'>5u32</span>));
+
+        <span class='kw'>let</span> <span class='ident'>vusize</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>from</span>((<span class='number'>4usize</span>, <span class='number'>5usize</span>));
+        <span class='kw'>let</span> <span class='ident'>vvec</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>from</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>4</span>, <span class='number'>5</span>));
+
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>vi32</span> <span class='op'>-</span> <span class='ident'>vu32</span>, <span class='ident'>vusize</span> <span class='op'>-</span> <span class='ident'>vvec</span>);
     }
 }
 </pre>

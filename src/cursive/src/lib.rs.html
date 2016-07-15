@@ -389,11 +389,35 @@
 <span id="345">345</span>
 <span id="346">346</span>
 <span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Cursive</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! Cursive is a TUI library built on top of ncurses-rs.</span>
+<span class='doccomment'>//! [Cursive](https://github.com/gyscos/Cursive) is a TUI library built on top</span>
+<span class='doccomment'>//! of ncurses-rs.</span>
 <span class='doccomment'>//! It allows to easily build layouts for text-based applications.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Getting started</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! * Every application should start with a [`Cursive`](struct.Cursive.html)</span>
+<span class='doccomment'>//!   object. It is the main entry-point to the library.</span>
+<span class='doccomment'>//! * A declarative phase then describes the structure of the UI by adding</span>
+<span class='doccomment'>//!   views and configuring their behaviours.</span>
+<span class='doccomment'>//! * Finally, the event loop is started by calling</span>
+<span class='doccomment'>//!   [`Cursive::run(&amp;mut self)`](struct.Cursive.html#method.run).</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ## Example</span>
 <span class='doccomment'>//! ```no_run</span>
@@ -412,6 +436,8 @@
 <span class='doccomment'>//!     siv.run();</span>
 <span class='doccomment'>//! }</span>
 <span class='doccomment'>//! ```</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
+
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncurses</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>toml</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_segmentation</span>;
@@ -428,20 +454,24 @@
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>event</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>view</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>printer</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>vec</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>theme</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>align</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>orientation</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>menu</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>direction</span>;
 
 <span class='comment'>// This probably doesn&#39;t need to be public?</span>
+<span class='kw'>mod</span> <span class='ident'>printer</span>;
 <span class='kw'>mod</span> <span class='ident'>menubar</span>;
+<span class='kw'>mod</span> <span class='ident'>xy</span>;
 
 <span class='kw'>mod</span> <span class='ident'>div</span>;
 <span class='kw'>mod</span> <span class='ident'>utf8</span>;
 
 <span class='kw'>mod</span> <span class='ident'>backend</span>;
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>xy</span>::<span class='ident'>XY</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
 
 <span class='kw'>use</span> <span class='ident'>backend</span>::{<span class='ident'>Backend</span>, <span class='ident'>NcursesBackend</span>};
 
@@ -451,11 +481,10 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
 
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Selector</span>, <span class='ident'>StackView</span>};
 
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>ToEvent</span>};
+<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
 
 <span class='doccomment'>/// Identifies a screen in the cursive ROOT.</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>ScreenId</span> <span class='op'>=</span> <span class='ident'>usize</span>;
@@ -608,10 +637,10 @@
     <span class='doccomment'>/// Adds a global callback.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Will be triggered on the given key press when no view catches it.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_global_callback</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>E</span>: <span class='ident'>ToEvent</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>E</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_global_callback</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>E</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>E</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>)
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
     {
-        <span class='self'>self</span>.<span class='ident'>global_callbacks</span>.<span class='ident'>insert</span>(<span class='ident'>event</span>.<span class='ident'>to_event</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>cb</span>));
+        <span class='self'>self</span>.<span class='ident'>global_callbacks</span>.<span class='ident'>insert</span>(<span class='ident'>event</span>.<span class='ident'>into</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>cb</span>));
     }
 
     <span class='doccomment'>/// Convenient method to add a layer to the current screen.</span>
@@ -700,9 +729,8 @@
             <span class='comment'>// Wait for next event.</span>
             <span class='comment'>// (If set_fps was called, this returns -1 now and then)</span>
             <span class='kw'>let</span> <span class='ident'>event</span> <span class='op'>=</span> <span class='ident'>B</span>::<span class='ident'>poll_event</span>();
-            <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>Key</span>(<span class='ident'>event</span>::<span class='ident'>Key</span>::<span class='ident'>Resize</span>) {
+            <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>WindowResize</span> {
                 <span class='ident'>B</span>::<span class='ident'>clear</span>();
-                <span class='kw'>continue</span>;
             }
 
             <span class='comment'>// Event dispatch order:</span>

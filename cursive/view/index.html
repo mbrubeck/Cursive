@@ -47,15 +47,51 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-263' class='srclink' href='../../src/cursive/src/view/mod.rs.html#1-97' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-260' class='srclink' href='../../src/cursive/src/view/mod.rs.html#1-198' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Defines various views to use when creating the layout.</p>
+
+<p>Views are the main building blocks of your UI.</p>
+
+<p>A view can delegate part or all of its responsabilities to child views,
+forming a view tree. The root of this tree is a <code>StackView</code> handled
+directly by the <code>Cursive</code> element.</p>
+
+<h1 id='layout' class='section-header'><a href='#layout'>Layout</a></h1>
+<p>The layout phase is when the size and location of each view is computed.</p>
+
+<p>Each view is given an area of the screen by the <code>View::layout()</code> method.
+With this, the view is free to plan its content, including calling
+<code>View::layout()</code> on its own children.</p>
+
+<p>In order to determine how much space should be given each child, parents
+can use <code>View::get_min_size()</code> on them.</p>
+
+<h3 id='contracts' class='section-header'><a href='#contracts'>Contracts</a></h3>
+<p>When building new Views, you should respect these contracts:</p>
+
+<ul>
+<li><p>By default, <code>View::layout()</code> should be called before any call to
+<code>View::draw()</code> with the same available size. The only exceptions is
+when both following conditions are met:</p>
+
+<ul>
+<li>The available size has not changed since the last call to
+<code>View::layout()</code></li>
+<li><code>View::needs_relayout()</code> returns <code>false</code></li>
+</ul>
+
+<p>In this case, it is safe to omit the call to <code>View::layout()</code>.</p></li>
+<li><p>The value returned by <code>get_min_size</code> should be an actually viable size,
+no matter what the request is. This means calling <code>View::layout()</code> with
+a size returned by <code>get_min_size</code> is <strong>never</strong> an error.</p></li>
+</ul>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.BoxView.html'
                                   title='cursive::view::BoxView'>BoxView</a></td>
                            <td class='docblock short'>
-                                <p><code>BoxView</code> is a wrapper around an other view, with a given minimum size.</p>
+                                <p>Wrapper around another view, with a fixed size.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -112,14 +148,7 @@ A button shows its content in a single line and has a fixed size.</p>
                            <td><a class='struct' href='struct.MenuPopup.html'
                                   title='cursive::view::MenuPopup'>MenuPopup</a></td>
                            <td class='docblock short'>
-                                <p>fd</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Position.html'
-                                  title='cursive::view::Position'>Position</a></td>
-                           <td class='docblock short'>
-                                <p>Location of the view on screen</p>
+                                <p>Popup that shows a list of items.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -141,6 +170,13 @@ A button shows its content in a single line and has a fixed size.</p>
                                   title='cursive::view::ShadowView'>ShadowView</a></td>
                            <td class='docblock short'>
                                 <p>Wrapper view that adds a shadow.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SizeCache.html'
+                                  title='cursive::view::SizeCache'>SizeCache</a></td>
+                           <td class='docblock short'>
+                                <p>Cache around a one-dimensional layout result</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -169,7 +205,7 @@ Only the top-most view is active and can receive input.</p>
                            <td><a class='struct' href='struct.TrackedView.html'
                                   title='cursive::view::TrackedView'>TrackedView</a></td>
                            <td class='docblock short'>
-                                
+                                <p>Wrapper around a view that remembers its position.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -184,7 +220,7 @@ Only the top-most view is active and can receive input.</p>
                            <td><a class='enum' href='enum.Offset.html'
                                   title='cursive::view::Offset'>Offset</a></td>
                            <td class='docblock short'>
-                                
+                                <p>Single-dimensional offset policy.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -207,6 +243,14 @@ Only the top-most view is active and can receive input.</p>
                                   title='cursive::view::ViewWrapper'>ViewWrapper</a></td>
                            <td class='docblock short'>
                                 <p>Generic wrapper around a view.</p>
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Position.html'
+                                  title='cursive::view::Position'>Position</a></td>
+                           <td class='docblock short'>
+                                <p>Location of the view on screen</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

@@ -106,15 +106,17 @@
 <span id="62">62</span>
 <span id="63">63</span>
 <span id="64">64</span>
+<span id="65">65</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 
+<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
 <span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 <span class='kw'>use</span> <span class='ident'>Cursive</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
+<span class='kw'>use</span> <span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 
 <span class='doccomment'>/// Simple text label with a callback when ENTER is pressed.</span>
@@ -167,7 +169,7 @@
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='kw'>fn</span> <span class='ident'>take_focus</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='ident'>Direction</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='bool-val'>true</span>
     }
 }

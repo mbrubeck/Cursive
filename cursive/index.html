@@ -47,11 +47,22 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/cursive/src/lib.rs.html#1-347' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/cursive/src/lib.rs.html#1-361' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <h1 id='cursive' class='section-header'><a href='#cursive'>Cursive</a></h1>
-<p>Cursive is a TUI library built on top of ncurses-rs.
+<p><a href="https://github.com/gyscos/Cursive">Cursive</a> is a TUI library built on top
+of ncurses-rs.
 It allows to easily build layouts for text-based applications.</p>
+
+<h2 id='getting-started' class='section-header'><a href='#getting-started'>Getting started</a></h2>
+<ul>
+<li>Every application should start with a <a href="struct.Cursive.html"><code>Cursive</code></a>
+object. It is the main entry-point to the library.</li>
+<li>A declarative phase then describes the structure of the UI by adding
+views and configuring their behaviours.</li>
+<li>Finally, the event loop is started by calling
+<a href="struct.Cursive.html#method.run"><code>Cursive::run(&amp;mut self)</code></a>.</li>
+</ul>
 
 <h2 id='example' class='section-header'><a href='#example'>Example</a></h2>
 <pre class='rust rust-example-rendered'>
@@ -79,6 +90,13 @@ It allows to easily build layouts for text-based applications.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class='mod' href='direction/index.html'
+                                  title='cursive::direction'>direction</a></td>
+                           <td class='docblock short'>
+                                <p>Direction-related structures.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='mod' href='event/index.html'
                                   title='cursive::event'>event</a></td>
                            <td class='docblock short'>
@@ -89,21 +107,7 @@ It allows to easily build layouts for text-based applications.</p>
                            <td><a class='mod' href='menu/index.html'
                                   title='cursive::menu'>menu</a></td>
                            <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='mod' href='orientation/index.html'
-                                  title='cursive::orientation'>orientation</a></td>
-                           <td class='docblock short'>
-                                <p>Define an Orientation and associated methods.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='mod' href='printer/index.html'
-                                  title='cursive::printer'>printer</a></td>
-                           <td class='docblock short'>
-                                <p>Makes drawing on ncurses windows easier.</p>
+                                <p>Module to build menus.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -132,7 +136,7 @@ It allows to easily build layouts for text-based applications.</p>
                            <td><a class='macro' href='macro.wrap_impl!.html'
                                   title='cursive::wrap_impl!'>wrap_impl!</a></td>
                            <td class='docblock short'>
-                                <p>Convenient macro to implement to two methods required for the ViewWrapper trait.</p>
+                                <p>Convenient macro to implement the ViewWrapper trait.</p>
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -141,6 +145,20 @@ It allows to easily build layouts for text-based applications.</p>
                                   title='cursive::Cursive'>Cursive</a></td>
                            <td class='docblock short'>
                                 <p>Central part of the cursive library.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Printer.html'
+                                  title='cursive::Printer'>Printer</a></td>
+                           <td class='docblock short'>
+                                <p>Convenient interface to draw on a subset of the screen.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.XY.html'
+                                  title='cursive::XY'>XY</a></td>
+                           <td class='docblock short'>
+                                <p>A generic structure with a value for each axis.</p>
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>

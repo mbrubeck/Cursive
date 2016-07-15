@@ -120,9 +120,16 @@
 <span id="76">76</span>
 <span id="77">77</span>
 <span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
-<span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
+<span class='kw'>use</span> <span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 
@@ -149,10 +156,17 @@
         (<span class='number'>1</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>left_padding</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='number'>1</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>top_padding</span> <span class='kw'>as</span> <span class='ident'>usize</span>)
     }
 
+    <span class='doccomment'>/// If set, adds an empty column to the left of the view.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Default to true.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>left_padding</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>left_padding</span> <span class='op'>=</span> <span class='ident'>value</span>;
         <span class='self'>self</span>
     }
+
+    <span class='doccomment'>/// If set, adds an empty row at the top of the view.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Default to true.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>top_padding</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>top_padding</span> <span class='op'>=</span> <span class='ident'>value</span>;
         <span class='self'>self</span>

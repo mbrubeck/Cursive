@@ -221,6 +221,14 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Makes drawing on ncurses windows easier.</span>
 
@@ -231,7 +239,7 @@
 <span class='kw'>use</span> <span class='ident'>B</span>;
 
 <span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>, <span class='ident'>Theme</span>};
-<span class='kw'>use</span> <span class='ident'>vec</span>::{<span class='ident'>ToVec2</span>, <span class='ident'>Vec2</span>};
+<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='doccomment'>/// Convenient interface to draw on a subset of the screen.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
@@ -248,10 +256,10 @@
 
 <span class='kw'>impl</span> <span class='ident'>Printer</span> {
     <span class='doccomment'>/// Creates a new printer on the given window.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span>(<span class='ident'>size</span>: <span class='ident'>T</span>, <span class='ident'>theme</span>: <span class='ident'>Theme</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='ident'>size</span>: <span class='ident'>T</span>, <span class='ident'>theme</span>: <span class='ident'>Theme</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>Printer</span> {
             <span class='ident'>offset</span>: <span class='ident'>Vec2</span>::<span class='ident'>zero</span>(),
-            <span class='ident'>size</span>: <span class='ident'>size</span>.<span class='ident'>to_vec2</span>(),
+            <span class='ident'>size</span>: <span class='ident'>size</span>.<span class='ident'>into</span>(),
             <span class='ident'>focused</span>: <span class='bool-val'>true</span>,
             <span class='ident'>theme</span>: <span class='ident'>theme</span>,
         }
@@ -260,8 +268,8 @@
     <span class='comment'>// TODO: use &amp;mut self? We don&#39;t *need* it, but it may make sense.</span>
     <span class='comment'>// We don&#39;t want people to start calling prints in parallel?</span>
     <span class='doccomment'>/// Prints some text at the given position relative to the window.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pos</span>: <span class='ident'>S</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>pos</span>.<span class='ident'>to_vec2</span>();
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pos</span>: <span class='ident'>S</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
+        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>pos</span>.<span class='ident'>into</span>();
         <span class='kw'>if</span> <span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>||</span> <span class='ident'>p</span>.<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> {
             <span class='kw'>return</span>;
         }
@@ -283,8 +291,8 @@
     }
 
     <span class='doccomment'>/// Prints a vertical line using the given character.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_vline</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>to_vec2</span>();
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_vline</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
+        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
         <span class='kw'>if</span> <span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>||</span> <span class='ident'>p</span>.<span class='ident'>x</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> {
             <span class='kw'>return</span>;
         }
@@ -297,8 +305,8 @@
     }
 
     <span class='doccomment'>/// Prints a horizontal line using the given character.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_hline</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>to_vec2</span>();
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_hline</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
+        <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
         <span class='kw'>if</span> <span class='ident'>p</span>.<span class='ident'>y</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>||</span> <span class='ident'>p</span>.<span class='ident'>x</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> {
             <span class='kw'>return</span>;
         }
@@ -316,7 +324,7 @@
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// ```no_run</span>
-    <span class='doccomment'>/// # use cursive::printer::Printer;</span>
+    <span class='doccomment'>/// # use cursive::Printer;</span>
     <span class='doccomment'>/// # use cursive::theme;</span>
     <span class='doccomment'>/// # let printer = Printer::new((6,4), theme::load_default());</span>
     <span class='doccomment'>/// printer.with_color(theme::ColorStyle::Highlight, |printer| {</span>
@@ -344,14 +352,14 @@
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// # use cursive::printer::Printer;</span>
+    <span class='doccomment'>/// # use cursive::Printer;</span>
     <span class='doccomment'>/// # use cursive::theme;</span>
     <span class='doccomment'>/// # let printer = Printer::new((6,4), theme::load_default());</span>
     <span class='doccomment'>/// printer.print_box((0,0), (6,4));</span>
     <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_box</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>size</span>: <span class='ident'>T</span>) {
-        <span class='kw'>let</span> <span class='ident'>start_v</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>to_vec2</span>();
-        <span class='kw'>let</span> <span class='ident'>size_v</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>to_vec2</span>() <span class='op'>-</span> (<span class='number'>1</span>, <span class='number'>1</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_box</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>size</span>: <span class='ident'>S</span>) {
+        <span class='kw'>let</span> <span class='ident'>start_v</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
+        <span class='kw'>let</span> <span class='ident'>size_v</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>into</span>() <span class='op'>-</span> (<span class='number'>1</span>, <span class='number'>1</span>);
 
         <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start_v</span>, <span class='string'>&quot;┌&quot;</span>);
         <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start_v</span> <span class='op'>+</span> <span class='ident'>size_v</span>.<span class='ident'>keep_x</span>(), <span class='string'>&quot;┐&quot;</span>);
@@ -368,6 +376,13 @@
                          <span class='string'>&quot;│&quot;</span>);
     }
 
+    <span class='doccomment'>/// Apply a selection style and call the given function.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// * If `selection` is `false`, simply uses `ColorStyle::Primary`.</span>
+    <span class='doccomment'>/// * If `selection` is `true`:</span>
+    <span class='doccomment'>///     * If the printer currently has the focus,</span>
+    <span class='doccomment'>///       uses `ColorStyle::Highlight`.</span>
+    <span class='doccomment'>///     * Otherwise, uses `ColorStyle::HighlightInactive`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_selection</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>)<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>selection</span>: <span class='ident'>bool</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) {
         <span class='self'>self</span>.<span class='ident'>with_color</span>(<span class='kw'>if</span> <span class='ident'>selection</span> {
                             <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>focused</span> {
@@ -381,21 +396,22 @@
                         <span class='ident'>f</span>);
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_hdelim</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>) {
-        <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>to_vec2</span>();
+    <span class='doccomment'>/// Prints a horizontal delimiter with side border `├` and `┤`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_hdelim</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>) {
+        <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
         <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span>, <span class='string'>&quot;├&quot;</span>);
         <span class='self'>self</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>), <span class='ident'>len</span> <span class='op'>-</span> <span class='number'>2</span>, <span class='string'>&quot;─&quot;</span>);
         <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='ident'>len</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='number'>0</span>), <span class='string'>&quot;┤&quot;</span>);
     }
 
     <span class='doccomment'>/// Returns a printer on a subset of this one&#39;s area.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sub_printer</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>ToVec2</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>offset</span>: <span class='ident'>S</span>, <span class='ident'>size</span>: <span class='ident'>S</span>, <span class='ident'>focused</span>: <span class='ident'>bool</span>)
-                                  <span class='op'>-&gt;</span> <span class='ident'>Printer</span> {
-        <span class='kw'>let</span> <span class='ident'>offset_v</span> <span class='op'>=</span> <span class='ident'>offset</span>.<span class='ident'>to_vec2</span>();
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sub_printer</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>offset</span>: <span class='ident'>S</span>, <span class='ident'>size</span>: <span class='ident'>S</span>, <span class='ident'>focused</span>: <span class='ident'>bool</span>)
+                                      <span class='op'>-&gt;</span> <span class='ident'>Printer</span> {
+        <span class='kw'>let</span> <span class='ident'>offset</span> <span class='op'>=</span> <span class='ident'>offset</span>.<span class='ident'>into</span>().<span class='ident'>or_min</span>(<span class='self'>self</span>.<span class='ident'>size</span>);
         <span class='ident'>Printer</span> {
-            <span class='ident'>offset</span>: <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>+</span> <span class='ident'>offset_v</span>,
+            <span class='ident'>offset</span>: <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>+</span> <span class='ident'>offset</span>,
             <span class='comment'>// We can&#39;t be larger than what remains</span>
-            <span class='ident'>size</span>: <span class='ident'>Vec2</span>::<span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>-</span> <span class='ident'>offset_v</span>, <span class='ident'>size</span>.<span class='ident'>to_vec2</span>()),
+            <span class='ident'>size</span>: <span class='ident'>Vec2</span>::<span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>-</span> <span class='ident'>offset</span>, <span class='ident'>size</span>.<span class='ident'>into</span>()),
             <span class='ident'>focused</span>: <span class='self'>self</span>.<span class='ident'>focused</span> <span class='op'>&amp;&amp;</span> <span class='ident'>focused</span>,
             <span class='ident'>theme</span>: <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>clone</span>(),
         }

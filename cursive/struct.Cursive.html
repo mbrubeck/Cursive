@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-2262' class='srclink' href='../src/cursive/src/lib.rs.html#78-87' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-2571' class='srclink' href='../src/cursive/src/lib.rs.html#93-102' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Cursive {
     // some fields omitted
 }</pre><div class='docblock'><p>Central part of the cursive library.</p>
@@ -57,7 +57,7 @@ To use it, you should populate it with views, layouts and callbacks,
 then start the event loop with run().</p>
 
 <p>It uses a list of screen, with one screen active at a time.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2272' class='srclink' href='../src/cursive/src/lib.rs.html#99-341' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2581' class='srclink' href='../src/cursive/src/lib.rs.html#114-355' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></h4>
 <div class='docblock'><p>Creates a new Cursive root, and initialize ncurses.</p>
 </div><h4 id='method.select_menubar' class='method'><code>fn <a href='#method.select_menubar' class='fnname'>select_menubar</a>(&amp;mut self)</code></h4>
@@ -97,7 +97,7 @@ If the view is not found, or if it is not of the asked type,
 it returns None.</p>
 </div><h4 id='method.find_id' class='method'><code>fn <a href='#method.find_id' class='fnname'>find_id</a>&lt;V:&nbsp;<a class='trait' href='../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;(&amp;mut self, id: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut V&gt;</code></h4>
 <div class='docblock'><p>Convenient method to use <code>find</code> with a <code>Selector::Id</code>.</p>
-</div><h4 id='method.add_global_callback' class='method'><code>fn <a href='#method.add_global_callback' class='fnname'>add_global_callback</a>&lt;F,&nbsp;E:&nbsp;<a class='trait' href='../cursive/event/trait.ToEvent.html' title='cursive::event::ToEvent'>ToEvent</a>&gt;(&amp;mut self, event: E, cb: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + 'static</span></code></h4>
+</div><h4 id='method.add_global_callback' class='method'><code>fn <a href='#method.add_global_callback' class='fnname'>add_global_callback</a>&lt;F,&nbsp;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>&gt;&gt;(&amp;mut self, event: E, cb: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>) + 'static</span></code></h4>
 <div class='docblock'><p>Adds a global callback.</p>
 
 <p>Will be triggered on the given key press when no view catches it.</p>
@@ -105,7 +105,7 @@ it returns None.</p>
 <div class='docblock'><p>Convenient method to add a layer to the current screen.</p>
 </div><h4 id='method.pop_layer' class='method'><code>fn <a href='#method.pop_layer' class='fnname'>pop_layer</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Convenient method to remove a layer from the current screen.</p>
-</div><h4 id='method.screen_size' class='method'><code>fn <a href='#method.screen_size' class='fnname'>screen_size</a>(&amp;self) -&gt; <a class='struct' href='../cursive/vec/struct.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
+</div><h4 id='method.screen_size' class='method'><code>fn <a href='#method.screen_size' class='fnname'>screen_size</a>(&amp;self) -&gt; <a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h4>
 <div class='docblock'><p>Returns the size of the screen, in characters.</p>
 </div><h4 id='method.run' class='method'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Runs the event loop.</p>
@@ -116,10 +116,10 @@ and trigger callbacks accordingly.</p>
 <p>Blocks until quit() is called.</p>
 </div><h4 id='method.quit' class='method'><code>fn <a href='#method.quit' class='fnname'>quit</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Stops the event loop.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2269' class='srclink' href='../src/cursive/src/lib.rs.html#89-93' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2578' class='srclink' href='../src/cursive/src/lib.rs.html#104-108' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2362' class='srclink' href='../src/cursive/src/lib.rs.html#343-347' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2671' class='srclink' href='../src/cursive/src/lib.rs.html#357-361' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop">Read more</a></p>
 </div></div></section>
