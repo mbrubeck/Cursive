@@ -47,8 +47,20 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1967' class='srclink' href='../../src/cursive/src/menu.rs.html#1-116' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-2411' class='srclink' href='../../src/cursive/src/menu.rs.html#1-121' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Module to build menus.</p>
+
+<p>Menus are a way to arrange many actions in groups of more manageable size.</p>
+
+<p>A menu can be seen as a <code>MenuTree</code>. It has a list of children:</p>
+
+<ul>
+<li>Leaf nodes are made of a label and a callback</li>
+<li>Sub-trees are made of a label, and another <code>MenuTree</code>.</li>
+<li>Delimiters are just there to separate groups of related children.</li>
+</ul>
+
+<p>The <a href="../struct.Cursive.html#method.menubar">menubar</a> is the main way to show menus.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>

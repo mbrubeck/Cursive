@@ -47,12 +47,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1482' class='srclink' href='../../src/cursive/src/view/mod.rs.html#98-147' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1926' class='srclink' href='../../src/cursive/src/view/mod.rs.html#104-158' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait View {
-    fn <a href='#tymethod.draw' class='fnname'>draw</a>(&amp;mut self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>);
+    fn <a href='#tymethod.draw' class='fnname'>draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>);
 
     fn <a href='#method.on_event' class='fnname'>on_event</a>(&amp;mut self, <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a> { ... }
-    fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a> { ... }
+    fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, constraint: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a> { ... }
     fn <a href='#method.needs_relayout' class='fnname'>needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
     fn <a href='#method.layout' class='fnname'>layout</a>(&amp;mut self, <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) { ... }
     fn <a href='#method.find' class='fnname'>find</a>(&amp;mut self, &amp;<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt; { ... }
@@ -61,12 +61,16 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.draw' class='method stab '><code>fn <a href='#tymethod.draw' class='fnname'>draw</a>(&amp;mut self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></h3><div class='docblock'><p>Draws the view with the given printer (includes bounds) and focus.</p>
+        <h3 id='tymethod.draw' class='method stab '><code>fn <a href='#tymethod.draw' class='fnname'>draw</a>(&amp;self, printer: &amp;<a class='struct' href='../../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>)</code></h3><div class='docblock'><p>Draws the view with the given printer (includes bounds) and focus.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.on_event' class='method stab '><code>fn <a href='#method.on_event' class='fnname'>on_event</a>(&amp;mut self, <a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>) -&gt; <a class='enum' href='../../cursive/event/enum.EventResult.html' title='cursive::event::EventResult'>EventResult</a></code></h3><div class='docblock'><p>Called when a key was pressed. Default implementation just ignores it.</p>
-</div><h3 id='method.get_min_size' class='method stab '><code>fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h3><div class='docblock'><p>Returns the minimum size the view requires with the given restrictions.</p>
+</div><h3 id='method.get_min_size' class='method stab '><code>fn <a href='#method.get_min_size' class='fnname'>get_min_size</a>(&amp;mut self, constraint: <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>) -&gt; <a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a></code></h3><div class='docblock'><p>Returns the minimum size the view requires with the given restrictions.</p>
+
+<p>If the view is flexible (it has multiple size options), it can try
+to return one that fits the given <code>constraint</code>.
+It&#39;s also fine to ignore it and return a fixed value.</p>
 </div><h3 id='method.needs_relayout' class='method stab '><code>fn <a href='#method.needs_relayout' class='fnname'>needs_relayout</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Returns <code>true</code> if the view content changed since last layout phase.</p>
 
 <p>This is mostly an optimisation for views where the layout phase is
@@ -98,13 +102,16 @@ When the source is unclear, <code>Front</code> is usually used.</p>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a>&gt; View for T</code></li>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.Button.html' title='cursive::view::Button'>Button</a></code></li>
-<li><code>impl View for <a class='struct' href='../../cursive/view/struct.Dialog.html' title='cursive::view::Dialog'>Dialog</a></code></li>
-<li><code>impl View for <a class='struct' href='../../cursive/view/struct.EditView.html' title='cursive::view::EditView'>EditView</a></code></li>
-<li><code>impl View for <a class='struct' href='../../cursive/view/struct.LinearLayout.html' title='cursive::view::LinearLayout'>LinearLayout</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/prelude/struct.Checkbox.html' title='cursive::prelude::Checkbox'>Checkbox</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/prelude/struct.Dialog.html' title='cursive::prelude::Dialog'>Dialog</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/prelude/struct.EditView.html' title='cursive::prelude::EditView'>EditView</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/prelude/struct.LinearLayout.html' title='cursive::prelude::LinearLayout'>LinearLayout</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/prelude/struct.ListView.html' title='cursive::prelude::ListView'>ListView</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/view/struct.Menubar.html' title='cursive::view::Menubar'>Menubar</a></code></li>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.MenuPopup.html' title='cursive::view::MenuPopup'>MenuPopup</a></code></li>
-<li><code>impl&lt;T:&nbsp;'static&gt; View for <a class='struct' href='../../cursive/view/struct.SelectView.html' title='cursive::view::SelectView'>SelectView</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T:&nbsp;'static&gt; View for <a class='struct' href='../../cursive/prelude/struct.SelectView.html' title='cursive::prelude::SelectView'>SelectView</a>&lt;T&gt;</code></li>
 <li><code>impl View for <a class='struct' href='../../cursive/view/struct.StackView.html' title='cursive::view::StackView'>StackView</a></code></li>
-<li><code>impl View for <a class='struct' href='../../cursive/view/struct.TextView.html' title='cursive::view::TextView'>TextView</a></code></li>
+<li><code>impl View for <a class='struct' href='../../cursive/prelude/struct.TextView.html' title='cursive::prelude::TextView'>TextView</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/cursive/view/trait.View.js">
                  </script></section>

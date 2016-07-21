@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `prelude` mod in crate `cursive`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, prelude">
+
+    <title>cursive::prelude - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>cursive</a></p><script>window.sidebarCurrent = {name: 'prelude', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>cursive</a>::<wbr><a class='mod' href=''>prelude</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-8' class='srclink' href='../../src/cursive/src/prelude.rs.html#1-15' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Commonly used imports, conveniently grouped.</p>
+
+<p>To easily import a bunch of commonly-used definitions, import this bundle:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>cursive</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;</pre>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use ::{<a class='struct' href='../../cursive/struct.Cursive.html' title='cursive::Cursive'>Cursive</a>};</code></td></tr><tr><td><code>pub use event::{<a class='enum' href='../../cursive/event/enum.Event.html' title='cursive::event::Event'>Event</a>, <a class='enum' href='../../cursive/event/enum.Key.html' title='cursive::event::Key'>Key</a>};</code></td></tr><tr><td><code>pub use view::{<a class='enum' href='../../cursive/view/enum.Selector.html' title='cursive::view::Selector'>Selector</a>, <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>};</code></td></tr><tr><td><code>pub use vec::<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>;</code></td></tr><tr><td><code>pub use menu::<a class='struct' href='../../cursive/menu/struct.MenuTree.html' title='cursive::menu::MenuTree'>MenuTree</a>;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.BoxView.html'
+                                  title='cursive::prelude::BoxView'>BoxView</a></td>
+                           <td class='docblock short'>
+                                <p>Wrapper around another view, with a fixed size.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Checkbox.html'
+                                  title='cursive::prelude::Checkbox'>Checkbox</a></td>
+                           <td class='docblock short'>
+                                <p>Checkable box.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Dialog.html'
+                                  title='cursive::prelude::Dialog'>Dialog</a></td>
+                           <td class='docblock short'>
+                                <p>Popup-like view with a main content, and optional buttons under it.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.EditView.html'
+                                  title='cursive::prelude::EditView'>EditView</a></td>
+                           <td class='docblock short'>
+                                <p>Input box where the user can enter and edit text.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.FullView.html'
+                                  title='cursive::prelude::FullView'>FullView</a></td>
+                           <td class='docblock short'>
+                                <p>Simple wrapper view that asks for all the space it can get.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.IdView.html'
+                                  title='cursive::prelude::IdView'>IdView</a></td>
+                           <td class='docblock short'>
+                                <p>Wrapper view that allows to select its content with a fixed string id.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.KeyEventView.html'
+                                  title='cursive::prelude::KeyEventView'>KeyEventView</a></td>
+                           <td class='docblock short'>
+                                <p>A simple wrapper view that catches some ignored event from its child.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.LinearLayout.html'
+                                  title='cursive::prelude::LinearLayout'>LinearLayout</a></td>
+                           <td class='docblock short'>
+                                <p>Arranges its children linearly according to its orientation.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ListView.html'
+                                  title='cursive::prelude::ListView'>ListView</a></td>
+                           <td class='docblock short'>
+                                <p>Displays a scrollable list of elements.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Printer.html'
+                                  title='cursive::prelude::Printer'>Printer</a></td>
+                           <td class='docblock short'>
+                                <p>Convenient interface to draw on a subset of the screen.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SelectView.html'
+                                  title='cursive::prelude::SelectView'>SelectView</a></td>
+                           <td class='docblock short'>
+                                <p>View to select an item among a list.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TextView.html'
+                                  title='cursive::prelude::TextView'>TextView</a></td>
+                           <td class='docblock short'>
+                                <p>A simple view showing a fixed text</p>
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.With.html'
+                                  title='cursive::prelude::With'>With</a></td>
+                           <td class='docblock short'>
+                                <p>Generic trait to enable chainable API</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "cursive";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

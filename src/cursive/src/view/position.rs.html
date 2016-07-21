@@ -105,6 +105,12 @@
 <span id="61">61</span>
 <span id="62">62</span>
 <span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
 <span class='kw'>use</span> <span class='ident'>XY</span>;
@@ -162,10 +168,16 @@
     <span class='doccomment'>/// Computes a single-dimension offset requred to draw a view.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>compute_offset</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>, <span class='ident'>available</span>: <span class='ident'>usize</span>, <span class='ident'>parent</span>: <span class='ident'>usize</span>)
                           <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-            <span class='ident'>Offset</span>::<span class='ident'>Center</span> <span class='op'>=&gt;</span> (<span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>) <span class='op'>/</span> <span class='number'>2</span>,
-            <span class='ident'>Offset</span>::<span class='ident'>Absolute</span>(<span class='ident'>offset</span>) <span class='op'>=&gt;</span> <span class='ident'>min</span>(<span class='ident'>offset</span>, <span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>),
-            <span class='ident'>Offset</span>::<span class='ident'>Parent</span>(<span class='ident'>offset</span>) <span class='op'>=&gt;</span> <span class='ident'>min</span>(<span class='ident'>parent</span> <span class='op'>+</span> <span class='ident'>offset</span>, <span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>),
+        <span class='kw'>if</span> <span class='ident'>size</span> <span class='op'>&gt;</span> <span class='ident'>available</span> {
+            <span class='number'>0</span>
+        } <span class='kw'>else</span> {
+            <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+                <span class='ident'>Offset</span>::<span class='ident'>Center</span> <span class='op'>=&gt;</span> (<span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>) <span class='op'>/</span> <span class='number'>2</span>,
+                <span class='ident'>Offset</span>::<span class='ident'>Absolute</span>(<span class='ident'>offset</span>) <span class='op'>=&gt;</span> <span class='ident'>min</span>(<span class='ident'>offset</span>, <span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>),
+                <span class='ident'>Offset</span>::<span class='ident'>Parent</span>(<span class='ident'>offset</span>) <span class='op'>=&gt;</span> {
+                    <span class='ident'>min</span>(<span class='ident'>parent</span> <span class='op'>+</span> <span class='ident'>offset</span>, <span class='ident'>available</span> <span class='op'>-</span> <span class='ident'>size</span>)
+                }
+            }
         }
     }
 }

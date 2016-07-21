@@ -419,6 +419,128 @@
 <span id="375">375</span>
 <span id="376">376</span>
 <span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Cursive</span>
 <span class='doccomment'>//!</span>
@@ -455,8 +577,7 @@
 <span class='doccomment'>//! ```no_run</span>
 <span class='doccomment'>//! extern crate cursive;</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! use cursive::Cursive;</span>
-<span class='doccomment'>//! use cursive::view::TextView;</span>
+<span class='doccomment'>//! use cursive::prelude::*;</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! fn main() {</span>
 <span class='doccomment'>//!     let mut siv = Cursive::new();</span>
@@ -483,6 +604,17 @@
     } }
 );
 
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>new_default</span>(
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>ident</span>) <span class='op'>=&gt;</span> {
+        <span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span> {
+            <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+                <span class='self'>Self</span>::<span class='ident'>new</span>()
+            }
+        }
+    }
+    );
+
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>prelude</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>event</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>view</span>;
@@ -494,8 +626,8 @@
 
 <span class='comment'>// This probably doesn&#39;t need to be public?</span>
 <span class='kw'>mod</span> <span class='ident'>printer</span>;
-<span class='kw'>mod</span> <span class='ident'>menubar</span>;
 <span class='kw'>mod</span> <span class='ident'>xy</span>;
+<span class='kw'>mod</span> <span class='ident'>with</span>;
 
 <span class='kw'>mod</span> <span class='ident'>div</span>;
 <span class='kw'>mod</span> <span class='ident'>utf8</span>;
@@ -503,6 +635,7 @@
 <span class='kw'>mod</span> <span class='ident'>backend</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>xy</span>::<span class='ident'>XY</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>with</span>::<span class='ident'>With</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>printer</span>::<span class='ident'>Printer</span>;
 
 <span class='kw'>use</span> <span class='ident'>backend</span>::{<span class='ident'>Backend</span>, <span class='ident'>NcursesBackend</span>};
@@ -532,18 +665,14 @@
     <span class='ident'>theme</span>: <span class='ident'>theme</span>::<span class='ident'>Theme</span>,
     <span class='ident'>screens</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>StackView</span><span class='op'>&gt;</span>,
     <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Event</span>, <span class='ident'>Callback</span><span class='op'>&gt;</span>,
-    <span class='ident'>menubar</span>: <span class='ident'>menubar</span>::<span class='ident'>Menubar</span>,
+    <span class='ident'>menubar</span>: <span class='ident'>view</span>::<span class='ident'>Menubar</span>,
 
     <span class='ident'>active_screen</span>: <span class='ident'>ScreenId</span>,
 
     <span class='ident'>running</span>: <span class='ident'>bool</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Cursive</span> {
-    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>new</span>()
-    }
-}
+<span class='macro'>new_default</span><span class='macro'>!</span>(<span class='ident'>Cursive</span>);
 
 <span class='comment'>// Use the Ncurses backend.</span>
 <span class='comment'>// TODO: make this feature-driven</span>
@@ -562,7 +691,7 @@
             <span class='ident'>theme</span>: <span class='ident'>theme</span>,
             <span class='ident'>screens</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
             <span class='ident'>global_callbacks</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-            <span class='ident'>menubar</span>: <span class='ident'>menubar</span>::<span class='ident'>Menubar</span>::<span class='ident'>new</span>(),
+            <span class='ident'>menubar</span>: <span class='ident'>view</span>::<span class='ident'>Menubar</span>::<span class='ident'>new</span>(),
             <span class='ident'>active_screen</span>: <span class='number'>0</span>,
             <span class='ident'>running</span>: <span class='bool-val'>true</span>,
         };
@@ -574,7 +703,7 @@
 
     <span class='doccomment'>/// Selects the menubar</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>select_menubar</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>take_focus</span>();
+        <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>take_focus</span>(<span class='ident'>direction</span>::<span class='ident'>Direction</span>::<span class='ident'>none</span>());
     }
 
     <span class='doccomment'>/// Sets the menubar autohide_menubar feature.</span>
@@ -586,7 +715,54 @@
     }
 
     <span class='doccomment'>/// Retrieve the menu tree used by the menubar.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>menubar</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>menubar</span>::<span class='ident'>Menubar</span> {
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This allows to add menu items to the menubar.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # extern crate cursive;</span>
+    <span class='doccomment'>/// #</span>
+    <span class='doccomment'>/// # use cursive::prelude::*;</span>
+    <span class='doccomment'>/// #</span>
+    <span class='doccomment'>/// # fn main() {</span>
+
+    <span class='doccomment'>/// let mut siv = Cursive::new();</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.menubar()</span>
+    <span class='doccomment'>///    .add(&quot;File&quot;,</span>
+    <span class='doccomment'>///         MenuTree::new()</span>
+    <span class='doccomment'>///             .leaf(&quot;New&quot;, |s| s.add_layer(Dialog::info(&quot;New file!&quot;)))</span>
+    <span class='doccomment'>///             .subtree(&quot;Recent&quot;, MenuTree::new().with(|tree| {</span>
+    <span class='doccomment'>///                 for i in 1..100 {</span>
+    <span class='doccomment'>///                     tree.add_leaf(&amp;format!(&quot;Item {}&quot;, i), |_| ())</span>
+    <span class='doccomment'>///                 }</span>
+    <span class='doccomment'>///             }))</span>
+    <span class='doccomment'>///             .delimiter()</span>
+    <span class='doccomment'>///             .with(|tree| {</span>
+    <span class='doccomment'>///                 for i in 1..10 {</span>
+    <span class='doccomment'>///                     tree.add_leaf(&amp;format!(&quot;Option {}&quot;, i), |_| ());</span>
+    <span class='doccomment'>///                 }</span>
+    <span class='doccomment'>///             })</span>
+    <span class='doccomment'>///             .delimiter()</span>
+    <span class='doccomment'>///             .leaf(&quot;Quit&quot;, |s| s.quit()))</span>
+    <span class='doccomment'>///    .add(&quot;Help&quot;,</span>
+    <span class='doccomment'>///         MenuTree::new()</span>
+    <span class='doccomment'>///             .subtree(&quot;Help&quot;,</span>
+    <span class='doccomment'>///                      MenuTree::new()</span>
+    <span class='doccomment'>///                          .leaf(&quot;General&quot;, |s| {</span>
+    <span class='doccomment'>///                              s.add_layer(Dialog::info(&quot;Help message!&quot;))</span>
+    <span class='doccomment'>///                          })</span>
+    <span class='doccomment'>///                          .leaf(&quot;Online&quot;, |s| {</span>
+    <span class='doccomment'>///                              s.add_layer(Dialog::info(&quot;Online help?&quot;))</span>
+    <span class='doccomment'>///                          }))</span>
+    <span class='doccomment'>///             .leaf(&quot;About&quot;,</span>
+    <span class='doccomment'>///                   |s| s.add_layer(Dialog::info(&quot;Cursive v0.0.0&quot;))));</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.add_global_callback(Key::Esc, |s| s.select_menubar());</span>
+    <span class='doccomment'>/// # }</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>menubar</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>view</span>::<span class='ident'>Menubar</span> {
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>menubar</span>
     }
 
@@ -613,6 +789,12 @@
     <span class='doccomment'>/// Call with fps=0 to disable (default value).</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_fps</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fps</span>: <span class='ident'>u32</span>) {
         <span class='ident'>B</span>::<span class='ident'>set_refresh_rate</span>(<span class='ident'>fps</span>)
+    }
+
+    <span class='doccomment'>/// Returns a reference to the currently active screen.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>screen</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>StackView</span> {
+        <span class='kw'>let</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>active_screen</span>;
+        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>screens</span>[<span class='ident'>id</span>]
     }
 
     <span class='doccomment'>/// Returns a mutable reference to the currently active screen.</span>
@@ -652,8 +834,27 @@
     }
 
     <span class='doccomment'>/// Tries to find the view pointed to by the given path.</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// If the view is not found, or if it is not of the asked type,</span>
     <span class='doccomment'>/// it returns None.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # extern crate cursive;</span>
+    <span class='doccomment'>/// # use cursive::prelude::*;</span>
+    <span class='doccomment'>/// # fn main() {</span>
+    <span class='doccomment'>/// let mut siv = Cursive::new();</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.add_layer(IdView::new(&quot;text&quot;, TextView::new(&quot;Text #1&quot;)));</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.add_global_callback(&#39;p&#39;, |s| {</span>
+    <span class='doccomment'>///     s.find::&lt;TextView&gt;(&amp;Selector::Id(&quot;text&quot;))</span>
+    <span class='doccomment'>///      .unwrap()</span>
+    <span class='doccomment'>///      .set_content(&quot;Text #2&quot;);</span>
+    <span class='doccomment'>/// });</span>
+    <span class='doccomment'>/// # }</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>find</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>sel</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span><span class='op'>&gt;</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>find_any</span>(<span class='ident'>sel</span>) {
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
@@ -662,6 +863,24 @@
     }
 
     <span class='doccomment'>/// Convenient method to use `find` with a `Selector::Id`.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # extern crate cursive;</span>
+    <span class='doccomment'>/// # use cursive::prelude::*;</span>
+    <span class='doccomment'>/// # fn main() {</span>
+    <span class='doccomment'>/// let mut siv = Cursive::new();</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.add_layer(IdView::new(&quot;text&quot;, TextView::new(&quot;Text #1&quot;)));</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.add_global_callback(&#39;p&#39;, |s| {</span>
+    <span class='doccomment'>///     s.find_id::&lt;TextView&gt;(&quot;text&quot;)</span>
+    <span class='doccomment'>///      .unwrap()</span>
+    <span class='doccomment'>///      .set_content(&quot;Text #2&quot;);</span>
+    <span class='doccomment'>/// });</span>
+    <span class='doccomment'>/// # }</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>find_id</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>id</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>find</span>(<span class='kw-2'>&amp;</span><span class='ident'>Selector</span>::<span class='ident'>Id</span>(<span class='ident'>id</span>))
     }
@@ -669,6 +888,18 @@
     <span class='doccomment'>/// Adds a global callback.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Will be triggered on the given key press when no view catches it.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # extern crate cursive;</span>
+    <span class='doccomment'>/// # use cursive::prelude::*;</span>
+    <span class='doccomment'>/// # fn main() {</span>
+    <span class='doccomment'>/// let mut siv = Cursive::new();</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.add_global_callback(&#39;q&#39;, |s| s.quit());</span>
+    <span class='doccomment'>/// # }</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_global_callback</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>E</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>E</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>)
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
     {
@@ -676,6 +907,18 @@
     }
 
     <span class='doccomment'>/// Convenient method to add a layer to the current screen.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # extern crate cursive;</span>
+    <span class='doccomment'>/// # use cursive::prelude::*;</span>
+    <span class='doccomment'>/// # fn main() {</span>
+    <span class='doccomment'>/// let mut siv = Cursive::new();</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// siv.add_layer(TextView::new(&quot;Hello world!&quot;));</span>
+    <span class='doccomment'>/// # }</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_layer</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>View</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>view</span>: <span class='ident'>T</span>) {
         <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>add_layer</span>(<span class='ident'>view</span>);
     }
@@ -771,7 +1014,8 @@
             <span class='comment'>//     * Current screen (top layer)</span>
             <span class='comment'>// * Global callbacks</span>
             <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>receive_events</span>() {
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>cb</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
+                <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>menubar</span>
+                    .<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
                     <span class='ident'>cb</span>(<span class='self'>self</span>);
                 }
             } <span class='kw'>else</span> {

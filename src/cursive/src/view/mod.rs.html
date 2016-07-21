@@ -240,6 +240,17 @@
 <span id="196">196</span>
 <span id="197">197</span>
 <span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Defines various views to use when creating the layout.</span>
 <span class='doccomment'>//!</span>
@@ -291,12 +302,15 @@
 <span class='comment'>// Views</span>
 <span class='kw'>mod</span> <span class='ident'>box_view</span>;
 <span class='kw'>mod</span> <span class='ident'>button</span>;
+<span class='kw'>mod</span> <span class='ident'>checkbox</span>;
 <span class='kw'>mod</span> <span class='ident'>dialog</span>;
 <span class='kw'>mod</span> <span class='ident'>edit_view</span>;
 <span class='kw'>mod</span> <span class='ident'>full_view</span>;
 <span class='kw'>mod</span> <span class='ident'>id_view</span>;
 <span class='kw'>mod</span> <span class='ident'>key_event_view</span>;
 <span class='kw'>mod</span> <span class='ident'>linear_layout</span>;
+<span class='kw'>mod</span> <span class='ident'>list_view</span>;
+<span class='kw'>mod</span> <span class='ident'>menubar</span>;
 <span class='kw'>mod</span> <span class='ident'>menu_popup</span>;
 <span class='kw'>mod</span> <span class='ident'>shadow_view</span>;
 <span class='kw'>mod</span> <span class='ident'>select_view</span>;
@@ -321,11 +335,14 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>id_view</span>::<span class='ident'>IdView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>box_view</span>::<span class='ident'>BoxView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>button</span>::<span class='ident'>Button</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>checkbox</span>::<span class='ident'>Checkbox</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>dialog</span>::<span class='ident'>Dialog</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>edit_view</span>::<span class='ident'>EditView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>full_view</span>::<span class='ident'>FullView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>key_event_view</span>::<span class='ident'>KeyEventView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>linear_layout</span>::<span class='ident'>LinearLayout</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>list_view</span>::<span class='ident'>ListView</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>menubar</span>::<span class='ident'>Menubar</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>menu_popup</span>::<span class='ident'>MenuPopup</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>view_path</span>::<span class='ident'>ViewPath</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>select_view</span>::<span class='ident'>SelectView</span>;
@@ -345,7 +362,12 @@
     }
 
     <span class='doccomment'>/// Returns the minimum size the view requires with the given restrictions.</span>
-    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// If the view is flexible (it has multiple size options), it can try</span>
+    <span class='doccomment'>/// to return one that fits the given `constraint`.</span>
+    <span class='doccomment'>/// It&#39;s also fine to ignore it and return a fixed value.</span>
+    <span class='kw'>fn</span> <span class='ident'>get_min_size</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>constraint</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
+        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>constraint</span>;
         <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>)
     }
 
@@ -370,7 +392,7 @@
     <span class='kw'>fn</span> <span class='ident'>layout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>Vec2</span>) {}
 
     <span class='doccomment'>/// Draws the view with the given printer (includes bounds) and focus.</span>
-    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>);
+    <span class='kw'>fn</span> <span class='ident'>draw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>);
 
     <span class='doccomment'>/// Finds the view pointed to by the given path.</span>
     <span class='doccomment'>///</span>
@@ -426,17 +448,17 @@
     <span class='doccomment'>/// * `size` must fit inside `req`.</span>
     <span class='doccomment'>/// * for each dimension, `constrained = (size == req)`</span>
     <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='ident'>size</span>: <span class='ident'>Vec2</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>x</span>, <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>==</span> <span class='ident'>req</span>.<span class='ident'>x</span>),
-                <span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>==</span> <span class='ident'>req</span>.<span class='ident'>y</span>))
+        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>x</span>, <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='ident'>req</span>.<span class='ident'>x</span>),
+                <span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='ident'>req</span>.<span class='ident'>y</span>))
     }
 }
 
 
 <span class='doccomment'>/// Selects a single view (if any) in the tree.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Selector</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Selects a view from its ID</span>
+    <span class='doccomment'>/// Selects a view from its ID.</span>
     <span class='ident'>Id</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>),
-    <span class='doccomment'>/// Selects a view from its path</span>
+    <span class='doccomment'>/// Selects a view from its path.</span>
     <span class='ident'>Path</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>ViewPath</span>),
 }
 </pre>

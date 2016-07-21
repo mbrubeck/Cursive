@@ -223,6 +223,12 @@
 <span id="179">179</span>
 <span id="180">180</span>
 <span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>max</span>, <span class='ident'>min</span>};
 
@@ -356,11 +362,17 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>draw</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>printer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Printer</span>, <span class='ident'>line_drawer</span>: <span class='ident'>F</span>)
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>Printer</span>, <span class='ident'>usize</span>)
     {
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>view_height</span> <span class='op'>==</span> <span class='number'>0</span> {
+            <span class='kw'>return</span>;
+        }
         <span class='comment'>// Print the content in a sub_printer</span>
         <span class='kw'>let</span> <span class='ident'>max_y</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>view_height</span>,
                         <span class='self'>self</span>.<span class='ident'>content_height</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start_line</span>);
         <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>scrollable</span>() {
-            <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span> <span class='comment'>// TODO: 2</span>
+            <span class='kw'>if</span> <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&lt;</span> <span class='number'>2</span> {
+                <span class='kw'>return</span>;
+            }
+            <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>2</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>scrollbar_padding</span> <span class='comment'>// TODO: 2</span>
         } <span class='kw'>else</span> {
             <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span>
         };
