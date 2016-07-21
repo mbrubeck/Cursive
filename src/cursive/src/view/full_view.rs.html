@@ -97,12 +97,26 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Orientation</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='doccomment'>/// Simple wrapper view that asks for all the space it can get.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// # Examples</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// ```</span>
+<span class='doccomment'>/// # use cursive::prelude::*;</span>
+<span class='doccomment'>/// let view = FullView::new(TextView::new(&quot;Big box for little text!&quot;));</span>
+<span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>FullView</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> {
     <span class='ident'>view</span>: <span class='ident'>T</span>,
     <span class='ident'>orientation</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Orientation</span><span class='op'>&gt;</span>,
