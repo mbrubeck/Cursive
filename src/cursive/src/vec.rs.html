@@ -318,6 +318,18 @@
 <span id="274">274</span>
 <span id="275">275</span>
 <span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Points on the 2D character grid.</span>
 <span class='kw'>use</span> <span class='ident'>XY</span>;
@@ -409,10 +421,22 @@
     }
 
     <span class='doccomment'>/// Returns a new `Vec2` with the axis `o` set to `value`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>value</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>other</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
-        <span class='op'>*</span><span class='ident'>o</span>.<span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>other</span>) <span class='op'>=</span> <span class='ident'>value</span>;
-        <span class='ident'>other</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_axis</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>value</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>new</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+        <span class='op'>*</span><span class='ident'>o</span>.<span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>new</span>) <span class='op'>=</span> <span class='ident'>value</span>;
+        <span class='ident'>new</span>
+    }
+
+    <span class='doccomment'>/// Returns a new `Vec2` with the axis `o` set to the value from `other`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_axis_from</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>new</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+        <span class='ident'>new</span>.<span class='ident'>set_axis_from</span>(<span class='ident'>o</span>, <span class='ident'>other</span>);
+        <span class='ident'>new</span>
+    }
+
+    <span class='doccomment'>/// Sets the axis `o` on `self` to the value from `other`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_axis_from</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>o</span>: <span class='ident'>Orientation</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec2</span>) {
+        <span class='op'>*</span><span class='ident'>o</span>.<span class='ident'>get_ref</span>(<span class='self'>self</span>) <span class='op'>=</span> <span class='ident'>o</span>.<span class='ident'>get</span>(<span class='ident'>other</span>);
     }
 }
 

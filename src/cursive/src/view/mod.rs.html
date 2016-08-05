@@ -177,84 +177,8 @@
 <span id="133">133</span>
 <span id="134">134</span>
 <span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
-<span id="164">164</span>
-<span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
 </pre><pre class='rust '>
-<span class='doccomment'>//! Defines various views to use when creating the layout.</span>
+<span class='doccomment'>//! Base elements required to build views.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! Views are the main building blocks of your UI.</span>
 <span class='doccomment'>//!</span>
@@ -296,35 +220,18 @@
 
 <span class='comment'>// Essentials components</span>
 <span class='kw'>mod</span> <span class='ident'>position</span>;
+<span class='kw'>mod</span> <span class='ident'>size_cache</span>;
+<span class='kw'>mod</span> <span class='ident'>size_constraint</span>;
 <span class='kw'>mod</span> <span class='ident'>view_path</span>;
 
 <span class='comment'>// Helper bases</span>
 <span class='kw'>mod</span> <span class='ident'>scroll</span>;
-
-<span class='comment'>// Views</span>
-<span class='kw'>mod</span> <span class='ident'>box_view</span>;
-<span class='kw'>mod</span> <span class='ident'>button</span>;
-<span class='kw'>mod</span> <span class='ident'>checkbox</span>;
-<span class='kw'>mod</span> <span class='ident'>dialog</span>;
-<span class='kw'>mod</span> <span class='ident'>edit_view</span>;
-<span class='kw'>mod</span> <span class='ident'>full_view</span>;
-<span class='kw'>mod</span> <span class='ident'>id_view</span>;
-<span class='kw'>mod</span> <span class='ident'>key_event_view</span>;
-<span class='kw'>mod</span> <span class='ident'>linear_layout</span>;
-<span class='kw'>mod</span> <span class='ident'>list_view</span>;
-<span class='kw'>mod</span> <span class='ident'>menubar</span>;
-<span class='kw'>mod</span> <span class='ident'>menu_popup</span>;
-<span class='kw'>mod</span> <span class='ident'>shadow_view</span>;
-<span class='kw'>mod</span> <span class='ident'>select_view</span>;
-<span class='kw'>mod</span> <span class='ident'>sized_view</span>;
-<span class='kw'>mod</span> <span class='ident'>stack_view</span>;
-<span class='kw'>mod</span> <span class='ident'>text_view</span>;
-<span class='kw'>mod</span> <span class='ident'>tracked_view</span>;
+<span class='kw'>mod</span> <span class='ident'>identifiable</span>;
+<span class='kw'>mod</span> <span class='ident'>boxable</span>;
 
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
 
-<span class='kw'>use</span> <span class='ident'>XY</span>;
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
@@ -334,26 +241,12 @@
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>scroll</span>::<span class='ident'>ScrollBase</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>id_view</span>::<span class='ident'>IdView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>box_view</span>::<span class='ident'>BoxView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>button</span>::<span class='ident'>Button</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>checkbox</span>::<span class='ident'>Checkbox</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>dialog</span>::<span class='ident'>Dialog</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>edit_view</span>::<span class='ident'>EditView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>full_view</span>::<span class='ident'>FullView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>key_event_view</span>::<span class='ident'>KeyEventView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>linear_layout</span>::<span class='ident'>LinearLayout</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>list_view</span>::<span class='ident'>ListView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>menubar</span>::<span class='ident'>Menubar</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>menu_popup</span>::<span class='ident'>MenuPopup</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>size_cache</span>::<span class='ident'>SizeCache</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>size_constraint</span>::<span class='ident'>SizeConstraint</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>view_path</span>::<span class='ident'>ViewPath</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>select_view</span>::<span class='ident'>SelectView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>shadow_view</span>::<span class='ident'>ShadowView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>stack_view</span>::<span class='ident'>StackView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>text_view</span>::<span class='ident'>TextView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>tracked_view</span>::<span class='ident'>TrackedView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>sized_view</span>::<span class='ident'>SizedView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>view_wrapper</span>::<span class='ident'>ViewWrapper</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>identifiable</span>::<span class='ident'>Identifiable</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>boxable</span>::<span class='ident'>Boxable</span>;
 
 
 <span class='doccomment'>/// Main trait defining a view behaviour.</span>
@@ -412,51 +305,6 @@
         <span class='bool-val'>false</span>
     }
 }
-
-<span class='doccomment'>/// Cache around a one-dimensional layout result.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is not a View, but something to help you if you create your own Views.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SizeCache</span> {
-    <span class='doccomment'>/// Cached value</span>
-    <span class='kw'>pub</span> <span class='ident'>value</span>: <span class='ident'>usize</span>,
-    <span class='doccomment'>/// `true` if the last size was constrained.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If unconstrained, any request larger than this value</span>
-    <span class='doccomment'>/// would return the same size.</span>
-    <span class='kw'>pub</span> <span class='ident'>constrained</span>: <span class='ident'>bool</span>,
-}
-
-<span class='kw'>impl</span> <span class='ident'>SizeCache</span> {
-    <span class='doccomment'>/// Creates a new sized cache</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>value</span>: <span class='ident'>usize</span>, <span class='ident'>constrained</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>SizeCache</span> {
-            <span class='ident'>value</span>: <span class='ident'>value</span>,
-            <span class='ident'>constrained</span>: <span class='ident'>constrained</span>,
-        }
-    }
-
-    <span class='doccomment'>/// Returns `true` if `self` is still valid for the given `request`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>accept</span>(<span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>if</span> <span class='ident'>request</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>value</span> {
-            <span class='bool-val'>false</span>
-        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>request</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>value</span> {
-            <span class='bool-val'>true</span>
-        } <span class='kw'>else</span> {
-            <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>constrained</span>
-        }
-    }
-
-    <span class='doccomment'>/// Creates a new bi-dimensional cache.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * `size` must fit inside `req`.</span>
-    <span class='doccomment'>/// * for each dimension, `constrained = (size == req)`</span>
-    <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='ident'>size</span>: <span class='ident'>Vec2</span>, <span class='ident'>req</span>: <span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>XY</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>XY</span>::<span class='ident'>new</span>(<span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>x</span>, <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='ident'>req</span>.<span class='ident'>x</span>),
-                <span class='ident'>SizeCache</span>::<span class='ident'>new</span>(<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='ident'>req</span>.<span class='ident'>y</span>))
-    }
-}
-
 
 <span class='doccomment'>/// Selects a single view (if any) in the tree.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Selector</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {

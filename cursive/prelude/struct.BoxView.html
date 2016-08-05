@@ -47,37 +47,72 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-467' class='srclink' href='../../src/cursive/src/view/box_view.rs.html#24-27' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-683' class='srclink' href='../../src/cursive/src/views/box_view.rs.html#22-35' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct BoxView&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; {
     // some fields omitted
-}</pre><div class='docblock'><p>Wrapper around another view, with a fixed size.</p>
+}</pre><div class='docblock'><p>Wrapper around another view, with a controlled size.</p>
 
-<p>Each axis can be enabled independantly.</p>
+<p>Each axis can independently be set to:</p>
 
 <ul>
-<li>If both axis are fixed, the view always asks for this size.</li>
-<li>If both axis are left free, the wrapper has no effect and the underlying
-view is directly queried.</li>
-<li>If only one axis is fixed, it will override the size request when
-querying the wrapped view.</li>
+<li>Keep a <strong>fixed</strong> size</li>
+<li>Use <strong>all</strong> available size</li>
+<li>Use <strong>at most</strong> a given size</li>
+<li>Use <strong>at least</strong> a given size</li>
+<li>Let the wrapped view decide.</li>
 </ul>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <pre class='rust rust-example-rendered'>
 <span class='comment'>// Creates a 20x4 BoxView with a TextView content.</span>
-<span class='kw'>let</span> <span class='ident'>view</span> <span class='op'>=</span> <span class='ident'>BoxView</span>::<span class='ident'>fixed_size</span>((<span class='number'>20</span>,<span class='number'>4</span>), <span class='ident'>TextView</span>::<span class='ident'>new</span>(<span class='string'>&quot;Hello!&quot;</span>));</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='struct' href='../../cursive/prelude/struct.BoxView.html' title='cursive::prelude::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-471' class='srclink' href='../../src/cursive/src/view/box_view.rs.html#29-56' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fixed_size' class='method'><code>fn <a href='#method.fixed_size' class='fnname'>fixed_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(size: S, view: T) -&gt; Self</code></h4>
-<div class='docblock'><p>Wraps <code>view</code> in a new <code>BoxView</code> with the given size.</p>
-</div><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(width: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;, height: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;, view: T) -&gt; Self</code></h4>
+<span class='kw'>let</span> <span class='ident'>view</span> <span class='op'>=</span> <span class='ident'>BoxView</span>::<span class='ident'>with_fixed_size</span>((<span class='number'>20</span>,<span class='number'>4</span>), <span class='ident'>TextView</span>::<span class='ident'>new</span>(<span class='string'>&quot;Hello!&quot;</span>));</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='struct' href='../../cursive/prelude/struct.BoxView.html' title='cursive::prelude::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-688' class='srclink' href='../../src/cursive/src/views/box_view.rs.html#37-149' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(width: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>, height: <a class='enum' href='../../cursive/view/enum.SizeConstraint.html' title='cursive::view::SizeConstraint'>SizeConstraint</a>, view: T) -&gt; Self</code></h4>
 <div class='docblock'><p>Creates a new <code>BoxView</code> with the given width and height requirements.</p>
 
 <p><code>None</code> values will use the wrapped view&#39;s preferences.</p>
-</div><h4 id='method.fixed_width' class='method'><code>fn <a href='#method.fixed_width' class='fnname'>fixed_width</a>(width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
+</div><h4 id='method.squishable' class='method'><code>fn <a href='#method.squishable' class='fnname'>squishable</a>(self) -&gt; Self</code></h4>
+<div class='docblock'><p>Sets <code>self</code> to be squishable.</p>
+
+<p>A squishable <code>BoxView</code> will take a smaller size than it should when
+the available space is too small. In that case, it will allow the
+child view to contract, if it can.</p>
+
+<p>More specifically, if the available space is less than the size we
+would normally ask for, return the child size.</p>
+</div><h4 id='method.with_fixed_size' class='method'><code>fn <a href='#method.with_fixed_size' class='fnname'>with_fixed_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(size: S, view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a new <code>BoxView</code> with the given size.</p>
+</div><h4 id='method.with_fixed_width' class='method'><code>fn <a href='#method.with_fixed_width' class='fnname'>with_fixed_width</a>(width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
 <div class='docblock'><p>Wraps <code>view</code> in a new <code>BoxView</code> with fixed width.</p>
-</div><h4 id='method.fixed_height' class='method'><code>fn <a href='#method.fixed_height' class='fnname'>fixed_height</a>(height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
+</div><h4 id='method.with_fixed_height' class='method'><code>fn <a href='#method.with_fixed_height' class='fnname'>with_fixed_height</a>(height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
 <div class='docblock'><p>Wraps <code>view</code> in a new <code>BoxView</code> with fixed height.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a> for <a class='struct' href='../../cursive/prelude/struct.BoxView.html' title='cursive::prelude::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-494' class='srclink' href='../../src/cursive/src/view/box_view.rs.html#65-90' title='goto source code'>[src]</a></span></h3>
+</div><h4 id='method.with_full_screen' class='method'><code>fn <a href='#method.with_full_screen' class='fnname'>with_full_screen</a>(view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will take all available space.</p>
+</div><h4 id='method.with_full_width' class='method'><code>fn <a href='#method.with_full_width' class='fnname'>with_full_width</a>(view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will take all available width.</p>
+</div><h4 id='method.with_full_height' class='method'><code>fn <a href='#method.with_full_height' class='fnname'>with_full_height</a>(view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will take all available height.</p>
+</div><h4 id='method.with_max_size' class='method'><code>fn <a href='#method.with_max_size' class='fnname'>with_max_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(size: S, view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will never be bigger than <code>size</code>.</p>
+</div><h4 id='method.with_max_width' class='method'><code>fn <a href='#method.with_max_width' class='fnname'>with_max_width</a>(max_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will enforce a maximum width.</p>
+
+<p>The resulting width will never be more than <code>max_width</code>.</p>
+</div><h4 id='method.with_max_height' class='method'><code>fn <a href='#method.with_max_height' class='fnname'>with_max_height</a>(max_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will enforce a maximum height.</p>
+
+<p>The resulting height will never be more than <code>max_height</code>.</p>
+</div><h4 id='method.with_min_size' class='method'><code>fn <a href='#method.with_min_size' class='fnname'>with_min_size</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(size: S, view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will never be smaller than <code>size</code>.</p>
+</div><h4 id='method.with_min_width' class='method'><code>fn <a href='#method.with_min_width' class='fnname'>with_min_width</a>(min_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will enforce a minimum width.</p>
+
+<p>The resulting width will never be less than <code>min_width</code>.</p>
+</div><h4 id='method.with_min_height' class='method'><code>fn <a href='#method.with_min_height' class='fnname'>with_min_height</a>(min_height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, view: T) -&gt; Self</code></h4>
+<div class='docblock'><p>Wraps <code>view</code> in a <code>BoxView</code> which will enforce a minimum height.</p>
+
+<p>The resulting height will never be less than <code>min_height</code>.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; <a class='trait' href='../../cursive/view/trait.ViewWrapper.html' title='cursive::view::ViewWrapper'>ViewWrapper</a> for <a class='struct' href='../../cursive/prelude/struct.BoxView.html' title='cursive::prelude::BoxView'>BoxView</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-735' class='srclink' href='../../src/cursive/src/views/box_view.rs.html#151-176' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.get_view' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a></code></h4>
 <div class='docblock'><p>Get an immutable reference to the wrapped view.</p>
 </div><h4 id='method.get_view_mut' class='method'><code>fn <a href='../../cursive/view/trait.ViewWrapper.html#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a></code></h4>

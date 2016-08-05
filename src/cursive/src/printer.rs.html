@@ -236,16 +236,43 @@
 <span id="192">192</span>
 <span id="193">193</span>
 <span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Makes drawing on ncurses windows easier.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
+<span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
 
+<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>prefix_length</span>;
 <span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
 
 <span class='kw'>use</span> <span class='ident'>B</span>;
 
-<span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>, <span class='ident'>Theme</span>};
+<span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>BorderStyle</span>, <span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>, <span class='ident'>Theme</span>};
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='doccomment'>/// Convenient interface to draw on a subset of the screen.</span>
@@ -284,17 +311,11 @@
         <span class='kw'>let</span> <span class='ident'>room</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>p</span>.<span class='ident'>x</span>;
         <span class='comment'>// We want the number of CHARACTERS, not bytes.</span>
         <span class='comment'>// (Actually we want the &quot;width&quot; of the string, see unicode-width)</span>
-        <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>text</span>.<span class='ident'>char_indices</span>().<span class='ident'>nth</span>(<span class='ident'>room</span>) {
-            <span class='prelude-val'>Some</span>((<span class='ident'>i</span>, _)) <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>text</span>[..<span class='ident'>i</span>],
-            _ <span class='op'>=&gt;</span> <span class='ident'>text</span>,
-        };
+        <span class='kw'>let</span> <span class='ident'>prefix_len</span> <span class='op'>=</span> <span class='ident'>prefix_length</span>(<span class='ident'>text</span>.<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>), <span class='ident'>room</span>, <span class='string'>&quot;&quot;</span>);
+        <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>text</span>[..<span class='ident'>prefix_len</span>];
 
         <span class='kw'>let</span> <span class='ident'>p</span> <span class='op'>=</span> <span class='ident'>p</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>offset</span>;
-        <span class='kw'>if</span> <span class='ident'>text</span>.<span class='ident'>contains</span>(<span class='string'>&#39;%&#39;</span>) {
-            <span class='ident'>B</span>::<span class='ident'>print_at</span>((<span class='ident'>p</span>.<span class='ident'>x</span>, <span class='ident'>p</span>.<span class='ident'>y</span>), <span class='kw-2'>&amp;</span><span class='ident'>text</span>.<span class='ident'>replace</span>(<span class='string'>&quot;%&quot;</span>, <span class='string'>&quot;%%&quot;</span>));
-        } <span class='kw'>else</span> {
-            <span class='ident'>B</span>::<span class='ident'>print_at</span>((<span class='ident'>p</span>.<span class='ident'>x</span>, <span class='ident'>p</span>.<span class='ident'>y</span>), <span class='ident'>text</span>);
-        }
+        <span class='ident'>B</span>::<span class='ident'>print_at</span>((<span class='ident'>p</span>.<span class='ident'>x</span>, <span class='ident'>p</span>.<span class='ident'>y</span>), <span class='ident'>text</span>);
     }
 
     <span class='doccomment'>/// Prints a vertical line using the given character.</span>
@@ -356,15 +377,19 @@
 
     <span class='doccomment'>/// Prints a rectangular box.</span>
     <span class='doccomment'>///</span>
+    <span class='doccomment'>/// If `invert` is `true`, and the theme uses `Outset` borders, then the</span>
+    <span class='doccomment'>/// box will use an &quot;inset&quot; style instead.</span>
+    <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Examples</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// ```no_run</span>
     <span class='doccomment'>/// # use cursive::Printer;</span>
     <span class='doccomment'>/// # use cursive::theme;</span>
     <span class='doccomment'>/// # let printer = Printer::new((6,4), theme::load_default());</span>
-    <span class='doccomment'>/// printer.print_box((0,0), (6,4));</span>
+    <span class='doccomment'>/// printer.print_box((0,0), (6,4), false);</span>
     <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_box</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>size</span>: <span class='ident'>S</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>print_box</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec2</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>start</span>: <span class='ident'>T</span>, <span class='ident'>size</span>: <span class='ident'>S</span>,
+                                                   <span class='ident'>invert</span>: <span class='ident'>bool</span>) {
         <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>start</span>.<span class='ident'>into</span>();
         <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>.<span class='ident'>into</span>();
         <span class='kw'>if</span> <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&lt;</span> <span class='number'>2</span> <span class='op'>||</span> <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>&lt;</span> <span class='number'>2</span> {
@@ -372,15 +397,40 @@
         }
         <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span> <span class='op'>-</span> (<span class='number'>1</span>, <span class='number'>1</span>);
 
-        <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span>, <span class='string'>&quot;┌&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_x</span>(), <span class='string'>&quot;┐&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_y</span>(), <span class='string'>&quot;└&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>, <span class='string'>&quot;┘&quot;</span>);
+        <span class='kw'>let</span> <span class='ident'>borders</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>borders</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>theme</span>.<span class='ident'>borders</span> {
+            <span class='ident'>borders</span>
+        } <span class='kw'>else</span> {
+            <span class='comment'>// No border, no box...</span>
+            <span class='comment'>// TODO: still allow other boxes?</span>
+            <span class='comment'>// For instance make the check in the view.</span>
+            <span class='kw'>return</span>;
+        };
 
-        <span class='self'>self</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>), <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;─&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print_vline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>0</span>, <span class='number'>1</span>), <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;│&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>) <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_y</span>(), <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;─&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>print_vline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>0</span>, <span class='number'>1</span>) <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_x</span>(), <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;│&quot;</span>);
+        <span class='self'>self</span>.<span class='ident'>with_color</span>(<span class='kw'>match</span> <span class='ident'>borders</span> {
+                            <span class='ident'>BorderStyle</span>::<span class='ident'>Outset</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>invert</span> <span class='op'>=&gt;</span> {
+                                <span class='ident'>ColorStyle</span>::<span class='ident'>Tertiary</span>
+                            }
+                            _ <span class='op'>=&gt;</span> <span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>,
+                        },
+                        <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
+                            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span>, <span class='string'>&quot;┌&quot;</span>);
+                            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_y</span>(), <span class='string'>&quot;└&quot;</span>);
+                            <span class='ident'>s</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>), <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;─&quot;</span>);
+                            <span class='ident'>s</span>.<span class='ident'>print_vline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>0</span>, <span class='number'>1</span>), <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;│&quot;</span>);
+                        });
+
+        <span class='self'>self</span>.<span class='ident'>with_color</span>(<span class='kw'>match</span> <span class='ident'>borders</span> {
+                            <span class='ident'>BorderStyle</span>::<span class='ident'>Outset</span> <span class='kw'>if</span> <span class='ident'>invert</span> <span class='op'>=&gt;</span> {
+                                <span class='ident'>ColorStyle</span>::<span class='ident'>Tertiary</span>
+                            }
+                            _ <span class='op'>=&gt;</span> <span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>,
+                        },
+                        <span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> {
+            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_x</span>(), <span class='string'>&quot;┐&quot;</span>);
+            <span class='ident'>s</span>.<span class='ident'>print</span>(<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>size</span>, <span class='string'>&quot;┘&quot;</span>);
+            <span class='ident'>s</span>.<span class='ident'>print_hline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>1</span>, <span class='number'>0</span>) <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_y</span>(), <span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;─&quot;</span>);
+            <span class='ident'>s</span>.<span class='ident'>print_vline</span>(<span class='ident'>start</span> <span class='op'>+</span> (<span class='number'>0</span>, <span class='number'>1</span>) <span class='op'>+</span> <span class='ident'>size</span>.<span class='ident'>keep_x</span>(), <span class='ident'>size</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='number'>1</span>, <span class='string'>&quot;│&quot;</span>);
+        });
     }
 
     <span class='doccomment'>/// Apply a selection style and call the given function.</span>

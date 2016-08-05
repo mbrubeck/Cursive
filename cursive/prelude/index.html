@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-8' class='srclink' href='../../src/cursive/src/prelude.rs.html#1-15' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-9' class='srclink' href='../../src/cursive/src/prelude.rs.html#1-16' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Commonly used imports, conveniently grouped.</p>
 
 <p>To easily import a bunch of commonly-used definitions, import this bundle:</p>
@@ -61,7 +61,7 @@
                            <td><a class='struct' href='struct.BoxView.html'
                                   title='cursive::prelude::BoxView'>BoxView</a></td>
                            <td class='docblock short'>
-                                <p>Wrapper around another view, with a fixed size.</p>
+                                <p>Wrapper around another view, with a controlled size.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -128,10 +128,24 @@
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Panel.html'
+                                  title='cursive::prelude::Panel'>Panel</a></td>
+                           <td class='docblock short'>
+                                <p>Draws a border around a wrapped view.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='struct' href='struct.Printer.html'
                                   title='cursive::prelude::Printer'>Printer</a></td>
                            <td class='docblock short'>
                                 <p>Convenient interface to draw on a subset of the screen.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ProgressBar.html'
+                                  title='cursive::prelude::ProgressBar'>ProgressBar</a></td>
+                           <td class='docblock short'>
+                                <p>Animated bar showing a progress value.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -142,6 +156,13 @@
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TextArea.html'
+                                  title='cursive::prelude::TextArea'>TextArea</a></td>
+                           <td class='docblock short'>
+                                <p>Multi-lines text editor.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='struct' href='struct.TextView.html'
                                   title='cursive::prelude::TextView'>TextView</a></td>
                            <td class='docblock short'>
@@ -149,6 +170,20 @@
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Boxable.html'
+                                  title='cursive::prelude::Boxable'>Boxable</a></td>
+                           <td class='docblock short'>
+                                <p>Makes a view wrappable in a <a href="../views/struct.BoxView.html"><code>BoxView</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Identifiable.html'
+                                  title='cursive::prelude::Identifiable'>Identifiable</a></td>
+                           <td class='docblock short'>
+                                <p>Makes a view wrappable in an <a href="../views/struct.IdView.html"><code>IdView</code></a>.</p>
+                           </td>
+                       </tr>
                        <tr class=' module-item'>
                            <td><a class='trait' href='trait.With.html'
                                   title='cursive::prelude::With'>With</a></td>

@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-276' class='srclink' href='../../src/cursive/src/view/view_wrapper.rs.html#13-54' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-305' class='srclink' href='../../src/cursive/src/view/view_wrapper.rs.html#13-54' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ViewWrapper {
     fn <a href='#tymethod.get_view' class='fnname'>get_view</a>(&amp;self) -&gt; &amp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>;
     fn <a href='#tymethod.get_view_mut' class='fnname'>get_view_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>;
@@ -85,9 +85,10 @@ Overrides some methods as desired.</p>
 <li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/prelude/struct.FullView.html' title='cursive::prelude::FullView'>FullView</a>&lt;T&gt;</code></li>
 <li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/prelude/struct.IdView.html' title='cursive::prelude::IdView'>IdView</a>&lt;T&gt;</code></li>
 <li><code>impl ViewWrapper for <a class='struct' href='../../cursive/prelude/struct.KeyEventView.html' title='cursive::prelude::KeyEventView'>KeyEventView</a></code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/view/struct.ShadowView.html' title='cursive::view::ShadowView'>ShadowView</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/view/struct.SizedView.html' title='cursive::view::SizedView'>SizedView</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/view/struct.TrackedView.html' title='cursive::view::TrackedView'>TrackedView</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;V:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/prelude/struct.Panel.html' title='cursive::prelude::Panel'>Panel</a>&lt;V&gt;</code></li>
+<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.ShadowView.html' title='cursive::views::ShadowView'>ShadowView</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.SizedView.html' title='cursive::views::SizedView'>SizedView</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../cursive/view/trait.View.html' title='cursive::view::View'>View</a>&gt; ViewWrapper for <a class='struct' href='../../cursive/views/struct.TrackedView.html' title='cursive::views::TrackedView'>TrackedView</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/cursive/view/trait.ViewWrapper.js">
                  </script></section>

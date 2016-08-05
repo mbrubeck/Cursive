@@ -47,44 +47,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1912' class='srclink' href='../../src/cursive/src/theme.rs.html#386-405' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn load_theme&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(filename: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a>,&nbsp;<a class='enum' href='../../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a>&gt;</pre><div class='docblock'><p>Loads a theme file, and returns its representation.</p>
-
-<p>The file should be a toml file. All fields are optional.</p>
-
-<p>Here are the possible entries:</p>
-
-<pre><code class="language-text"># Every field in a theme file is optional.
-
-shadow = false
-borders = &quot;simple&quot; # Alternatives are &quot;none&quot; and &quot;outset&quot;
-
-# Base colors are red, green, blue,
-# cyan, magenta, yellow, white and black.
-[colors]
-    background = &quot;black&quot;
-    # If the value is an array, the first valid color will be used.
-    # If the terminal doesn&#39;t support custom color,
-    # non-base colors will be skipped.
-    shadow     = [&quot;#000000&quot;, &quot;black&quot;]
-    view       = &quot;#d3d7cf&quot;
-
-    # Array and simple values have the same effect.
-    primary   = [&quot;#111111&quot;]
-    secondary = &quot;#EEEEEE&quot;
-    tertiary  = &quot;#444444&quot;
-
-    # Hex values can use lower or uppercase.
-    # (base color MUST be lowercase)
-    title_primary   = &quot;#ff5555&quot;
-    title_secondary = &quot;#ffff55&quot;
-
-    # Lower precision values can use only 3 digits.
-    highlight          = &quot;#F00&quot;
-    highlight_inactive = &quot;#5555FF&quot;
-</code></pre>
-
-<p>Loads a theme and sets it as active.</p>
+               </span><a id='src-2932' class='srclink' href='../../src/cursive/src/theme.rs.html#492-500' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn load_theme(content: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a>,&nbsp;<a class='enum' href='../../cursive/theme/enum.Error.html' title='cursive::theme::Error'>Error</a>&gt;</pre><div class='docblock'><p>Loads a theme string and sets it as active.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

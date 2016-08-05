@@ -232,6 +232,19 @@
 <span id="188">188</span>
 <span id="189">189</span>
 <span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>max</span>, <span class='ident'>min</span>};
 
@@ -254,11 +267,14 @@
     <span class='doccomment'>/// Padding for the scrollbar</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// If present, the scrollbar will be shifted</span>
-    <span class='doccomment'>/// `scrollbar_padding` columns to the left.</span>
+    <span class='doccomment'>/// `scrollbar_offset` columns to the left.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// (Useful when each item includes its own side borders,</span>
     <span class='doccomment'>/// to draw the scrollbar inside.)</span>
-    <span class='kw'>pub</span> <span class='ident'>scrollbar_padding</span>: <span class='ident'>usize</span>,
+    <span class='kw'>pub</span> <span class='ident'>scrollbar_offset</span>: <span class='ident'>usize</span>,
+
+    <span class='doccomment'>/// Blank between the text and the scrollbar.</span>
+    <span class='kw'>pub</span> <span class='ident'>right_padding</span>: <span class='ident'>usize</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>ScrollBase</span> {
@@ -268,7 +284,8 @@
             <span class='ident'>start_line</span>: <span class='number'>0</span>,
             <span class='ident'>content_height</span>: <span class='number'>0</span>,
             <span class='ident'>view_height</span>: <span class='number'>0</span>,
-            <span class='ident'>scrollbar_padding</span>: <span class='number'>0</span>,
+            <span class='ident'>scrollbar_offset</span>: <span class='number'>0</span>,
+            <span class='ident'>right_padding</span>: <span class='number'>1</span>,
         }
     }
 
@@ -277,8 +294,16 @@
     <span class='doccomment'>/// Used by views that draw their side borders in the children.</span>
     <span class='doccomment'>/// Pushing the scrollbar to the left allows it to stay inside</span>
     <span class='doccomment'>/// the borders.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bar_padding</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>padding</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>scrollbar_padding</span> <span class='op'>=</span> <span class='ident'>padding</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>scrollbar_offset</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>offset</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='self'>self</span>.<span class='ident'>scrollbar_offset</span> <span class='op'>=</span> <span class='ident'>offset</span>;
+        <span class='self'>self</span>
+    }
+
+    <span class='doccomment'>/// Sets the number of blank cells between the text and the scrollbar.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Defaults to 1.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>right_padding</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>padding</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='self'>self</span>.<span class='ident'>right_padding</span> <span class='op'>=</span> <span class='ident'>padding</span>;
         <span class='self'>self</span>
     }
 
@@ -378,7 +403,8 @@
             <span class='kw'>if</span> <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>&lt;</span> <span class='number'>2</span> {
                 <span class='kw'>return</span>;
             }
-            <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>2</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>scrollbar_padding</span> <span class='comment'>// TODO: 2</span>
+            <span class='comment'>// We have to remove the bar width and the padding.</span>
+            <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>right_padding</span>
         } <span class='kw'>else</span> {
             <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span>
         };
@@ -415,10 +441,10 @@
             };
 
             <span class='comment'>// TODO: use 1 instead of 2</span>
-            <span class='kw'>let</span> <span class='ident'>scrollbar_x</span> <span class='op'>=</span> <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>scrollbar_padding</span>;
+            <span class='kw'>let</span> <span class='ident'>scrollbar_x</span> <span class='op'>=</span> <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>scrollbar_offset</span>;
             <span class='ident'>printer</span>.<span class='ident'>print_vline</span>((<span class='ident'>scrollbar_x</span>, <span class='number'>0</span>), <span class='ident'>printer</span>.<span class='ident'>size</span>.<span class='ident'>y</span>, <span class='string'>&quot;|&quot;</span>);
             <span class='ident'>printer</span>.<span class='ident'>with_color</span>(<span class='ident'>color</span>, <span class='op'>|</span><span class='ident'>printer</span><span class='op'>|</span> {
-                <span class='ident'>printer</span>.<span class='ident'>print_vline</span>((<span class='ident'>scrollbar_x</span>, <span class='ident'>start</span>), <span class='ident'>height</span>, <span class='string'>&quot; &quot;</span>);
+                <span class='ident'>printer</span>.<span class='ident'>print_vline</span>((<span class='ident'>scrollbar_x</span>, <span class='ident'>start</span>), <span class='ident'>height</span>, <span class='string'>&quot;▒&quot;</span>);
             });
         }
     }
