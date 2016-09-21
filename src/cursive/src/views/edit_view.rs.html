@@ -443,6 +443,21 @@
 <span id="399">399</span>
 <span id="400">400</span>
 <span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
@@ -583,9 +598,9 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// `callback` will be called with the view</span>
     <span class='doccomment'>/// content and the current cursor position.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_edit</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>usize</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>,
-                                                               <span class='ident'>callback</span>: <span class='ident'>F</span>)
-                                                               <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_edit</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
+        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>usize</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
+    {
         <span class='self'>self</span>.<span class='ident'>on_edit</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>callback</span>));
         <span class='self'>self</span>
     }
@@ -593,9 +608,9 @@
     <span class='doccomment'>/// Sets a callback to be called when `&lt;Enter&gt;` is pressed.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// `callback` will be given the content of the view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_submit</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>,
-                                                          <span class='ident'>callback</span>: <span class='ident'>F</span>)
-                                                          <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_submit</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
+        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
+    {
         <span class='self'>self</span>.<span class='ident'>on_submit</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>callback</span>));
         <span class='self'>self</span>
     }
@@ -611,9 +626,13 @@
     }
 
     <span class='doccomment'>/// Replace the entire content of the view with the given one.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_content</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_content</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>S</span>) {
+        <span class='kw'>let</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>into</span>();
+        <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>len</span>();
+
+        <span class='self'>self</span>.<span class='ident'>content</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>content</span>);
         <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='self'>self</span>.<span class='ident'>content</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>content</span>.<span class='ident'>to_string</span>());
+        <span class='self'>self</span>.<span class='ident'>set_cursor</span>(<span class='ident'>len</span>);
     }
 
     <span class='doccomment'>/// Get the current text.</span>
@@ -624,9 +643,16 @@
     <span class='doccomment'>/// Sets the current content to the given value.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Convenient chainable method.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>content</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>content</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>set_content</span>(<span class='ident'>content</span>);
         <span class='self'>self</span>
+    }
+
+    <span class='doccomment'>/// Sets the cursor position.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_cursor</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cursor</span>: <span class='ident'>usize</span>) {
+        <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>=</span> <span class='ident'>cursor</span>;
+
+        <span class='self'>self</span>.<span class='ident'>keep_cursor_in_view</span>();
     }
 
     <span class='doccomment'>/// Insert `ch` at the current cursor position.</span>
@@ -643,6 +669,44 @@
         <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span>;
         <span class='kw'>let</span> <span class='ident'>end</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>+</span> <span class='ident'>len</span>;
         <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='ident'>Rc</span>::<span class='ident'>make_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>content</span>).<span class='ident'>drain</span>(<span class='ident'>start</span>..<span class='ident'>end</span>) {}
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>keep_cursor_in_view</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='comment'>// keep cursor in [offset, offset+last_length] by changing offset</span>
+        <span class='comment'>// so keep offset in [last_length-cursor,cursor]</span>
+        <span class='comment'>// Also call this on resize,</span>
+        <span class='comment'>// but right now it is an event like any other</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>offset</span> {
+            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span>;
+        } <span class='kw'>else</span> {
+            <span class='comment'>// So we&#39;re against the right wall.</span>
+            <span class='comment'>// Let&#39;s find how much space will be taken by the selection</span>
+            <span class='comment'>// (either a char, or _)</span>
+            <span class='kw'>let</span> <span class='ident'>c_len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>cursor</span>..]
+                .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
+                .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>g</span><span class='op'>|</span> <span class='ident'>g</span>.<span class='ident'>width</span>())
+                .<span class='ident'>next</span>()
+                .<span class='ident'>unwrap_or</span>(<span class='number'>1</span>);
+            <span class='comment'>// Now, we have to fit self.content[..self.cursor]</span>
+            <span class='comment'>// into self.last_length - c_len.</span>
+            <span class='kw'>let</span> <span class='ident'>available</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>-</span> <span class='ident'>c_len</span>;
+            <span class='comment'>// Look at the content before the cursor (we will print its tail).</span>
+            <span class='comment'>// From the end, count the length until we reach `available`.</span>
+            <span class='comment'>// Then sum the byte lengths.</span>
+            <span class='kw'>let</span> <span class='ident'>suffix_length</span> <span class='op'>=</span>
+                <span class='ident'>simple_suffix_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..<span class='self'>self</span>.<span class='ident'>cursor</span>],
+                                     <span class='ident'>available</span>);
+            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-</span> <span class='ident'>suffix_length</span>;
+            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>offset</span>);
+
+        }
+
+        <span class='comment'>// If we have too much space</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..].<span class='ident'>width</span>() <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> {
+            <span class='kw'>let</span> <span class='ident'>suffix_length</span> <span class='op'>=</span> <span class='ident'>simple_suffix_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>,
+                                                     <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>-</span> <span class='number'>1</span>);
+            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='ident'>suffix_length</span>;
+        }
     }
 }
 
@@ -796,41 +860,7 @@
             _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span>,
         }
 
-        <span class='comment'>// Keep cursor in [offset, offset+last_length] by changing offset</span>
-        <span class='comment'>// So keep offset in [last_length-cursor,cursor]</span>
-        <span class='comment'>// Also call this on resize,</span>
-        <span class='comment'>// but right now it is an event like any other</span>
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>offset</span> {
-            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span>;
-        } <span class='kw'>else</span> {
-            <span class='comment'>// So we&#39;re against the right wall.</span>
-            <span class='comment'>// Let&#39;s find how much space will be taken by the selection</span>
-            <span class='comment'>// (either a char, or _)</span>
-            <span class='kw'>let</span> <span class='ident'>c_len</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>cursor</span>..]
-                .<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
-                .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>g</span><span class='op'>|</span> <span class='ident'>g</span>.<span class='ident'>width</span>())
-                .<span class='ident'>next</span>()
-                .<span class='ident'>unwrap_or</span>(<span class='number'>1</span>);
-            <span class='comment'>// Now, we have to fit self.content[..self.cursor]</span>
-            <span class='comment'>// into self.last_length - c_len.</span>
-            <span class='kw'>let</span> <span class='ident'>available</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>-</span> <span class='ident'>c_len</span>;
-            <span class='comment'>// Look at the content before the cursor (we will print its tail).</span>
-            <span class='comment'>// From the end, count the length until we reach `available`.</span>
-            <span class='comment'>// Then sum the byte lengths.</span>
-            <span class='kw'>let</span> <span class='ident'>suffix_length</span> <span class='op'>=</span>
-                <span class='ident'>simple_suffix_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..<span class='self'>self</span>.<span class='ident'>cursor</span>],
-                                     <span class='ident'>available</span>);
-            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>-</span> <span class='ident'>suffix_length</span>;
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>cursor</span> <span class='op'>&gt;=</span> <span class='self'>self</span>.<span class='ident'>offset</span>);
-
-        }
-
-        <span class='comment'>// If we have too much space</span>
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>content</span>[<span class='self'>self</span>.<span class='ident'>offset</span>..].<span class='ident'>width</span>() <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> {
-            <span class='kw'>let</span> <span class='ident'>suffix_length</span> <span class='op'>=</span> <span class='ident'>simple_suffix_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content</span>,
-                                                     <span class='self'>self</span>.<span class='ident'>last_length</span> <span class='op'>-</span> <span class='number'>1</span>);
-            <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>content</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='ident'>suffix_length</span>;
-        }
+        <span class='self'>self</span>.<span class='ident'>keep_cursor_in_view</span>();
 
         <span class='kw'>let</span> <span class='ident'>cb</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>on_edit</span>.<span class='ident'>clone</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>cb</span><span class='op'>|</span> {
 

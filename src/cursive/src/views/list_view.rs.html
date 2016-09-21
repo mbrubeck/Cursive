@@ -312,11 +312,6 @@
 <span id="268">268</span>
 <span id="269">269</span>
 <span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
-<span id="273">273</span>
-<span id="274">274</span>
-<span id="275">275</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>With</span>;
@@ -348,16 +343,6 @@
             _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
         }
     }
-
-    <span class='comment'>// Currently unused</span>
-    <span class='comment'>//</span>
-    <span class='comment'>// fn is_delimiter(&amp;self) -&gt; bool {</span>
-    <span class='comment'>// match *self {</span>
-    <span class='comment'>// Child::Row(_, _) =&gt; false,</span>
-    <span class='comment'>// Child::Delimiter =&gt; true,</span>
-    <span class='comment'>// }</span>
-    <span class='comment'>// }</span>
-    <span class='comment'>//</span>
 }
 
 <span class='doccomment'>/// Displays a scrollable list of elements.</span>
@@ -382,6 +367,11 @@
     <span class='doccomment'>/// Adds a view to the end of the list.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_child</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>label</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>view</span>: <span class='ident'>V</span>) {
         <span class='self'>self</span>.<span class='ident'>children</span>.<span class='ident'>push</span>(<span class='ident'>Child</span>::<span class='ident'>Row</span>(<span class='ident'>label</span>.<span class='ident'>to_string</span>(), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>view</span>)));
+    }
+
+    <span class='doccomment'>/// Removes all children from this view.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='self'>self</span>.<span class='ident'>children</span>.<span class='ident'>clear</span>();
     }
 
     <span class='doccomment'>/// Adds a view to the end of the list.</span>
@@ -585,11 +575,11 @@
         <span class='bool-val'>true</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>find</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selector</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>find_any</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selector</span>: <span class='kw-2'>&amp;</span><span class='ident'>Selector</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>children</span>
             .<span class='ident'>iter_mut</span>()
             .<span class='ident'>filter_map</span>(<span class='ident'>Child</span>::<span class='ident'>view</span>)
-            .<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> <span class='ident'>v</span>.<span class='ident'>find</span>(<span class='ident'>selector</span>))
+            .<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> <span class='ident'>v</span>.<span class='ident'>find_any</span>(<span class='ident'>selector</span>))
             .<span class='ident'>next</span>()
     }
 }

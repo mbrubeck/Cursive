@@ -309,19 +309,19 @@
         ::<span class='ident'>std</span>::<span class='ident'>env</span>::<span class='ident'>set_var</span>(<span class='string'>&quot;ESCDELAY&quot;</span>, <span class='string'>&quot;25&quot;</span>);
         <span class='ident'>ncurses</span>::<span class='ident'>setlocale</span>(<span class='ident'>ncurses</span>::<span class='ident'>LcCategory</span>::<span class='ident'>all</span>, <span class='string'>&quot;&quot;</span>);
         <span class='ident'>ncurses</span>::<span class='ident'>initscr</span>();
-        <span class='ident'>ncurses</span>::<span class='ident'>keypad</span>(<span class='ident'>ncurses</span>::<span class='ident'>stdscr</span>, <span class='bool-val'>true</span>);
+        <span class='ident'>ncurses</span>::<span class='ident'>keypad</span>(<span class='kw'>unsafe</span> { <span class='ident'>ncurses</span>::<span class='ident'>stdscr</span> }, <span class='bool-val'>true</span>);
         <span class='ident'>ncurses</span>::<span class='ident'>noecho</span>();
         <span class='ident'>ncurses</span>::<span class='ident'>cbreak</span>();
         <span class='ident'>ncurses</span>::<span class='ident'>start_color</span>();
         <span class='ident'>ncurses</span>::<span class='ident'>curs_set</span>(<span class='ident'>ncurses</span>::<span class='ident'>CURSOR_VISIBILITY</span>::<span class='ident'>CURSOR_INVISIBLE</span>);
-        <span class='ident'>ncurses</span>::<span class='ident'>wbkgd</span>(<span class='ident'>ncurses</span>::<span class='ident'>stdscr</span>,
+        <span class='ident'>ncurses</span>::<span class='ident'>wbkgd</span>(<span class='kw'>unsafe</span> { <span class='ident'>ncurses</span>::<span class='ident'>stdscr</span> },
                        <span class='ident'>ncurses</span>::<span class='ident'>COLOR_PAIR</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Background</span>.<span class='ident'>id</span>()));
     }
 
     <span class='kw'>fn</span> <span class='ident'>screen_size</span>() <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>) {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='ident'>ncurses</span>::<span class='ident'>getmaxyx</span>(<span class='ident'>ncurses</span>::<span class='ident'>stdscr</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>y</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>x</span>);
+        <span class='ident'>ncurses</span>::<span class='ident'>getmaxyx</span>(<span class='kw'>unsafe</span> { <span class='ident'>ncurses</span>::<span class='ident'>stdscr</span> }, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>y</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>x</span>);
         (<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>usize</span>)
     }
 
