@@ -96,7 +96,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 
 <span class='kw'>use</span> <span class='ident'>Cursive</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
+<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>ToEvent</span>};
 <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
 
 <span class='doccomment'>/// A simple wrapper view that catches some ignored event from its child.</span>
@@ -117,10 +117,10 @@
     }
 
     <span class='doccomment'>/// Registers a callback when the given key is ignored by the child.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>E</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Event</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>E</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>E</span>: <span class='ident'>ToEvent</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>E</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
     {
-        <span class='self'>self</span>.<span class='ident'>callbacks</span>.<span class='ident'>insert</span>(<span class='ident'>event</span>.<span class='ident'>into</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>cb</span>));
+        <span class='self'>self</span>.<span class='ident'>callbacks</span>.<span class='ident'>insert</span>(<span class='ident'>event</span>.<span class='ident'>to_event</span>(), <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>cb</span>));
 
         <span class='self'>self</span>
     }

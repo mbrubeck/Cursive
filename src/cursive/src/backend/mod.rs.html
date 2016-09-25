@@ -81,25 +81,25 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>curses</span>::<span class='ident'>NcursesBackend</span>;
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Backend</span> {
-    <span class='kw'>fn</span> <span class='ident'>init</span>();
-    <span class='kw'>fn</span> <span class='ident'>finish</span>();
+    <span class='kw'>fn</span> <span class='ident'>init</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>);
 
     <span class='kw'>fn</span> <span class='ident'>clear</span>();
-    <span class='kw'>fn</span> <span class='ident'>refresh</span>();
+    <span class='kw'>fn</span> <span class='ident'>refresh</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>has_colors</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+    <span class='kw'>fn</span> <span class='ident'>has_colors</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>init_color_style</span>(<span class='ident'>style</span>: <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>, <span class='ident'>foreground</span>: <span class='kw-2'>&amp;</span><span class='ident'>theme</span>::<span class='ident'>Color</span>,
-                        <span class='ident'>background</span>: <span class='kw-2'>&amp;</span><span class='ident'>theme</span>::<span class='ident'>Color</span>);
+    <span class='kw'>fn</span> <span class='ident'>init_color_style</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>style</span>: <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>,
+                        <span class='ident'>foreground</span>: <span class='kw-2'>&amp;</span><span class='ident'>theme</span>::<span class='ident'>Color</span>, <span class='ident'>background</span>: <span class='kw-2'>&amp;</span><span class='ident'>theme</span>::<span class='ident'>Color</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>print_at</span>((<span class='ident'>usize</span>, <span class='ident'>usize</span>), <span class='kw-2'>&amp;</span><span class='ident'>str</span>);
+    <span class='kw'>fn</span> <span class='ident'>print_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, (<span class='ident'>usize</span>, <span class='ident'>usize</span>), <span class='kw-2'>&amp;</span><span class='ident'>str</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>poll_event</span>() <span class='op'>-&gt;</span> <span class='ident'>event</span>::<span class='ident'>Event</span>;
-    <span class='kw'>fn</span> <span class='ident'>set_refresh_rate</span>(<span class='ident'>fps</span>: <span class='ident'>u32</span>);
-    <span class='kw'>fn</span> <span class='ident'>screen_size</span>() <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>);
+    <span class='kw'>fn</span> <span class='ident'>poll_event</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>event</span>::<span class='ident'>Event</span>;
+    <span class='kw'>fn</span> <span class='ident'>set_refresh_rate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fps</span>: <span class='ident'>u32</span>);
+    <span class='kw'>fn</span> <span class='ident'>screen_size</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>with_color</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='ident'>color</span>: <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>, <span class='ident'>f</span>: <span class='ident'>F</span>);
-    <span class='kw'>fn</span> <span class='ident'>with_effect</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='ident'>effect</span>: <span class='ident'>theme</span>::<span class='ident'>Effect</span>, <span class='ident'>f</span>: <span class='ident'>F</span>);
+    <span class='kw'>fn</span> <span class='ident'>with_color</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>color</span>: <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>, <span class='ident'>f</span>: <span class='ident'>F</span>);
+    <span class='kw'>fn</span> <span class='ident'>with_effect</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>()<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>effect</span>: <span class='ident'>theme</span>::<span class='ident'>Effect</span>, <span class='ident'>f</span>: <span class='ident'>F</span>);
 }
 </pre>
 </section>

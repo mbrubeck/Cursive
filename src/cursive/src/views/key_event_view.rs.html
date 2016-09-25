@@ -123,7 +123,7 @@
     <span class='ident'>callbacks</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Event</span>, <span class='ident'>Callback</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>KeyEventView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>KeyEventView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Wraps the given view in a new KeyEventView.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>view</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>KeyEventView</span> {
@@ -142,7 +142,7 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>KeyEventView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> <span class='ident'>ViewWrapper</span> <span class='kw'>for</span> <span class='ident'>KeyEventView</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='macro'>wrap_impl</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>content</span>: <span class='ident'>T</span>);
 
     <span class='kw'>fn</span> <span class='ident'>wrap_on_event</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>EventResult</span> {

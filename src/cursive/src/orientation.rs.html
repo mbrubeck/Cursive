@@ -97,12 +97,6 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Define an Orientation and associated methods.</span>
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
@@ -117,12 +111,13 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Orientation</span> {
-    <span class='doccomment'>/// Returns the component of `v` corresponding to this orientation.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// (`Horizontal` will return the x value,</span>
-    <span class='doccomment'>/// and `Vertical` will return the y value.)</span>
+    <span class='doccomment'>/// Returns the component of the given vector corresponding to this orientation.</span>
+    <span class='doccomment'>/// (Horizontal will return the x value, and Vertical will return the y value.)</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>v</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec2</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='op'>*</span><span class='ident'>v</span>.<span class='ident'>get</span>(<span class='op'>*</span><span class='self'>self</span>)
+        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+            <span class='ident'>Orientation</span>::<span class='ident'>Horizontal</span> <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>x</span>,
+            <span class='ident'>Orientation</span>::<span class='ident'>Vertical</span> <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>y</span>,
+        }
     }
 
     <span class='doccomment'>/// Returns the other orientation.</span>
@@ -156,13 +151,6 @@
                 <span class='ident'>iter</span>.<span class='ident'>fold</span>(<span class='ident'>Vec2</span>::<span class='ident'>zero</span>(), <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>stack_vertical</span>(<span class='ident'>b</span>))
             }
         }
-    }
-
-    <span class='doccomment'>/// Creates a new `Vec2` with `value` in `self`&#39;s axis.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>make_vec</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>zero</span>();
-        <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>get_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>) <span class='op'>=</span> <span class='ident'>value</span>;
-        <span class='ident'>result</span>
     }
 }
 </pre>

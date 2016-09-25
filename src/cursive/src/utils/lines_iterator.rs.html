@@ -200,7 +200,6 @@
 <span id="156">156</span>
 <span id="157">157</span>
 <span id="158">158</span>
-<span id="159">159</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 <span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
@@ -334,7 +333,7 @@
                     <span class='comment'>// would include the whitespace in the row.</span>
                     <span class='self'>self</span>.<span class='ident'>offset</span> <span class='op'>+=</span> <span class='number'>1</span>;
                     <span class='ident'>other</span>
-                },
+                }
             };
 
         <span class='kw'>if</span> <span class='ident'>prefix_length</span> <span class='op'>==</span> <span class='number'>0</span> {
@@ -358,8 +357,7 @@
 <span class='kw'>mod</span> <span class='ident'>tests</span> {
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>test_layout</span>() {
-    }
+    <span class='kw'>fn</span> <span class='ident'>test_layout</span>() {}
 }
 </pre>
 </section>
