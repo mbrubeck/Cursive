@@ -99,6 +99,7 @@
 <span id="55">55</span>
 <span id="56">56</span>
 <span id="57">57</span>
+<span id="58">58</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 
@@ -113,10 +114,11 @@
 <span class='doccomment'>/// # Examples</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # use cursive::prelude::*;</span>
+<span class='doccomment'>/// # use cursive::event;;</span>
+<span class='doccomment'>/// # use cursive::views::{KeyEventView, TextView};</span>
 <span class='doccomment'>/// let view = KeyEventView::new(TextView::new(&quot;This view has an event!&quot;))</span>
 <span class='doccomment'>///                         .register(&#39;q&#39;, |s| s.quit())</span>
-<span class='doccomment'>///                         .register(Key::Esc, |s| s.quit());</span>
+<span class='doccomment'>///                         .register(event::Key::Esc, |s| s.quit());</span>
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>KeyEventView</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> {
     <span class='ident'>content</span>: <span class='ident'>T</span>,

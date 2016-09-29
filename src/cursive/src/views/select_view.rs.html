@@ -569,10 +569,16 @@
 <span id="525">525</span>
 <span id="526">526</span>
 <span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>Cell</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Borrow</span>;
 
 <span class='kw'>use</span> <span class='ident'>Cursive</span>;
 <span class='kw'>use</span> <span class='ident'>With</span>;
@@ -596,7 +602,8 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
 <span class='doccomment'>/// # extern crate cursive;</span>
-<span class='doccomment'>/// # use cursive::prelude::*;</span>
+<span class='doccomment'>/// # use cursive::Cursive;</span>
+<span class='doccomment'>/// # use cursive::views::{SelectView, Dialog, TextView};</span>
 <span class='doccomment'>/// # use cursive::align::HAlign;</span>
 <span class='doccomment'>/// # fn main() {</span>
 <span class='doccomment'>/// let mut time_select = SelectView::new().h_align(HAlign::Center);</span>
@@ -613,7 +620,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// let mut siv = Cursive::new();</span>
 <span class='doccomment'>/// siv.add_layer(Dialog::new(time_select)</span>
-<span class='doccomment'>///                 .title(&quot;How long is your wait?&quot;));</span>
+<span class='doccomment'>///                      .title(&quot;How long is your wait?&quot;));</span>
 <span class='doccomment'>/// # }</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
@@ -704,7 +711,6 @@
 
     <span class='doccomment'>/// Sets a callback to be used when an item is selected.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///</span>
     <span class='doccomment'>/// Chainable variant.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_select</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
@@ -715,10 +721,13 @@
     <span class='doccomment'>/// Sets a callback to be used when `&lt;Enter&gt;` is pressed.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// The item currently selected will be given to the callback.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_on_submit</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Here, `V` can be `T` itself, or a type that can be borrowed from `T`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_on_submit</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>V</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>)
+        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>V</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
+              <span class='ident'>T</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>
     {
-        <span class='self'>self</span>.<span class='ident'>on_submit</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>cb</span>));
+        <span class='self'>self</span>.<span class='ident'>on_submit</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>s</span>, <span class='ident'>t</span><span class='op'>|</span> <span class='ident'>cb</span>(<span class='ident'>s</span>, <span class='ident'>t</span>.<span class='ident'>borrow</span>())));
     }
 
     <span class='doccomment'>/// Sets a callback to be used when `&lt;Enter&gt;` is pressed.</span>
@@ -726,8 +735,9 @@
     <span class='doccomment'>/// The item currently selected will be given to the callback.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_submit</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>T</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_submit</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>V</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>cb</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
+        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>, <span class='kw-2'>&amp;</span><span class='ident'>V</span>) <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
+              <span class='ident'>T</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>
     {
         <span class='self'>self</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>set_on_submit</span>(<span class='ident'>cb</span>))
     }
