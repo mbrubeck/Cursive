@@ -184,17 +184,21 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
+<span class='kw'>use</span> <span class='ident'>Printer</span>;
+<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
 
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
+<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
+<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Offset</span>, <span class='ident'>Position</span>, <span class='ident'>Selector</span>, <span class='ident'>View</span>};
 <span class='kw'>use</span> <span class='ident'>views</span>::<span class='ident'>ShadowView</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>};
-<span class='kw'>use</span> <span class='ident'>Printer</span>;
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 
 <span class='doccomment'>/// Simple stack of views.</span>
 <span class='doccomment'>/// Only the top-most view is active and can receive input.</span>
@@ -292,7 +296,11 @@
 
         <span class='kw'>for</span> <span class='ident'>layer</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>layers</span> {
             <span class='comment'>// Give each guy what he asks for, within the budget constraints.</span>
-            <span class='ident'>layer</span>.<span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>min</span>(<span class='ident'>size</span>, <span class='ident'>layer</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>size</span>));
+            <span class='kw'>let</span> <span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>Vec2</span>::<span class='ident'>min</span>(<span class='ident'>size</span>, <span class='ident'>layer</span>.<span class='ident'>view</span>.<span class='ident'>get_min_size</span>(<span class='ident'>size</span>));
+            <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>layer</span>.<span class='ident'>size</span>.<span class='ident'>fits_in</span>(<span class='ident'>size</span>) {
+                ::<span class='ident'>B</span>::<span class='ident'>clear</span>();
+            }
+            <span class='ident'>layer</span>.<span class='ident'>size</span> <span class='op'>=</span> <span class='ident'>size</span>;
             <span class='ident'>layer</span>.<span class='ident'>view</span>.<span class='ident'>layout</span>(<span class='ident'>layer</span>.<span class='ident'>size</span>);
 
             <span class='comment'>// We do it here instead of when adding a new layer because...?</span>

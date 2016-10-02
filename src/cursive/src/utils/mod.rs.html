@@ -122,15 +122,11 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
-<span id="83">83</span>
-<span id="84">84</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Toolbox to make text layout easier.</span>
 
-<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 <span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
+<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 
 <span class='kw'>mod</span> <span class='ident'>lines_iterator</span>;
 <span class='kw'>mod</span> <span class='ident'>reader</span>;
@@ -184,11 +180,7 @@
 
     <span class='comment'>// We counted delimiter once too many times,</span>
     <span class='comment'>// but only if the iterator was non empty.</span>
-    <span class='kw'>if</span> <span class='ident'>sum</span> <span class='op'>==</span> <span class='number'>0</span> {
-        <span class='ident'>sum</span>
-    } <span class='kw'>else</span> {
-        <span class='ident'>sum</span> <span class='op'>-</span> <span class='ident'>delimiter_len</span>
-    }
+    <span class='kw'>if</span> <span class='ident'>sum</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='ident'>sum</span> } <span class='kw'>else</span> { <span class='ident'>sum</span> <span class='op'>-</span> <span class='ident'>delimiter_len</span> }
 }
 
 <span class='doccomment'>/// Computes the length of a suffix that fits in the given `width`.</span>

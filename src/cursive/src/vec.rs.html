@@ -330,13 +330,15 @@
 <span id="286">286</span>
 <span id="287">287</span>
 <span id="288">288</span>
+<span id="289">289</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Points on the 2D character grid.</span>
+
 <span class='kw'>use</span> <span class='ident'>XY</span>;
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Orientation</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>Ordering</span>, <span class='ident'>max</span>, <span class='ident'>min</span>};
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Div</span>, <span class='ident'>Mul</span>, <span class='ident'>Sub</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>Ordering</span>, <span class='ident'>max</span>, <span class='ident'>min</span>};
 
 <span class='doccomment'>/// Simple 2D size, in cells.</span>
 <span class='doccomment'>///</span>

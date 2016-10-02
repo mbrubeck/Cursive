@@ -502,18 +502,20 @@
 <span id="458">458</span>
 <span id="459">459</span>
 <span id="460">460</span>
+<span id="461">461</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
-<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
-<span class='kw'>use</span> <span class='ident'>odds</span>::<span class='ident'>vec</span>::<span class='ident'>VecExt</span>;
+
 
 <span class='kw'>use</span> {<span class='ident'>Printer</span>, <span class='ident'>With</span>, <span class='ident'>XY</span>};
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
-<span class='kw'>use</span> <span class='ident'>utils</span>::{<span class='ident'>LinesIterator</span>, <span class='ident'>Row</span>, <span class='ident'>prefix_length</span>};
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>ScrollBase</span>, <span class='ident'>SizeCache</span>, <span class='ident'>View</span>};
+<span class='kw'>use</span> <span class='ident'>odds</span>::<span class='ident'>vec</span>::<span class='ident'>VecExt</span>;
 <span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>};
+<span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
+<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
+<span class='kw'>use</span> <span class='ident'>utils</span>::{<span class='ident'>LinesIterator</span>, <span class='ident'>Row</span>, <span class='ident'>prefix_length</span>};
+<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
+<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>ScrollBase</span>, <span class='ident'>SizeCache</span>, <span class='ident'>View</span>};
 
 <span class='doccomment'>/// Multi-lines text editor.</span>
 <span class='doccomment'>///</span>

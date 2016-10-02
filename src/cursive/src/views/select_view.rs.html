@@ -571,28 +571,26 @@
 <span id="527">527</span>
 <span id="528">528</span>
 <span id="529">529</span>
-<span id="530">530</span>
-<span id="531">531</span>
-<span id="532">532</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>Cell</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Borrow</span>;
+
 
 <span class='kw'>use</span> <span class='ident'>Cursive</span>;
-<span class='kw'>use</span> <span class='ident'>With</span>;
-<span class='kw'>use</span> <span class='ident'>menu</span>::<span class='ident'>MenuTree</span>;
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Position</span>, <span class='ident'>ScrollBase</span>, <span class='ident'>View</span>};
-<span class='kw'>use</span> <span class='ident'>views</span>::<span class='ident'>MenuPopup</span>;
-<span class='kw'>use</span> <span class='ident'>align</span>::{<span class='ident'>Align</span>, <span class='ident'>HAlign</span>, <span class='ident'>VAlign</span>};
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>Printer</span>;
+<span class='kw'>use</span> <span class='ident'>With</span>;
+<span class='kw'>use</span> <span class='ident'>align</span>::{<span class='ident'>Align</span>, <span class='ident'>HAlign</span>, <span class='ident'>VAlign</span>};
+<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
+<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
+<span class='kw'>use</span> <span class='ident'>menu</span>::<span class='ident'>MenuTree</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Borrow</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>Cell</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
+<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
+<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
+<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Position</span>, <span class='ident'>ScrollBase</span>, <span class='ident'>View</span>};
+<span class='kw'>use</span> <span class='ident'>views</span>::<span class='ident'>MenuPopup</span>;
 
 <span class='doccomment'>/// View to select an item among a list.</span>
 <span class='doccomment'>///</span>
@@ -614,12 +612,12 @@
 <span class='doccomment'>/// time_select.set_on_submit(|s, time| {</span>
 <span class='doccomment'>///     s.pop_layer();</span>
 <span class='doccomment'>///     let text = format!(&quot;You will wait for {} minutes...&quot;, time);</span>
-<span class='doccomment'>///     s.add_layer(Dialog::new(TextView::new(text))</span>
+<span class='doccomment'>///     s.add_layer(Dialog::around(TextView::new(text))</span>
 <span class='doccomment'>///                     .button(&quot;Quit&quot;, |s| s.quit()));</span>
 <span class='doccomment'>/// });</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// let mut siv = Cursive::new();</span>
-<span class='doccomment'>/// siv.add_layer(Dialog::new(time_select)</span>
+<span class='doccomment'>/// siv.add_layer(Dialog::around(time_select)</span>
 <span class='doccomment'>///                      .title(&quot;How long is your wait?&quot;));</span>
 <span class='doccomment'>/// # }</span>
 <span class='doccomment'>///</span>
@@ -971,11 +969,7 @@
             <span class='kw'>let</span> <span class='ident'>scrolling</span> <span class='op'>=</span> <span class='ident'>req</span>.<span class='ident'>y</span> <span class='op'>&lt;</span> <span class='ident'>h</span>;
 
             <span class='comment'>// Add 2 spaces for the scrollbar if we need</span>
-            <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>scrolling</span> {
-                <span class='ident'>w</span> <span class='op'>+</span> <span class='number'>2</span>
-            } <span class='kw'>else</span> {
-                <span class='ident'>w</span>
-            };
+            <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>scrolling</span> { <span class='ident'>w</span> <span class='op'>+</span> <span class='number'>2</span> } <span class='kw'>else</span> { <span class='ident'>w</span> };
 
             <span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='ident'>w</span>, <span class='ident'>h</span>)
         }

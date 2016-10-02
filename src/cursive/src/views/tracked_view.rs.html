@@ -88,12 +88,12 @@
 <span id="44">44</span>
 <span id="45">45</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>Cell</span>;
+<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>View</span>, <span class='ident'>ViewWrapper</span>};
 <span class='kw'>use</span> <span class='ident'>views</span>::<span class='ident'>IdView</span>;
-<span class='kw'>use</span> <span class='ident'>Printer</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='doccomment'>/// Wrapper around a view that remembers its position.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TrackedView</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>View</span><span class='op'>&gt;</span> {

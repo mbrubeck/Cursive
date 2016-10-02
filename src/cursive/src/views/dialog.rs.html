@@ -444,22 +444,24 @@
 <span id="400">400</span>
 <span id="401">401</span>
 <span id="402">402</span>
+<span id="403">403</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
+
 
 <span class='kw'>use</span> <span class='ident'>Cursive</span>;
-<span class='kw'>use</span> <span class='ident'>With</span>;
-<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
-<span class='kw'>use</span> <span class='ident'>align</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Selector</span>, <span class='ident'>View</span>};
-<span class='kw'>use</span> <span class='ident'>views</span>::{<span class='ident'>Button</span>, <span class='ident'>DummyView</span>, <span class='ident'>SizedView</span>, <span class='ident'>TextView</span>};
-<span class='kw'>use</span> <span class='ident'>vec</span>::{<span class='ident'>Vec2</span>, <span class='ident'>Vec4</span>};
 <span class='kw'>use</span> <span class='ident'>Printer</span>;
+<span class='kw'>use</span> <span class='ident'>With</span>;
+<span class='kw'>use</span> <span class='ident'>align</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
+<span class='kw'>use</span> <span class='ident'>event</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>max</span>;
+<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
 
 <span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
+<span class='kw'>use</span> <span class='ident'>vec</span>::{<span class='ident'>Vec2</span>, <span class='ident'>Vec4</span>};
+<span class='kw'>use</span> <span class='ident'>view</span>::{<span class='ident'>Selector</span>, <span class='ident'>View</span>};
+<span class='kw'>use</span> <span class='ident'>views</span>::{<span class='ident'>Button</span>, <span class='ident'>DummyView</span>, <span class='ident'>SizedView</span>, <span class='ident'>TextView</span>};
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>enum</span> <span class='ident'>Focus</span> {
@@ -473,7 +475,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
 <span class='doccomment'>/// # use cursive::views::{Dialog,TextView};</span>
-<span class='doccomment'>/// let dialog = Dialog::new(TextView::new(&quot;Hello!&quot;))</span>
+<span class='doccomment'>/// let dialog = Dialog::around(TextView::new(&quot;Hello!&quot;))</span>
 <span class='doccomment'>///                     .button(&quot;Ok&quot;, |s| s.quit());</span>
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Dialog</span> {
@@ -494,12 +496,12 @@
     <span class='doccomment'>/// Creates a new `Dialog` with empty content.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// You should probably call `content()` next.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>new</span>(<span class='ident'>DummyView</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='self'>Self</span>::<span class='ident'>around</span>(<span class='ident'>DummyView</span>)
     }
 
     <span class='doccomment'>/// Creates a new `Dialog` with the given content.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='ident'>view</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>around</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>View</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='ident'>view</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>Dialog</span> {
             <span class='ident'>content</span>: <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>view</span>),
             <span class='ident'>buttons</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
@@ -527,7 +529,7 @@
 
     <span class='doccomment'>/// Convenient method to create a dialog with a simple text content.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>text</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='ident'>text</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>new</span>(<span class='ident'>TextView</span>::<span class='ident'>new</span>(<span class='ident'>text</span>))
+        <span class='self'>Self</span>::<span class='ident'>around</span>(<span class='ident'>TextView</span>::<span class='ident'>new</span>(<span class='ident'>text</span>))
     }
 
     <span class='doccomment'>/// Convenient method to create an infobox.</span>

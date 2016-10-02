@@ -137,9 +137,10 @@
 <span id="93">93</span>
 <span id="94">94</span>
 <span id="95">95</span>
+<span id="96">96</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
 <span class='kw'>use</span> <span class='ident'>XY</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='doccomment'>/// Location of the view on screen</span>
@@ -200,7 +201,8 @@
 
 <span class='kw'>impl</span> <span class='ident'>Offset</span> {
     <span class='doccomment'>/// Computes a single-dimension offset requred to draw a view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>compute_offset</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>, <span class='ident'>available</span>: <span class='ident'>usize</span>, <span class='ident'>parent</span>: <span class='ident'>usize</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>compute_offset</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>size</span>: <span class='ident'>usize</span>, <span class='ident'>available</span>: <span class='ident'>usize</span>,
+                          <span class='ident'>parent</span>: <span class='ident'>usize</span>)
                           <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
         <span class='kw'>if</span> <span class='ident'>size</span> <span class='op'>&gt;</span> <span class='ident'>available</span> {
             <span class='number'>0</span>
@@ -219,18 +221,18 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>tests</span> {
 
-    <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
     <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>Position</span>;
+    <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_center</span>() {
-        <span class='kw'>let</span> <span class='ident'>center</span> <span class='op'>=</span> <span class='ident'>Position</span>::<span class='ident'>center</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>1</span>), <span class='ident'>center</span>.<span class='ident'>compute_offset</span>((<span class='number'>1</span>,<span class='number'>1</span>), (<span class='number'>5</span>,<span class='number'>3</span>), (<span class='number'>0</span>,<span class='number'>0</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>0</span>), <span class='ident'>center</span>.<span class='ident'>compute_offset</span>((<span class='number'>1</span>,<span class='number'>3</span>), (<span class='number'>5</span>,<span class='number'>3</span>), (<span class='number'>0</span>,<span class='number'>0</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>center</span>.<span class='ident'>compute_offset</span>((<span class='number'>3</span>,<span class='number'>1</span>), (<span class='number'>5</span>,<span class='number'>3</span>), (<span class='number'>0</span>,<span class='number'>0</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>), <span class='ident'>center</span>.<span class='ident'>compute_offset</span>((<span class='number'>5</span>,<span class='number'>1</span>), (<span class='number'>5</span>,<span class='number'>3</span>), (<span class='number'>0</span>,<span class='number'>0</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>center</span>.<span class='ident'>compute_offset</span>((<span class='number'>5</span>,<span class='number'>3</span>), (<span class='number'>5</span>,<span class='number'>3</span>), (<span class='number'>0</span>,<span class='number'>0</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>center</span>.<span class='ident'>compute_offset</span>((<span class='number'>5</span>,<span class='number'>3</span>), (<span class='number'>3</span>,<span class='number'>1</span>), (<span class='number'>0</span>,<span class='number'>0</span>)));
+        <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>Position</span>::<span class='ident'>center</span>();
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>1</span>), <span class='ident'>c</span>.<span class='ident'>compute_offset</span>((<span class='number'>1</span>, <span class='number'>1</span>), (<span class='number'>5</span>, <span class='number'>3</span>), (<span class='number'>0</span>, <span class='number'>0</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>0</span>), <span class='ident'>c</span>.<span class='ident'>compute_offset</span>((<span class='number'>1</span>, <span class='number'>3</span>), (<span class='number'>5</span>, <span class='number'>3</span>), (<span class='number'>0</span>, <span class='number'>0</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>), <span class='ident'>c</span>.<span class='ident'>compute_offset</span>((<span class='number'>3</span>, <span class='number'>1</span>), (<span class='number'>5</span>, <span class='number'>3</span>), (<span class='number'>0</span>, <span class='number'>0</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>), <span class='ident'>c</span>.<span class='ident'>compute_offset</span>((<span class='number'>5</span>, <span class='number'>1</span>), (<span class='number'>5</span>, <span class='number'>3</span>), (<span class='number'>0</span>, <span class='number'>0</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>c</span>.<span class='ident'>compute_offset</span>((<span class='number'>5</span>, <span class='number'>3</span>), (<span class='number'>5</span>, <span class='number'>3</span>), (<span class='number'>0</span>, <span class='number'>0</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Vec2</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>c</span>.<span class='ident'>compute_offset</span>((<span class='number'>5</span>, <span class='number'>3</span>), (<span class='number'>3</span>, <span class='number'>1</span>), (<span class='number'>0</span>, <span class='number'>0</span>)));
     }
 }
 </pre>

@@ -308,21 +308,17 @@
 <span id="264">264</span>
 <span id="265">265</span>
 <span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
-<span id="269">269</span>
-<span id="270">270</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>Printer</span>;
 <span class='kw'>use</span> <span class='ident'>With</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>Selector</span>;
 <span class='kw'>use</span> <span class='ident'>direction</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>ScrollBase</span>;
 <span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
+<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
+<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>ScrollBase</span>;
+<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>Selector</span>;
+<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
 
 <span class='kw'>enum</span> <span class='ident'>Child</span> {
     <span class='ident'>Row</span>(<span class='ident'>String</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>View</span><span class='op'>&gt;</span>),
@@ -399,11 +395,7 @@
 
         <span class='kw'>match</span> <span class='ident'>source</span> {
             <span class='ident'>direction</span>::<span class='ident'>Relative</span>::<span class='ident'>Front</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>from_focus</span> {
-                    <span class='self'>self</span>.<span class='ident'>focus</span>
-                } <span class='kw'>else</span> {
-                    <span class='number'>0</span>
-                };
+                <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>from_focus</span> { <span class='self'>self</span>.<span class='ident'>focus</span> } <span class='kw'>else</span> { <span class='number'>0</span> };
 
                 <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>children</span>.<span class='ident'>iter_mut</span>().<span class='ident'>enumerate</span>().<span class='ident'>skip</span>(<span class='ident'>start</span>))
             }

@@ -176,44 +176,17 @@
 <span id="132">132</span>
 <span id="133">133</span>
 <span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>With</span>;
 <span class='kw'>use</span> <span class='ident'>Cursive</span>;
 <span class='kw'>use</span> <span class='ident'>Printer</span>;
-<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
-<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
-<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
+<span class='kw'>use</span> <span class='ident'>With</span>;
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
+<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
+<span class='kw'>use</span> <span class='ident'>theme</span>::<span class='ident'>ColorStyle</span>;
+<span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
+<span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
 
 
 <span class='doccomment'>/// Checkable box.</span>
@@ -227,6 +200,8 @@
 <span class='macro'>new_default</span><span class='macro'>!</span>(<span class='ident'>Checkbox</span>);
 
 <span class='kw'>impl</span> <span class='ident'>Checkbox</span> {
+    <span class='macro'>impl_enabled</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>enabled</span>);
+
     <span class='doccomment'>/// Creates a new, unchecked checkbox.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>Checkbox</span> {
@@ -234,35 +209,6 @@
             <span class='ident'>enabled</span>: <span class='bool-val'>true</span>,
             <span class='ident'>on_change</span>: <span class='prelude-val'>None</span>,
         }
-    }
-
-    <span class='doccomment'>/// Disables this view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// A disabled view cannot be selected.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
-    }
-
-    <span class='doccomment'>/// Disables this view.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Chainable variant.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disabled</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with</span>(<span class='self'>Self</span>::<span class='ident'>disable</span>)
-    }
-
-    <span class='doccomment'>/// Re-enables this view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
-    }
-
-    <span class='doccomment'>/// Enable or disable this view.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_enabled</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>enabled</span>: <span class='ident'>bool</span>) {
-        <span class='self'>self</span>.<span class='ident'>enabled</span> <span class='op'>=</span> <span class='ident'>enabled</span>;
-    }
-
-    <span class='doccomment'>/// Returns `true` if this view is enabled.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_enabled</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>enabled</span>
     }
 
     <span class='doccomment'>/// Sets a callback to be used when the state changes.</span>

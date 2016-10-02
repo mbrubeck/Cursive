@@ -680,16 +680,16 @@
 <span class='doccomment'>//! 	highlight_inactive = &quot;#5555FF&quot;</span>
 <span class='doccomment'>//! ```</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Read</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
-
-<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
-
-<span class='kw'>use</span> <span class='ident'>toml</span>;
 
 <span class='kw'>use</span> <span class='ident'>B</span>;
+
+<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>Read</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
+
+<span class='kw'>use</span> <span class='ident'>toml</span>;
 
 <span class='doccomment'>/// Text effect</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>)]</span>
@@ -799,32 +799,32 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>activate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>backend</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
         <span class='comment'>// Initialize each color with the backend</span>
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Background</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>background</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>background</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Shadow</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>shadow</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>shadow</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>shadow</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>shadow</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Primary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>primary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>primary</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Secondary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>secondary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>secondary</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Tertiary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>tertiary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>tertiary</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>TitlePrimary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>title_primary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>title_primary</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>TitleSecondary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>title_secondary</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>title_secondary</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>Highlight</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>highlight</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>highlight</span>);
         <span class='ident'>backend</span>.<span class='ident'>init_color_style</span>(<span class='ident'>ColorStyle</span>::<span class='ident'>HighlightInactive</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
-                            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>highlight_inactive</span>);
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>view</span>,
+                                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>colors</span>.<span class='ident'>highlight_inactive</span>);
     }
 }
 

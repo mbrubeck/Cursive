@@ -89,8 +89,78 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Various views to use when creating the layout.</span>
+
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_enabled</span> {
+    (<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>:<span class='ident'>ident</span>) <span class='op'>=&gt;</span> {
+
+        <span class='doccomment'>/// Disables this view.</span>
+        <span class='doccomment'>///</span>
+        <span class='doccomment'>/// A disabled view cannot be selected.</span>
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+            <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+        }
+
+        <span class='doccomment'>/// Disables this view.</span>
+        <span class='doccomment'>///</span>
+        <span class='doccomment'>/// Chainable variant.</span>
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disabled</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+            <span class='self'>self</span>.<span class='ident'>with</span>(<span class='self'>Self</span>::<span class='ident'>disable</span>)
+        }
+
+        <span class='doccomment'>/// Re-enables this view.</span>
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+            <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
+        }
+
+        <span class='doccomment'>/// Enable or disable this view.</span>
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_enabled</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>enabled</span>: <span class='ident'>bool</span>) {
+            <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span> <span class='op'>=</span> <span class='ident'>enabled</span>;
+        }
+
+        <span class='doccomment'>/// Returns `true` if this view is enabled.</span>
+        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_enabled</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+            <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>
+        }
+    }
+}
 
 <span class='kw'>mod</span> <span class='ident'>box_view</span>;
 <span class='kw'>mod</span> <span class='ident'>button</span>;
@@ -106,6 +176,7 @@
 <span class='kw'>mod</span> <span class='ident'>menu_popup</span>;
 <span class='kw'>mod</span> <span class='ident'>panel</span>;
 <span class='kw'>mod</span> <span class='ident'>progress_bar</span>;
+<span class='kw'>mod</span> <span class='ident'>radio</span>;
 <span class='kw'>mod</span> <span class='ident'>select_view</span>;
 <span class='kw'>mod</span> <span class='ident'>slider_view</span>;
 <span class='kw'>mod</span> <span class='ident'>shadow_view</span>;
@@ -115,24 +186,25 @@
 <span class='kw'>mod</span> <span class='ident'>text_view</span>;
 <span class='kw'>mod</span> <span class='ident'>tracked_view</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>id_view</span>::<span class='ident'>IdView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>box_view</span>::<span class='ident'>BoxView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>button</span>::<span class='ident'>Button</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>checkbox</span>::<span class='ident'>Checkbox</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>dialog</span>::<span class='ident'>Dialog</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>dummy</span>::<span class='ident'>DummyView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>edit_view</span>::<span class='ident'>EditView</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>id_view</span>::<span class='ident'>IdView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>key_event_view</span>::<span class='ident'>KeyEventView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>linear_layout</span>::<span class='ident'>LinearLayout</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>list_view</span>::<span class='ident'>ListView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>menubar</span>::<span class='ident'>Menubar</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>menu_popup</span>::<span class='ident'>MenuPopup</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>menubar</span>::<span class='ident'>Menubar</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>panel</span>::<span class='ident'>Panel</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>progress_bar</span>::{<span class='ident'>Counter</span>, <span class='ident'>ProgressBar</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>radio</span>::{<span class='ident'>RadioGroup</span>, <span class='ident'>RadioButton</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>select_view</span>::<span class='ident'>SelectView</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>slider_view</span>::<span class='ident'>SliderView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>shadow_view</span>::<span class='ident'>ShadowView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>sized_view</span>::<span class='ident'>SizedView</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>slider_view</span>::<span class='ident'>SliderView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>stack_view</span>::<span class='ident'>StackView</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>text_area</span>::<span class='ident'>TextArea</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>text_view</span>::<span class='ident'>TextView</span>;

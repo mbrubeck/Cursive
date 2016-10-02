@@ -289,15 +289,15 @@
 </pre><pre class='rust '>
 <span class='doccomment'>//! Makes drawing on ncurses windows easier.</span>
 
+
+<span class='kw'>use</span> <span class='ident'>B</span>;
+<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
+
+<span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>BorderStyle</span>, <span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>, <span class='ident'>Theme</span>};
 <span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
 
 <span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>prefix_length</span>;
-<span class='kw'>use</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span>;
-
-<span class='kw'>use</span> <span class='ident'>B</span>;
-
-<span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>BorderStyle</span>, <span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>, <span class='ident'>Theme</span>};
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 
 <span class='doccomment'>/// Convenient interface to draw on a subset of the screen.</span>

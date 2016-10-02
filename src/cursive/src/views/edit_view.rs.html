@@ -457,22 +457,20 @@
 <span id="413">413</span>
 <span id="414">414</span>
 <span id="415">415</span>
-<span id="416">416</span>
-<span id="417">417</span>
-<span id="418">418</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
-<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 
 <span class='kw'>use</span> {<span class='ident'>Cursive</span>, <span class='ident'>Printer</span>, <span class='ident'>With</span>};
 <span class='kw'>use</span> <span class='ident'>direction</span>::<span class='ident'>Direction</span>;
+<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
+
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 <span class='kw'>use</span> <span class='ident'>theme</span>::{<span class='ident'>ColorStyle</span>, <span class='ident'>Effect</span>};
+<span class='kw'>use</span> <span class='ident'>unicode_segmentation</span>::<span class='ident'>UnicodeSegmentation</span>;
+<span class='kw'>use</span> <span class='ident'>unicode_width</span>::<span class='ident'>UnicodeWidthStr</span>;
+<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>simple_suffix_length</span>;
 <span class='kw'>use</span> <span class='ident'>vec</span>::<span class='ident'>Vec2</span>;
 <span class='kw'>use</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
-<span class='kw'>use</span> <span class='ident'>event</span>::{<span class='ident'>Callback</span>, <span class='ident'>Event</span>, <span class='ident'>EventResult</span>, <span class='ident'>Key</span>};
-<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>simple_suffix_length</span>;
 
 
 <span class='doccomment'>/// Input box where the user can enter and edit text.</span>
@@ -494,7 +492,7 @@
 <span class='doccomment'>/// // Create a dialog with an edit text and a button.</span>
 <span class='doccomment'>/// // The user can either hit the &lt;Ok&gt; button,</span>
 <span class='doccomment'>/// // or press Enter on the edit text.</span>
-<span class='doccomment'>/// siv.add_layer(Dialog::empty()</span>
+<span class='doccomment'>/// siv.add_layer(Dialog::new()</span>
 <span class='doccomment'>///     .title(&quot;Enter your name&quot;)</span>
 <span class='doccomment'>///     .padding((1, 1, 1, 0))</span>
 <span class='doccomment'>///     .content(EditView::new()</span>
@@ -514,7 +512,7 @@
 <span class='doccomment'>///     } else {</span>
 <span class='doccomment'>///         let content = format!(&quot;Hello {}!&quot;, name);</span>
 <span class='doccomment'>///         s.pop_layer();</span>
-<span class='doccomment'>///         s.add_layer(Dialog::new(TextView::new(content))</span>
+<span class='doccomment'>///         s.add_layer(Dialog::around(TextView::new(content))</span>
 <span class='doccomment'>///             .button(&quot;Quit&quot;, |s| s.quit()));</span>
 <span class='doccomment'>///     }</span>
 <span class='doccomment'>/// }</span>
@@ -752,11 +750,7 @@
                     <span class='kw'>let</span> <span class='ident'>display_bytes</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>graphemes</span>(<span class='bool-val'>true</span>)
                         .<span class='ident'>scan</span>(<span class='number'>0</span>, <span class='op'>|</span><span class='ident'>w</span>, <span class='ident'>g</span><span class='op'>|</span> {
                             <span class='op'>*</span><span class='ident'>w</span> <span class='op'>+=</span> <span class='ident'>g</span>.<span class='ident'>width</span>();
-                            <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>w</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> {
-                                <span class='prelude-val'>None</span>
-                            } <span class='kw'>else</span> {
-                                <span class='prelude-val'>Some</span>(<span class='ident'>g</span>)
-                            }
+                            <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>w</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>last_length</span> { <span class='prelude-val'>None</span> } <span class='kw'>else</span> { <span class='prelude-val'>Some</span>(<span class='ident'>g</span>) }
                         })
                         .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>g</span><span class='op'>|</span> <span class='ident'>g</span>.<span class='ident'>len</span>())
                         .<span class='ident'>fold</span>(<span class='number'>0</span>, <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>);
