@@ -71,11 +71,13 @@
                            <span id='theme.v' class='invisible'>
                            <code>theme: <a class='struct' href='../cursive/theme/struct.Theme.html' title='cursive::theme::Theme'>Theme</a></code>
                            </span></span><span class='stab '></span><div class='docblock'><p>Currently used theme</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2737' class='srclink' href='../src/cursive/src/printer.rs.html#32-269' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../cursive/struct.Printer.html' title='cursive::Printer'>Printer</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2737' class='srclink' href='../src/cursive/src/printer.rs.html#32-271' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clear' class='method'><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;self)</code></span></h4>
 <div class='docblock'><p>Clear the screen.</p>
 
-<p>Careful with this method, it will discard anything drawn before.</p>
+<p>It will discard anything drawn before.</p>
+
+<p>Users rarely need to call this directly.</p>
 </div><h4 id='method.is_new' class='method'><span id='is_new.v' class='invisible'><code>fn <a href='#method.is_new' class='fnname'>is_new</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
 <div class='docblock'><p>Returns <code>true</code> if nothing has been printed yet.</p>
 </div><h4 id='method.print' class='method'><span id='print.v' class='invisible'><code>fn <a href='#method.print' class='fnname'>print</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../cursive/vec/type.Vec2.html' title='cursive::vec::Vec2'>Vec2</a>&gt;&gt;(&amp;self, pos: S, text: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></span></h4>

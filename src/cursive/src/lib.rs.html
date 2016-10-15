@@ -612,6 +612,15 @@
 <span id="568">568</span>
 <span id="569">569</span>
 <span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Cursive</span>
 <span class='doccomment'>//!</span>
@@ -739,7 +748,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>xy</span>::<span class='ident'>XY</span>;
 
 
-<span class='doccomment'>/// Identifies a screen in the cursive ROOT.</span>
+<span class='doccomment'>/// Identifies a screen in the cursive root.</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>ScreenId</span> <span class='op'>=</span> <span class='ident'>usize</span>;
 
 <span class='doccomment'>/// Central part of the cursive library.</span>
@@ -774,7 +783,6 @@
 <span class='kw'>impl</span> <span class='ident'>Cursive</span> {
     <span class='doccomment'>/// Creates a new Cursive root, and initialize the back-end.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='comment'>// Default delay is way too long. 25 is imperceptible yet works fine.</span>
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>backend</span> <span class='op'>=</span> <span class='ident'>backend</span>::<span class='ident'>Concrete</span>::<span class='ident'>init</span>();
 
         <span class='kw'>let</span> <span class='ident'>theme</span> <span class='op'>=</span> <span class='ident'>theme</span>::<span class='ident'>load_default</span>();
@@ -808,16 +816,21 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Callbacks will be executed in the order</span>
     <span class='doccomment'>/// of arrival on the next event cycle.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Note that you currently need to call [`set_fps`] to force cursive to</span>
+    <span class='doccomment'>/// regularly check for messages.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// [`set_fps`]: #method.set_fps</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cb_sink</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>mpsc</span>::<span class='ident'>Sender</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Cursive</span>) <span class='op'>+</span> <span class='ident'>Send</span><span class='op'>&gt;&gt;</span> {
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>cb_sink</span>
     }
 
-    <span class='doccomment'>/// Selects the menubar</span>
+    <span class='doccomment'>/// Selects the menubar.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>select_menubar</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>take_focus</span>(<span class='ident'>direction</span>::<span class='ident'>Direction</span>::<span class='ident'>none</span>());
     }
 
-    <span class='doccomment'>/// Sets the menubar autohide_menubar feature.</span>
+    <span class='doccomment'>/// Sets the menubar autohide feature.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// * When enabled (default), the menu is only visible when selected.</span>
     <span class='doccomment'>/// * When disabled, the menu is always visible and reserves the top row.</span>
@@ -825,7 +838,7 @@
         <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>autohide</span> <span class='op'>=</span> <span class='ident'>autohide</span>;
     }
 
-    <span class='doccomment'>/// Retrieve the menu tree used by the menubar.</span>
+    <span class='doccomment'>/// Access the menu tree used by the menubar.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// This allows to add menu items to the menubar.</span>
     <span class='doccomment'>///</span>
@@ -879,7 +892,7 @@
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>menubar</span>
     }
 
-    <span class='doccomment'>/// Returns the currently used theme</span>
+    <span class='doccomment'>/// Returns the currently used theme.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>current_theme</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>theme</span>::<span class='ident'>Theme</span> {
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>theme</span>
     }
@@ -893,7 +906,7 @@
 
     <span class='doccomment'>/// Clears the screen.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If a view becomes smaller, clearing the screen may be necessary.</span>
+    <span class='doccomment'>/// Users rarely have to call this directly.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
     }
@@ -918,8 +931,13 @@
     <span class='doccomment'>/// Sets the refresh rate, in frames per second.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Regularly redraws everything, even when no input is given.</span>
-    <span class='doccomment'>/// Between 0 and 1000.</span>
-    <span class='doccomment'>/// Call with fps=0 to disable (default value).</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// You currently need this to regularly check</span>
+    <span class='doccomment'>/// for events sent using [`cb_sink`].</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Between 0 and 1000. Call with `fps = 0` to disable (default value).</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// [`cb_sink`]: #method.cb_sink</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_fps</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>fps</span>: <span class='ident'>u32</span>) {
         <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>set_refresh_rate</span>(<span class='ident'>fps</span>)
     }
@@ -1123,7 +1141,7 @@
     <span class='doccomment'>/// It will wait for user input (key presses)</span>
     <span class='doccomment'>/// and trigger callbacks accordingly.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Blocks until quit() is called.</span>
+    <span class='doccomment'>/// Blocks until `quit()` is called.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
 
         <span class='comment'>// And the big event loop begins!</span>

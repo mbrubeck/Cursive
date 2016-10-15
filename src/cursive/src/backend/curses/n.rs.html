@@ -270,6 +270,9 @@
 <span id="226">226</span>
 <span id="227">227</span>
 <span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
 </pre><pre class='rust '>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncurses</span>;
 
@@ -284,6 +287,9 @@
 
 <span class='kw'>impl</span> <span class='ident'>backend</span>::<span class='ident'>Backend</span> <span class='kw'>for</span> <span class='ident'>Concrete</span> {
     <span class='kw'>fn</span> <span class='ident'>init</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
+        <span class='comment'>// The delay is the time ncurses wait after pressing ESC</span>
+        <span class='comment'>// to see if it&#39;s an escape sequence.</span>
+        <span class='comment'>// Default delay is way too long. 25 is imperceptible yet works fine.</span>
         ::<span class='ident'>std</span>::<span class='ident'>env</span>::<span class='ident'>set_var</span>(<span class='string'>&quot;ESCDELAY&quot;</span>, <span class='string'>&quot;25&quot;</span>);
         <span class='ident'>ncurses</span>::<span class='ident'>setlocale</span>(<span class='ident'>ncurses</span>::<span class='ident'>LcCategory</span>::<span class='ident'>all</span>, <span class='string'>&quot;&quot;</span>);
         <span class='ident'>ncurses</span>::<span class='ident'>initscr</span>();
