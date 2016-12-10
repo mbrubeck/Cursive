@@ -21,8 +21,12 @@ toml = "0.2"
 unicode-segmentation = "0.1"
 unicode-width = "0.1"
 
-[dependencies.ncurses]
+[target.'cfg(target_os = "linux")'.dependencies.ncurses]
 features = ["wide"]
+optional = true
+version = "5.84.0"
+
+[target.'cfg(target_os = "macos")'.dependencies.ncurses]
 optional = true
 version = "5.84.0"
 
