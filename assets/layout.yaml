@@ -1,0 +1,22 @@
+Dialog:
+    child: 
+        LinearLayout:
+            orientation: horizontal
+            children:
+                - TextView:
+                    text: This is the left part.
+                    with:
+                        - fixed_width: 8
+                - DummyView
+                - TextView:
+                    text: this is the right part.
+                    with:
+                        - fixed_width: 8
+            with:
+                - id: linear
+                - fixed_height: 4
+    buttons:
+        - label: Ok
+          callback: $next
+        - label: Cancel
+          callback: $quit

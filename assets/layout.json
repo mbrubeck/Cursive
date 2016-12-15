@@ -1,0 +1,29 @@
+{
+	"layers": [
+		{
+			"dialog": {
+				"child": {
+					"LinearLayout": {
+						"orientation": "horizontal",
+						"children": [
+							{
+								"TextView": {
+								}
+							}
+						]
+					}
+				},
+				"buttons": [
+					{
+						"label": "Ok",
+						"callback": "@next"
+					},
+					{
+						"label": "Cancel",
+						"callback": "@quit"
+					}
+				]
+			}
+		}
+	]
+}

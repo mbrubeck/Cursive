@@ -621,6 +621,33 @@
 <span id="577">577</span>
 <span id="578">578</span>
 <span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Cursive</span>
 <span class='doccomment'>//!</span>
@@ -640,7 +667,7 @@
 <span class='doccomment'>//! ## Views</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! Views are the main components of a cursive interface.</span>
-<span class='doccomment'>//! The [`view`](./view/index.html) module contains many views to use in your</span>
+<span class='doccomment'>//! The [`views`](./views/index.html) module contains many views to use in your</span>
 <span class='doccomment'>//! application; if you don&#39;t find what you need, you may also implement the</span>
 <span class='doccomment'>//! [`View`](view/trait.View.html) trait and build your own.</span>
 <span class='doccomment'>//!</span>
@@ -657,12 +684,13 @@
 <span class='doccomment'>//! ```no_run</span>
 <span class='doccomment'>//! extern crate cursive;</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! use cursive::*;</span>
+<span class='doccomment'>//! use cursive::Cursive;</span>
+<span class='doccomment'>//! use cursive::views::TextView;</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! fn main() {</span>
 <span class='doccomment'>//!     let mut siv = Cursive::new();</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!     siv.add_layer(views::TextView::new(&quot;Hello World!\nPress q to quit.&quot;));</span>
+<span class='doccomment'>//!     siv.add_layer(TextView::new(&quot;Hello World!\nPress q to quit.&quot;));</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!     siv.add_global_callback(&#39;q&#39;, |s| s.quit());</span>
 <span class='doccomment'>//!</span>
@@ -678,12 +706,17 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! One solution is to redirect stderr to a file when running the application,</span>
 <span class='doccomment'>//! and log to it instead of stdout.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! Or you can use gdb as usual.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>toml</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_segmentation</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unicode_width</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>odds</span>;
+
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>chan</span>;
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>println_stderr</span>(
     ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>arg</span>:<span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> { {
@@ -1136,56 +1169,77 @@
 
     }
 
+    <span class='doccomment'>/// Returns `true` until [`quit(&amp;mut self)`] is called.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// [`quit(&amp;mut self)`]: #method.quit</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_running</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='self'>self</span>.<span class='ident'>running</span>
+    }
+
+
     <span class='doccomment'>/// Runs the event loop.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// It will wait for user input (key presses)</span>
     <span class='doccomment'>/// and trigger callbacks accordingly.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Blocks until `quit()` is called.</span>
+    <span class='doccomment'>/// Calls [`step(&amp;mut self)`] until [`quit(&amp;mut self)]`] is called.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// [`step(&amp;mut self)`]: #method.step</span>
+    <span class='doccomment'>/// [`quit(&amp;mut self)`]: #method.quit</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
 
         <span class='comment'>// And the big event loop begins!</span>
         <span class='kw'>while</span> <span class='self'>self</span>.<span class='ident'>running</span> {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>cb</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cb_source</span>.<span class='ident'>try_recv</span>() {
-                <span class='ident'>cb</span>(<span class='self'>self</span>);
-            }
+            <span class='self'>self</span>.<span class='ident'>step</span>();
+        }
+    }
 
-            <span class='comment'>// Do we need to redraw everytime?</span>
-            <span class='comment'>// Probably, actually.</span>
-            <span class='comment'>// TODO: Do we need to re-layout everytime?</span>
-            <span class='self'>self</span>.<span class='ident'>layout</span>();
+    <span class='doccomment'>/// Performs a single step from the event loop.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Useful if you need tighter control on the event loop.</span>
+    <span class='doccomment'>/// Otherwise, [`run(&amp;mut self)`] might be more convenient.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// [`run(&amp;mut self)`]: #method.run</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>step</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>cb</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cb_source</span>.<span class='ident'>try_recv</span>() {
+            <span class='ident'>cb</span>(<span class='self'>self</span>);
+        }
 
-            <span class='comment'>// TODO: Do we need to redraw every view every time?</span>
-            <span class='comment'>// (Is this getting repetitive? :p)</span>
-            <span class='self'>self</span>.<span class='ident'>draw</span>();
-            <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>refresh</span>();
+        <span class='comment'>// Do we need to redraw everytime?</span>
+        <span class='comment'>// Probably, actually.</span>
+        <span class='comment'>// TODO: Do we need to re-layout everytime?</span>
+        <span class='self'>self</span>.<span class='ident'>layout</span>();
 
-            <span class='comment'>// Wait for next event.</span>
-            <span class='comment'>// (If set_fps was called, this returns -1 now and then)</span>
-            <span class='kw'>let</span> <span class='ident'>event</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>poll_event</span>();
-            <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>Exit</span> {
-                <span class='self'>self</span>.<span class='ident'>quit</span>();
-            }
+        <span class='comment'>// TODO: Do we need to redraw every view every time?</span>
+        <span class='comment'>// (Is this getting repetitive? :p)</span>
+        <span class='self'>self</span>.<span class='ident'>draw</span>();
+        <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>refresh</span>();
 
-            <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>WindowResize</span> {
-                <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
-            }
+        <span class='comment'>// Wait for next event.</span>
+        <span class='comment'>// (If set_fps was called, this returns -1 now and then)</span>
+        <span class='kw'>let</span> <span class='ident'>event</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>poll_event</span>();
+        <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>Exit</span> {
+            <span class='self'>self</span>.<span class='ident'>quit</span>();
+        }
 
-            <span class='comment'>// Event dispatch order:</span>
-            <span class='comment'>// * Focused element:</span>
-            <span class='comment'>//     * Menubar (if active)</span>
-            <span class='comment'>//     * Current screen (top layer)</span>
-            <span class='comment'>// * Global callbacks</span>
-            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>receive_events</span>() {
-                <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>).<span class='ident'>process</span>(<span class='self'>self</span>);
-            } <span class='kw'>else</span> {
-                <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
-                    <span class='comment'>// If the event was ignored,</span>
-                    <span class='comment'>// it is our turn to play with it.</span>
-                    <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>),
-                    <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> (),
-                    <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=&gt;</span> <span class='ident'>cb</span>(<span class='self'>self</span>),
-                }
+        <span class='kw'>if</span> <span class='ident'>event</span> <span class='op'>==</span> <span class='ident'>Event</span>::<span class='ident'>WindowResize</span> {
+            <span class='self'>self</span>.<span class='ident'>backend</span>.<span class='ident'>clear</span>();
+        }
+
+        <span class='comment'>// Event dispatch order:</span>
+        <span class='comment'>// * Focused element:</span>
+        <span class='comment'>//     * Menubar (if active)</span>
+        <span class='comment'>//     * Current screen (top layer)</span>
+        <span class='comment'>// * Global callbacks</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>receive_events</span>() {
+            <span class='self'>self</span>.<span class='ident'>menubar</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>).<span class='ident'>process</span>(<span class='self'>self</span>);
+        } <span class='kw'>else</span> {
+            <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>screen_mut</span>().<span class='ident'>on_event</span>(<span class='ident'>event</span>) {
+                <span class='comment'>// If the event was ignored,</span>
+                <span class='comment'>// it is our turn to play with it.</span>
+                <span class='ident'>EventResult</span>::<span class='ident'>Ignored</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>on_event</span>(<span class='ident'>event</span>),
+                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> (),
+                <span class='ident'>EventResult</span>::<span class='ident'>Consumed</span>(<span class='prelude-val'>Some</span>(<span class='ident'>cb</span>)) <span class='op'>=&gt;</span> <span class='ident'>cb</span>(<span class='self'>self</span>),
             }
         }
     }
@@ -1262,7 +1316,7 @@
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    <script src="../../../extra.js"></script>
+    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

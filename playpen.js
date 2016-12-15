@@ -15,11 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     if (!window.playgroundUrl) {
-        var runButtons = document.querySelectorAll(".test-arrow");
-
-        for (var i = 0; i < runButtons.length; i++) {
-            runButtons[i].classList.remove("test-arrow");
-        }
         return;
     }
 
